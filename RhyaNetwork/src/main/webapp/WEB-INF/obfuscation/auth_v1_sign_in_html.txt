@@ -1,0 +1,30 @@
+<span class="login100-form-title p-b-26">
+	Please sign in
+</span>
+
+<div class="wrap-input100 validate-input">
+	<input class="input100" type="text" id="ID" onkeyup="noSpaceInput(this);" onchange="noSpaceInput(this);" maxlength="60" required>
+	<span class="focus-input100" data-placeholder="ID"></span>
+</div>
+
+<div class="wrap-input100 validate-input" data-validate="Password">
+	<span class="btn-show-pass">
+		<i class="zmdi zmdi-eye"></i>
+	</span>
+	<input class="input100" type="password" id="Password" onkeyup="noSpaceInput(this);" onchange="noSpaceInput(this);" required> 
+	<span class="focus-input100" data-placeholder="Password"></span>
+</div>					
+
+<div class="remember-me">
+	<input type="checkbox" name="remember_me" id="remember_me"/>
+	<label>Remember Me</label>
+</div>
+
+<div class="container-login100-form-btn">
+	<div class="wrap-login100-form-btn">
+		<div class="login100-form-bgbtn"></div>
+		<button type="submit" class="login100-form-btn" id="sign-in-button" onclick="SignInFun()">
+			Login
+		</button>
+	</div>
+</div>

@@ -1,0 +1,78 @@
+<%@ page import="java.sql.*"%>
+<%@ page import="java.util.Random"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="kro.kr.rhya_network.captcha.reCaptChaInfo"%>
+<%@ page import="kro.kr.rhya_network.page.JspPageInfo"%>
+<%@ page import="kro.kr.rhya_network.page.PageParameter"%>
+<%@ page import="kro.kr.rhya_network.security.RhyaAES"%>
+<%@ page import="kro.kr.rhya_network.security.ParameterManipulation"%>
+<%@ page import="kro.kr.rhya_network.logger.RhyaLogger"%>
+<%@ page import="kro.kr.rhya_network.logger.GetClientIPAddress"%>
+<%@ page import="kro.kr.rhya_network.databses.DatabaseInfo"%>
+<%@ page import="kro.kr.rhya_network.databses.DatabaseConnection"%>
+<%@ page import="kro.kr.rhya_network.utils.db.DatabaseManager"%>
+<%@ page import="kro.kr.rhya_network.util.LoginChecker"%>
+<%@ page import="kro.kr.rhya_network.util.RhyaAnnouncementVO"%>
+
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+    
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>RHYA.Network Page Blocked</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="apple-touch-icon" sizes="180x180" href="<%=request.getContextPath()%>/webpage/resources/icon/apple_touch_logo_icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="<%=request.getContextPath()%>/webpage/resources/icon/logo_32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="<%=request.getContextPath()%>/webpage/resources/icon/logo_16x16.png">
+		<link rel="manifest" href="<%=request.getContextPath()%>/webpage/res/icon/site.webmanifest">
+		<link rel="mask-icon" href="<%=request.getContextPath()%>/webpage/res/icon/server_logo.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#ffffff">
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+		<link href="<%=request.getContextPath()%>/webpage/resources/assets/main/css/bootstrap.min.css" rel="stylesheet">
+	    <link href="<%=request.getContextPath()%>/webpage/resources/assets/main/css/fontawesome-all.min.css" rel="stylesheet">
+	    <link href="<%=request.getContextPath()%>/webpage/resources/assets/main/css/aos.min.css" rel="stylesheet">
+	    <link href="<%=request.getContextPath()%>/webpage/resources/assets/main/css/swiper.css" rel="stylesheet">
+	    <link href="<%=request.getContextPath()%>/webpage/resources/assets/main/css/style.css" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+	</head>
+	
+	
+	<script type="text/javascript" src='https://cdn.jsdelivr.net/npm/sweetalert2@10'></script>
+	<script src="https://kit.fontawesome.com/f1def33959.js" crossorigin="anonymous"></script>
+
+
+	<body>
+		<!-- Basic -->
+		<div class="ex-basic-1 pt-4">
+		    <div class="container text-center">
+		        <div class="row">
+		            <div class="col-xl-10 offset-xl-1">
+		                <div class="col-lg-12">
+		                	<img class="img-fluid mt-5 mb-3" style="width: 350px; height: 350px;" src="<%=request.getContextPath()%>/webpage/resources/assets/main/assets/images/block.jpg" alt="alternative">
+		            		<h5 class="py-3" style="font-family: 'Noto Sans KR', sans-serif;">해당 페이지가 일시적으로 차단되었거나 이용이 불가능한 페이지 입니다.</h5>
+		            		<p>RHYA.Network에서 해당 페이지의 접근을 거부하였습니다.</p>
+		            		<p>현재 해당 페이지의 <span style="color:#0074FF">업데이트</span> 작업 중 이거나</p>
+		            		<p><span style="color:#0074FF">관리자</span>가 해당 페이지의 접근을 <span style="color:#0074FF">일시적으로</span> 거부한 것일 수도 있습니다.</p>
+		            		<p>해당 페이지의 연결 과정 중 계속 이러한 문제가 발생하면 관리자에게 연락해주십시오.</p>
+		            		<p>관리자 : sihun.choi@email.rhya-network.kro.kr</p>
+		            		<br>
+		            		<p>Copyright 2022 RHYA.Network. All rights reserved.</p>
+		            	</div> <!-- end of col -->
+		            </div> <!-- end of col -->
+		        </div> <!-- end of row -->
+		    </div> <!-- end of container -->
+		</div> <!-- end of ex-basic-1 -->
+		<!-- end of basic -->
+	    
+	    <script src="<%=request.getContextPath()%>/webpage/resources/assets/main/js/bootstrap.min.js"></script><!-- Bootstrap framework -->
+	    <script src="<%=request.getContextPath()%>/webpage/resources/assets/main/js/purecounter.min.js"></script> <!-- Purecounter counter for statistics numbers -->
+	    <script src="<%=request.getContextPath()%>/webpage/resources/assets/main/js/swiper.min.js"></script><!-- Swiper for image and text sliders -->
+	    <script src="<%=request.getContextPath()%>/webpage/resources/assets/main/js/aos.js"></script><!-- AOS on Animation Scroll -->
+	    <script src="<%=request.getContextPath()%>/webpage/resources/assets/main/js/script.js"></script>  <!-- Custom scripts -->
+	</body>
+</html>

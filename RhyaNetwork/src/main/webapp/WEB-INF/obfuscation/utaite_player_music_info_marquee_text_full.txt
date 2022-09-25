@@ -1,0 +1,136 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+   pageEncoding="utf-8"%>
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        
+        <style>
+			.marquee {
+			  overflow:hidden;
+			  margin-bottom:10px;
+			  position:relative;
+			}
+			
+			.marquee p {
+			  margin:0;
+			  padding-left:100%;
+			  display:inline-block;
+			  white-space:nowrap;
+			    -webkit-animation-name:marquee;
+			    -webkit-animation-timing-function:linear;
+			    -webkit-animation-duration:10s;
+			    -webkit-animation-iteration-count:infinite;
+			    -moz-animation-name:marquee;
+			    -moz-animation-timing-function:linear;
+			    -moz-animation-duration:10s;
+			    -moz-animation-iteration-count:infinite;
+			    -ms-animation-name:marquee;
+			    -ms-animation-timing-function:linear;
+			    -ms-animation-duration:10s;
+			    -ms-animation-iteration-count:infinite;
+			    -o-animation-name:marquee;
+			    -o-animation-timing-function:linear;
+			    -o-animation-duration:10s;
+			    -o-animation-iteration-count:infinite;
+			    animation-name:marquee;
+			    animation-timing-function:linear;
+			    animation-duration:10s;
+			    animation-iteration-count:infinite;
+			}
+			@-webkit-keyframes marquee {
+			  from   { -webkit-transform: translate(0%);}
+			  99%,to { -webkit-transform: translate(-100%);}
+			}
+			@-moz-keyframes marquee {
+			  from   { -moz-transform: translate(0%);}
+			  99%,to { -moz-transform: translate(-100%);}
+			}
+			@-ms-keyframes marquee {
+			  from   { -ms-transform: translate(0%);}
+			  99%,to { -ms-transform: translate(-100%);}
+			}
+			@-o-keyframes marquee {
+			  from   { -o-transform: translate(0%);}
+			  99%,to { -o-transform: translate(-100%);}
+			}
+			@keyframes marquee {
+			  from   { transform: translate(0%);}
+			  99%,to { transform: translate(-100%);}
+			}
+
+			@font-face {
+			    font-family: 'esamanru_light';
+			    src: url('<%=request.getContextPath()%>/webpage/resources/font/esamanru_light.woff') format('woff');
+			    font-weight: normal;
+			    font-style: normal;
+			}
+
+            .txt_post {
+            	font-size: 28vmin;
+            	font-family: 'esamanru_light';
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: box; 
+                overflow: hidden; 
+                vertical-align: top; 
+                text-overflow: ellipsis; 
+                word-break: break-all; 
+                -webkit-box-orient: vertical; 
+                -webkit-line-clamp: 1;
+                color: #ffffff;
+            }
+           
+            .txt_post2 {
+            	text-align: center;
+            	font-size: 17vmin;
+            	font-family: 'esamanru_light';
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: box; 
+                overflow: hidden; 
+                vertical-align: top; 
+                text-overflow: ellipsis; 
+                word-break: break-all; 
+                -webkit-box-orient: vertical; 
+                -webkit-line-clamp: 2;
+                color: gray;
+            }
+        </style>
+    </head>
+
+    <body translate="no" style="overflow:hidden;">
+        <div class="box">
+            <div class="marquee" id="marqueeDiv">
+                <p class="txt_post" id="marqueeTitle">Loading...</p>
+            </div>
+            
+            <p class="txt_post2" id="marqueeSubTitle" style="margin-top: -5px;">Loading...</p>
+        </div>
+        
+	    <script src="<%=request.getContextPath()%>/webpage/resources/assets/user_account/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript">
+            function removeMarqueeClass(Title) {
+                $("#marqueeDiv").removeClass("marquee");
+            }
+
+            function changeMarqueeText(Title) {
+                marqueeTitle.innerText = Title;
+            }
+
+            function changeSubMarqueeText(SubTitle) {
+            	marqueeSubTitle.innerText = SubTitle;
+            }
+            
+            function addMarqueeClass(Title) {
+                $("#marqueeDiv").addClass("marquee");
+            }
+
+            function initHTMLStyle(BackgroundColor) {
+                document.body.style.backgroundColor = BackgroundColor;
+            }
+        </script>
+    </body>
+</html>

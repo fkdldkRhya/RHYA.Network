@@ -1,0 +1,27 @@
+<span class="login100-form-title p-b-26">
+	Please enter your account information
+</span>
+
+<div class="wrap-input100 validate-input">
+	<input class="input100" type="text" id="Name" required>
+	<span class="focus-input100" data-placeholder="Name"></span>
+</div>
+
+<div class="wrap-input100 validate-input">
+	<input class="input100" type="text" id="ID" onkeyup="noSpaceInput(this)" onchange="noSpaceInput(this)" required>
+	<span class="focus-input100" data-placeholder="ID"></span>
+</div>
+
+<div class="wrap-input100 validate-input">
+	<input class="input100" type="email" id="Email" onkeyup="noSpaceInput(this)" onchange="noSpaceInput(this)" required>
+	<span class="focus-input100" data-placeholder="Email"></span>
+</div>
+
+<div class="container-login100-form-btn">
+	<div class="wrap-login100-form-btn">
+		<div class="login100-form-bgbtn"></div>
+		<button type="submit" class="login100-form-btn" id="SignupButton" onclick="ForgotPWD()">
+			Forgot password
+		</button>
+	</div>
+</div>

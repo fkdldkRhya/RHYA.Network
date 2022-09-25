@@ -1,0 +1,246 @@
+<%@ page import="java.sql.PreparedStatement"%>
+<%@ page import="java.sql.ResultSet"%>
+<%@ page import="java.sql.SQLException"%>
+<%@ page import="java.io.File"%>
+<%@ page import="java.io.FileFilter"%>
+<%@ page import="java.io.BufferedInputStream"%>
+<%@ page import="java.io.FileInputStream"%>
+<%@ page import="java.io.BufferedOutputStream"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.io.*"%>
+<%@ page import="java.net.URLEncoder"%>
+<%@ page import="com.google.gson.Gson"%>
+<%@ page import="com.google.gson.JsonObject"%>
+<%@ page import="org.apache.commons.io.IOUtils"%>
+<%@ page import="kro.kr.rhya_network.page.JspPageInfo"%>
+<%@ page import="kro.kr.rhya_network.page.PageParameter"%>
+<%@ page import="kro.kr.rhya_network.security.SelfXSSFilter"%>
+<%@ page import="kro.kr.rhya_network.security.RhyaSHA512"%>
+<%@ page import="kro.kr.rhya_network.security.RhyaAES"%>
+<%@ page import="kro.kr.rhya_network.security.ParameterManipulation"%>
+<%@ page import="kro.kr.rhya_network.captcha.reCaptChaInfo"%>
+<%@ page import="kro.kr.rhya_network.logger.RhyaLogger"%>
+<%@ page import="kro.kr.rhya_network.logger.GetClientIPAddress"%>
+<%@ page import="kro.kr.rhya_network.database.DatabaseInfo"%>
+<%@ page import="kro.kr.rhya_network.database.DatabaseConnection"%>
+<%@ page import="kro.kr.rhya_network.util.LoginChecker"%>
+<%@ page import="kro.kr.rhya_network.util.AuthTokenChecker"%>
+<%@ page import="kro.kr.rhya_network.security.IPBlockChecker"%>
+<%@ page import="kro.kr.rhya_network.util.PathManager"%>
+<%@ page import="kro.kr.rhya_network.utils.db.DatabaseManager"%>
+<%@ page import="kro.kr.rhya_network.utils.online_attendance.OnlineAttendanceAccessChecker"%>
+
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+    
+<%
+final String successMessage = "success";
+final String failMessage = "fail";
+
+// 변수 클레스 선언
+PageParameter.SignIn signinV = new PageParameter.SignIn();
+
+// Rhya 로거 변수 선언
+RhyaLogger rl = new RhyaLogger();
+// Rhya 로거 설정
+rl.JspName = request.getServletPath();
+rl.LogConsole = true;
+rl.LogFile = true;
+
+// 쿼리 작성 StringBuilder
+StringBuilder sql = new StringBuilder();
+
+// 클라이언트 아이피
+String clientIP = GetClientIPAddress.getClientIp(request);
+
+// 데이터베이스 커넥터 변수 선언
+DatabaseConnection cont = new DatabaseConnection();
+// 데이터베이스 쿼리 실행 변수 선언
+PreparedStatement stat = null;
+ResultSet rs = null;
+
+
+//------------------------------------------------
+if (!IPBlockChecker.isIPBlock(clientIP)) {
+	// 로그 출력
+	rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "IP 차단 목록에 있는 호스트가 접속을 시도하였습니다. 해당 호스트의 접속을 시스템이 거부했습니다."));
+	// 페이지 이동
+	RequestDispatcher rd = request.getRequestDispatcher(JspPageInfo.GetJspPageURL(request, 22).replace(request.getContextPath().subSequence(0, request.getContextPath().length()), ""));
+	rd.forward(request,response);
+	return;
+}
+//------------------------------------------------
+
+
+// 데이터베이스 접속 예외 처리
+try {
+	// 데이터베이스 접속
+	cont.Connection(DatabaseInfo.DATABASE_DRIVER_CLASS_NAME,
+					DatabaseInfo.DATABASE_CONNECTION_URL,
+					DatabaseInfo.DATABASE_ROOT_ACCOUNT_ID,
+					DatabaseInfo.DATABASE_ROOT_ACCOUNT_PW);
+}catch (SQLException ex1) {
+	// 데이터베이스 접속 오류 처리
+	rs.close();
+	stat.close();
+	cont.Close();
+	sql = null;
+	signinV = null;
+	// 로그 작성
+	rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv4(clientIP, JspPageInfo.ERROR_PAGE_PATH_HTTP_500, ex1.toString()));
+	// 페이지 이동
+	response.sendRedirect(JspPageInfo.ERROR_PAGE_PATH_HTTP_500);
+	
+	return;
+}catch (ClassNotFoundException ex2) {
+	// 데이터베이스 접속 오류 처리
+	rs.close();
+	stat.close();
+	cont.Close();
+	sql = null;
+	signinV = null;
+	// 로그 작성
+	rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv4(clientIP, JspPageInfo.ERROR_PAGE_PATH_HTTP_500, ex2.toString()));
+	// 페이지 이동
+	response.sendRedirect(JspPageInfo.ERROR_PAGE_PATH_HTTP_500);
+	
+	return;
+}
+
+// 페이지 상태 확인
+if (cont != null) {
+	// 쿼리 생성
+	sql.append("SELECT * FROM ");
+	sql.append(DatabaseInfo.DATABASE_TABLE_NAME_JSP_PAGE_SETTING);
+	sql.append(" WHERE ");
+	sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_JSP_PAGE_SETTING_PAGE_ID);
+	sql.append("=");
+	sql.append("?;");
+
+	
+	// 쿼리 설정
+	stat = cont.GetConnection().prepareStatement(sql.toString());
+	stat.setInt(1, JspPageInfo.PageID_Online_Attendance_Image);
+	// 쿼리 생성 StringBuilder 초기화
+	sql.delete(0,sql.length());
+	// 쿼리 실행
+	rs = stat.executeQuery();
+	// 쿼리 실행 결과
+	int state = 0;
+	if (rs.next()) {
+		state = rs.getInt(DatabaseInfo.DATABASE_TABLE_COLUMN_JSP_PAGE_SETTING_PAGE_STATE);
+		// 연결 종료
+		rs.close();
+		stat.close();
+		cont.Close();
+	}
+	// 상태 확인 - 결과 처리
+	if (!JspPageInfo.JspPageStateManager(state)) {
+		// 연결 종료
+		rs.close();
+		stat.close();
+		cont.Close();
+		rl = null;
+		sql = null;
+		signinV = null;
+		
+		// 페이지 이동
+		RequestDispatcher rd = request.getRequestDispatcher(JspPageInfo.GetJspPageURL(request, 22).replace(request.getContextPath().subSequence(0, request.getContextPath().length()), ""));
+	  	rd.forward(request,response);
+		return;
+	}
+}
+
+// 출력 결과
+Gson gson = new Gson();
+JsonObject obj = new JsonObject();
+
+final String keyName_Result = "result";
+final String keyName_Message = "message";
+
+// 예외 처리
+try {
+	int typeInt = 0;
+	String auth = request.getParameter("auth");
+	String uuid = request.getParameter("uuid");
+	String type = request.getParameter("type");
+	if (type != null) {
+		typeInt = Integer.parseInt(type);
+	}
+	
+	final String path = PathManager.ONLINE_ATTENDANCE_IMAGE_ROOT_PATH;
+	StringBuilder sb = new StringBuilder();
+	
+	// 로그인
+	OnlineAttendanceAccessChecker onlineAttendanceAccessChecker = new OnlineAttendanceAccessChecker();
+	// 로그인 확인
+	if (onlineAttendanceAccessChecker.isAccessCheck(auth)) {
+		File dir;
+		switch (typeInt) {
+			default:
+			case 1: {
+				sb.append(path);
+				sb.append(File.separator);
+				sb.append("teacher");
+				sb.append(File.separator);
+				sb.append(uuid);
+				sb.append(".jpg");
+
+				break;
+			}
+			
+			case 2: {
+				sb.append(path);
+				sb.append(File.separator);
+				sb.append("student");
+				sb.append(File.separator);
+				sb.append(uuid);
+				sb.append(".jpg");
+				break;
+			}
+		}
+		
+		out.clear(); 
+		out = pageContext.pushBody();
+
+		// 연결 종료
+		rs.close();
+		stat.close();
+		cont.Close();
+		
+		File getFile = new File(sb.toString());
+		String orgfilename = java.net.URLEncoder.encode(getFile.getName(), "UTF-8");
+		response.setHeader("Content-Type", "image/png;");
+		
+		byte[] image = IOUtils.toByteArray(new FileInputStream(getFile));
+		response.getOutputStream().write(image);
+		
+		// 로그 출력
+		rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "온라인 출석부 이미지 출력 성공! - ", getFile.getName()));
+	}else {
+		// 로그 출력
+		rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "사용자 로그인 실패. 다른 기기에서 접속했거나 일시적인 문제일 수 있습니다. 다시 로그인 해주세요. [AUTH]", auth));
+		
+		obj.addProperty(keyName_Result, failMessage);
+		obj.addProperty(keyName_Message, URLEncoder.encode("사용자 로그인 실패. 다른 기기에서 접속했거나 일시적인 문제일 수 있습니다. 다시 로그인 해주세요.", "UTF-8"));
+
+		out.println(gson.toJson(obj));
+	}
+}catch (Exception ex) {
+	// 로그 출력
+	rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, ex.toString()));
+	// 결과 설정
+	obj.addProperty(signinV.RESULT, signinV.RST_FAIL);
+	obj.addProperty(signinV.MSG, "알 수 없는 오류 발생");
+	// 결과 출력
+	out.println(gson.toJson(obj));
+	// 연결 종료
+	rs.close();
+	stat.close();
+	cont.Close();
+	rl = null;
+	sql = null;
+	signinV = null;
+}
+%>
+    

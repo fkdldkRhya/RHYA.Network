@@ -1,0 +1,28 @@
+<span class="login100-form-title p-b-26">
+	Change your password
+</span>
+
+<div class="wrap-input100 validate-input" data-validate="Password">
+	<span class="btn-show-pass">
+		<i class="zmdi zmdi-eye"></i>
+	</span>
+	<input class="input100" type="password" id="Password" onkeyup="noSpaceInput(this);" onchange="noSpaceInput(this);" required > 
+	<span class="focus-input100" data-placeholder="Password"></span>
+</div>					
+
+<div class="wrap-input100 validate-input" data-validate="Confirm Password">
+	<span class="btn-show-pass">
+		<i class="zmdi zmdi-eye"></i>
+	</span>
+	<input class="input100" type="password" id="PasswordC" onkeyup="noSpaceInput(this);" onchange="noSpaceInput(this);" required>
+	<span class="focus-input100" data-placeholder="Confirm Password"></span>
+</div>
+
+<div class="container-login100-form-btn">
+	<div class="wrap-login100-form-btn">
+		<div class="login100-form-bgbtn"></div>
+		<button type="submit" class="login100-form-btn" id="forgot-pwd-button" onclick="ResetPWD()">
+			Change password
+		</button>
+	</div>
+</div>

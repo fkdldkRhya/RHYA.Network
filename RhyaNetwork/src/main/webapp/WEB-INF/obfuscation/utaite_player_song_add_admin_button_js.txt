@@ -1,0 +1,44 @@
+function addSongManagerFunc() {
+	// 로딩 중 메시지 출력
+	Swal.fire({
+        title: 'Please Wait!',
+        html: '처리 중...',
+        allowOutsideClick: false,
+        didOpen: () => {
+        	Swal.showLoading()
+        }
+    });
+    
+	// Ajax
+	$.ajax({
+		url: urlValue,
+		type: "POST",
+		
+		success: function(result){
+			Swal.close();
+			ajax_result_json = JSON.parse(result);
+			if (ajax_result_json.result == 'S') {
+		    	Swal.fire({
+	    		    title: "노래 PUSH 성공!",
+	    		    html: "노래 신청 데이터 PUSH에 성공하였습니다.",
+	    		    icon: "success"
+	    		});
+			}else {
+		    	Swal.fire({
+	    		    title: "노래 PUSH 실패!",
+	    		    html: ajax_result_json.message,
+	    		    icon: "error"
+	    		});
+			}
+		},
+		
+		error: function(){
+			Swal.close();
+	    	Swal.fire({
+    		    title: "노래 PUSH 실패!",
+    		    text: "Ajax 통신 실패! 다시 시도해 주세요.",
+    		    icon: "error"
+    		});
+		}
+	});
+}

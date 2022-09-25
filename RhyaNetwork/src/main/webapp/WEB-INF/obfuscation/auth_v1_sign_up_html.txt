@@ -1,0 +1,55 @@
+<span class="login100-form-title p-b-26">
+	Registration Info
+</span>
+
+<div class="wrap-input100 validate-input">
+	<input class="input100" type="text" id="Name" required>
+	<span class="focus-input100" data-placeholder="Name"></span>
+</div>
+
+<div class="wrap-input100 validate-input">
+	<input class="input100" type="text" id="ID" onkeyup="noSpaceInput_ID(this)" onchange="noSpaceInput_ID(this)" required>
+	<span class="focus-input100" data-placeholder="ID"></span>
+</div>
+
+<div class="container-login100-form-btn">
+	<div class="button-8" id="IDChecker" onclick="SignUpIDCheckFun()">
+        <div class="eff-8"></div>
+		<p>아이디 중복 확인</p>
+	</div>
+</div>
+
+<div class="wrap-input100 validate-input">
+	<input class="input100" type="email" id="Email" onkeyup="noSpaceInput(this)" onchange="noSpaceInput(this)" required>
+	<span class="focus-input100" data-placeholder="Email"></span>
+</div>
+
+<div class="wrap-input100 validate-input">
+	<input class="input100" type="date" id="Birthday" pattern="\d{4}-\d{2}-\d{2}" max="9999-12-31" required>
+	<span class="focus-input100" data-placeholder="Birthday"></span>
+</div>
+
+<div class="wrap-input100 validate-input" data-validate="Password">
+	<span class="btn-show-pass">
+		<i class="zmdi zmdi-eye"></i>
+	</span>
+	<input class="input100" type="password" id="Password" onkeyup="noSpaceInput(this)" onchange="noSpaceInput(this)" required> 
+	<span class="focus-input100" data-placeholder="Password"></span>
+</div>
+
+<div class="wrap-input100 validate-input" data-validate="Confirm Password">
+	<span class="btn-show-pass">
+		<i class="zmdi zmdi-eye"></i>
+	</span>
+	<input class="input100" type="password" id="ConfirmPassword" onkeyup="noSpaceInput(this)" onchange="noSpaceInput(this)" required>
+	<span class="focus-input100" data-placeholder="Confirm Password"></span>
+</div>
+
+<div class="container-login100-form-btn">
+	<div class="wrap-login100-form-btn">
+		<div class="login100-form-bgbtn"></div>
+		<button type="submit" class="login100-form-btn" id="SignupButton" onclick="SignUpFun()">
+			Sign up
+		</button>
+	</div>
+</div>
