@@ -4,8 +4,10 @@ RHYA.Network
 ![RHYA.Network Logo](rhya-network-logo.png)
 
 ## RHYA.Network
-*sdgdsdsfg
-** sdf
+* Product distribution
+  - RHYA.Network에 연결되어있는 모든 서비스 배포 기능
+* Account management
+  - RHYA.Network Auth.V1
 
 ## Development and deployment environment
 | Part                           | Environment                     | Remark(Version)                 |
