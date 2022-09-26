@@ -7,7 +7,12 @@ RHYA.Network
 * Product distribution
   - RHYA.Network에 연결되어있는 모든 서비스 배포 기능
 * Account management
-  - RHYA.Network Auth.V1
+  - RHYA.Network Auth.V1 (통합 계정 관리 시스템)
+    + 회원가입
+    + 로그인
+    + 비밀번호 찾기
+    + 2단계 인증
+    + IP 차단 / 계정 차단
 
 ## Development and deployment environment
 | Part                           | Environment                     | Remark(Version)                 |
