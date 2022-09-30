@@ -84,7 +84,7 @@ public class AuthTokenChecker {
 						cont.Close();
 						
 						// 로그인 성공
-						return new String[] { AUTH_RESULT_SUCCESS };
+						return new String[] { AUTH_RESULT_SUCCESS, login_result[1] };
 					}else {
 						// 연결 종료
 						rs.close();
