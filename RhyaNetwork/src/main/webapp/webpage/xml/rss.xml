@@ -5,5 +5,37 @@
   <title>RHYA.Network Home Page</title>
   <link>https://rhya-network.kro.kr</link>
   <description>RHYA.Network</description>
+  <!-- en -->
+  <item>
+    <title>Utaite Player</title>
+    <link>https://rhya-network.kro.kr</link>
+    <description>RHYA.Network Utaite Player</description>
+  </item>
+  <item>
+    <title>Online Attendance</title>
+    <link>https://rhya-network.kro.kr</link>
+    <description>RHYA.Network Online Attendance</description>
+  </item>
+  <item>
+    <title>Seoul Bukbu District Office of Education Alerts</title>
+    <link>https://rhya-network.kro.kr</link>
+    <description>RHYA.Network Seoul Bukbu District Office of Education Alerts</description>
+  </item>
+  <!-- kr -->
+  <item>
+    <title>우타이테 플레이어</title>
+    <link>https://rhya-network.kro.kr</link>
+    <description>RHYA.Network 우타이테 플레이어</description>
+  </item>
+  <item>
+    <title>온라인 출석부</title>
+    <link>https://rhya-network.kro.kr</link>
+    <description>RHYA.Network 온라인 출석부</description>
+  </item>
+  <item>
+    <title>서울북부지원교육청 알리미</title>
+    <link>https://rhya-network.kro.kr</link>
+    <description>RHYA.Network 서울북부지원교육청 알리미</description>
+  </item>
 </channel>
 </rss>
