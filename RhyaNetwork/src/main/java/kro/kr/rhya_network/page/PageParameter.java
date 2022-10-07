@@ -88,9 +88,9 @@ public class PageParameter {
 		
 		// 지원 서비스 이름
 		public final ArrayList<String> SERVICE = new ArrayList<String>(
-				Arrays.asList("kro_kr_rhya__network_jp__player",
+				Arrays.asList(
+						"kro_kr_rhya__network_jp__player",
 						"kro_kr_rhya__network_online__attendance",
-						"kro_kr_rhya__network_vpn_service",
-						"kro_kr_rhya__network_service_manager"));
+						"kro_kr_rhya__network_vpn_service"));
 	}
 }

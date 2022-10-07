@@ -538,10 +538,6 @@
 	                            <i class="fas fa-caret-right"></i>
 	                            <a href="#bbedu_alert"><p class="ms-3">BBEDU Alerts</p></a>
 	                        </div>
-	                        <div class="d-flex align-items-center py-2" x>
-	                            <i class="fas fa-caret-right"></i>
-	                            <a href="https://rhya-network.kro.kr/RhyaNetwork/other_service_download?package=2"><p class="ms-3">RHYA OpenVPN Client</p></a>
-	                        </div>
 	                        <div class="d-flex align-items-center py-2">
 	                            <i class="fas fa-caret-right"></i>
 	                            <a href="https://github.com/fkdldkRhya"><p class="ms-3">개발자 GitHub</p></a>
