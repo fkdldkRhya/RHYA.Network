@@ -77,6 +77,12 @@ public class JspPageInfo {
 	public static final int PageID_Rhya_Network_VPN_Access_Manager = 40;
 	/* RHYA.Network 사용자 계정을 모든 기기에서 로그아웃 작업 진행 */
 	public static final int PageID_Rhya_Network_Logout_All_Edit = 41;
+	/* RHYA.Network Auth Token을 이용한 사용자 권한 확인 */
+	public static final int PageID_Rhya_Network_Auth_Token_For_Check_User_Permission = 42;
+	/* RHYA.Network 관리자 도구 - RHYA.Network Web server background main image manager */
+	public static final int PageID_Rhya_Network_Admin_Tool_Server_Background_Image_Manager = 43;
+	/* RHYA.Network 관리자 도구 - RHYA.Network Web server announcement editor */
+	public static final int PageID_Rhya_Network_Admin_Tool_Announcement_Editor = 44;
 	
 	// 오류 페이지 경로
 	/* HTTP 400 에러 */
@@ -348,6 +354,24 @@ public class JspPageInfo {
 		}else if (id == PageID_Rhya_Network_Logout_All_Edit) {
 			sb.append(req.getContextPath());
 			sb.append("/webpage/jsp/auth.v1/edit_my_account_logout.jsp");
+			String Url = sb.toString();
+			sb = null;
+			return Url;
+		}else if (id == PageID_Rhya_Network_Auth_Token_For_Check_User_Permission) {
+			sb.append(req.getContextPath());
+			sb.append("/webpage/jsp/auth.v1/auth_permission_checker.jsp");
+			String Url = sb.toString();
+			sb = null;
+			return Url;
+		}else if (id == PageID_Rhya_Network_Admin_Tool_Server_Background_Image_Manager) {
+			sb.append(req.getContextPath());
+			sb.append("/webpage/jsp/admin/lv1/server_image_manager.jsp");
+			String Url = sb.toString();
+			sb = null;
+			return Url;
+		}else if (id == PageID_Rhya_Network_Admin_Tool_Announcement_Editor) {
+			sb.append(req.getContextPath());
+			sb.append("/webpage/jsp/admin/lv2/server_announcement_editor.jsp");
 			String Url = sb.toString();
 			sb = null;
 			return Url;

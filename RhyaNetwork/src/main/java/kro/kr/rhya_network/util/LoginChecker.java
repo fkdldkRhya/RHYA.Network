@@ -217,8 +217,12 @@ public class LoginChecker {
 				// ==========================================================================	
 			}
 			
+			// 사용자 권한 가져오기
+			UserPermissionChecker userPermissionChecker = new UserPermissionChecker();
+			int permissionResult = userPermissionChecker.getUserPermission(user_uuid);
+			
 			// 로그인 성공
-			result = new String[] { LOGIN_RESULT_SUCCESS , user_uuid, uuid.toString(), id, userName, userEmail, userBirthday, userRegDate, pw };
+			result = new String[] { LOGIN_RESULT_SUCCESS , user_uuid, uuid.toString(), id, userName, userEmail, userBirthday, userRegDate, pw, String.valueOf(permissionResult) };
 			
 			// 데이터 반환
 			return result;

@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.Random"%>
 <%@ page import="java.util.ArrayList"%>
@@ -14,6 +15,7 @@
 <%@ page import="kro.kr.rhya_network.utils.db.DatabaseManager"%>
 <%@ page import="kro.kr.rhya_network.util.LoginChecker"%>
 <%@ page import="kro.kr.rhya_network.util.RhyaAnnouncementVO"%>
+<%@ page import="kro.kr.rhya_network.admintool.ServerMainImageManager"%>
 <%@ page import="kro.kr.rhya_network.security.IPBlockChecker"%>
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -42,8 +44,8 @@
 	
 	
 	<script type="text/javascript" src='https://cdn.jsdelivr.net/npm/sweetalert2@10'></script>
-	<script src="https://kit.fontawesome.com/f1def33959.js" crossorigin="anonymous"></script>
-	
+	<script type="text/javascript" src="https://kit.fontawesome.com/f1def33959.js" crossorigin="anonymous"></script>
+
 	
 	<%
 	String ctoken = request.getParameter(PageParameter.IS_CREATE_TOKEN_PARM);
@@ -158,17 +160,26 @@
 		}
 	}
 
-	
+	// HTML 설정 변수
 	boolean isLoginUser = false;
 	String userName = null;
 	String up_version = null;
 	String up_version_for_windows = null;
 	String oa_version = null;
+	String todayRandomImageURL1 = String.format("%s?todayrandomimage=%d", JspPageInfo.GetJspPageURL(request, 23), 1);
+	String todayRandomImageURL2 = String.format("%s?todayrandomimage=%d", JspPageInfo.GetJspPageURL(request, 23), 2);
+	String todayRandomImageURL3 = String.format("%s?todayrandomimage=%d", JspPageInfo.GetJspPageURL(request, 23), 3);
+	int userPermission = 0;
+	int mainImageSetting = 0;
 	
 	try {
 		// -------------- 로그인 확인 --------------
 		LoginChecker.AutoLoginTask(rl, session, request, response, false, false, null, isCreateTokenTOF);
-		// ----------------------------------------
+		// -------------------------------------
+		
+		// 메인 이미지 상태 확인
+		ServerMainImageManager serverMainImageManager = new ServerMainImageManager();
+		mainImageSetting = serverMainImageManager.getServerMainSate();
 		
 		//정수형 랜덤키 생성
 		Random random = new Random();
@@ -185,10 +196,12 @@
 			// 자동 로그인
 			String[] auto_login_result = LoginChecker.IsAutoLogin(RhyaAES.AES_Decode(login_session[1]), RhyaAES.AES_Decode(login_session[0]), response, true);
 			// 출력 데이터
-			userName = auto_login_result[4];	
+			userName = auto_login_result[4];
 			
-			isLoginUser= true;
+			isLoginUser = true;
+			userPermission = Integer.parseInt(auto_login_result[9]);	
 		}
+		
 		
 		DatabaseManager.DatabaseConnection databaseConnection = new DatabaseManager.DatabaseConnection();
 		try {
@@ -196,7 +209,6 @@
 			databaseConnection.connection();
 			databaseConnection.setPreparedStatement("SELECT * FROM utaite_info WHERE main_key = 1;");
 			databaseConnection.setResultSet();
-			
 			if (databaseConnection.getResultSet().next()) {
 				up_version = databaseConnection.getResultSet().getString("version");
 				up_version_for_windows = databaseConnection.getResultSet().getString("version_for_windows");
@@ -240,6 +252,87 @@
 	
 	            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
 	                <ul class="navbar-nav ms-auto navbar-nav-scroll">
+	                	<%
+	                    if (userPermission >= 1) {
+                        %>
+                        <li class="nav-item dropdown">
+	                        <a class="nav-link dropdown-toggle" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">관리자 메뉴</a>
+	                        <ul class="dropdown-menu" aria-labelledby="dropdown01">
+	                        	<%
+	                        	// 관리자 메뉴 내용 생성
+	                        	StringBuilder task_builder = new StringBuilder();
+	                        	
+	                        	// LEVEL 1 권한 관리자 메뉴 내용
+	                        	task_builder.append("<li readonly><span readonly class=\"dropdown-item\"><strong>LEVEL 1 작업</strong></span></li>");
+	                        	task_builder.append(System.lineSeparator());
+	                        	task_builder.append(String.format("<li><a class=\"dropdown-item\" href=\"%s\" target=\"_blank\">서버 이미지 관리자</a></li>", JspPageInfo.GetJspPageURL(request, JspPageInfo.PageID_Rhya_Network_Admin_Tool_Server_Background_Image_Manager)));
+	                        	task_builder.append(System.lineSeparator());
+	                        	task_builder.append("<li><div class=\"dropdown-divider\"></div></li>");
+                        		final String LEVEL_1_ADMIN_TASK = task_builder.toString();
+                        		// LEVEL 2 권한 관리자 메뉴 내용
+                        		task_builder.setLength(0);
+	                        	task_builder.append("<li readonly><span readonly class=\"dropdown-item\"><strong>LEVEL 2 작업</strong></span></li>");
+	                        	task_builder.append(System.lineSeparator());
+	                        	task_builder.append(String.format("<li><a class=\"dropdown-item\" href=\"%s\" target=\"_blank\">공지사항 관리자</a></li>", JspPageInfo.GetJspPageURL(request, JspPageInfo.PageID_Rhya_Network_Admin_Tool_Announcement_Editor)));
+	                        	task_builder.append(System.lineSeparator());
+	                        	task_builder.append("<li><div class=\"dropdown-divider\"></div></li>");
+                        		final String LEVEL_2_ADMIN_TASK = task_builder.toString();
+                        		// LEVEL 3 권한 관리자 메뉴 내용
+                        		task_builder.setLength(0);
+	                        	task_builder.append("<li readonly><span readonly class=\"dropdown-item\"><strong>LEVEL 3 작업</strong></span></li>");
+	                        	task_builder.append(System.lineSeparator());
+	                        	// task_builder.append(String.format("<li><a class=\"dropdown-item\" href=\"%s\" target=\"_blank\">우타이테 플레이어 관리자</a></li>", JspPageInfo.GetJspPageURL(request, JspPageInfo.PageID_Utaite_Player_Song_Add_Manager_Admin)));
+                        		// task_builder.append(System.lineSeparator());
+                        		// task_builder.append(String.format("<li><a class=\"dropdown-item\" href=\"%s\" target=\"_blank\">온라인 출석부 관리자</a></li>", JspPageInfo.GetJspPageURL(request, JspPageInfo.PageID_Utaite_Player_Song_Add_Manager_Admin)));
+                        		// task_builder.append(System.lineSeparator());
+                        		// task_builder.append(String.format("<li><a class=\"dropdown-item\" href=\"%s\" target=\"_blank\">서울북부지원교육청 알리미 관리자</a></li>", JspPageInfo.GetJspPageURL(request, JspPageInfo.PageID_Utaite_Player_Song_Add_Manager_Admin)));
+                        		// task_builder.append(System.lineSeparator());
+	                        	task_builder.append("<li><div class=\"dropdown-divider\"></div></li>");
+                        		final String LEVEL_3_ADMIN_TASK = task_builder.toString();
+                        		// LEVEL 4 권한 관리자 메뉴 내용
+                        		task_builder.setLength(0);
+                        		task_builder.append("<li readonly><span readonly class=\"dropdown-item\"><strong>LEVEL 4 작업</strong></span></li>");
+	                        	task_builder.append(System.lineSeparator());
+	                        	// task_builder.append(String.format("<li><a class=\"dropdown-item\" href=\"%s\" target=\"_blank\">서버 상태 관리자</a></li>", JspPageInfo.GetJspPageURL(request, JspPageInfo.PageID_Utaite_Player_Song_Add_Manager_Admin)));
+                        		// task_builder.append(System.lineSeparator());
+                        		final String LEVEL_4_ADMIN_TASK = task_builder.toString();
+                        		
+                        		// 권한 비교
+                        		switch (userPermission) {
+                        		// LEVEL 1 권한 관리자 메뉴
+                        		case 1: {
+                        			out.println(LEVEL_1_ADMIN_TASK);
+                        			break;
+                        		}
+                        		// LEVEL 2 권한 관리자 메뉴
+                        		case 2: {
+                        			out.println(LEVEL_1_ADMIN_TASK);
+                        			out.println(LEVEL_2_ADMIN_TASK);
+                        			break;
+                        		}
+                        		// LEVEL 3 권한 관리자 메뉴
+                        		case 3: {
+                        			out.println(LEVEL_1_ADMIN_TASK);
+                        			out.println(LEVEL_2_ADMIN_TASK);
+                        			out.println(LEVEL_3_ADMIN_TASK);
+                        			break;
+                        		}
+                        		// LEVEL 4 권한 관리자 메뉴
+                        		case 4: {
+                        			out.println(LEVEL_1_ADMIN_TASK);
+                        			out.println(LEVEL_2_ADMIN_TASK);
+                        			out.println(LEVEL_3_ADMIN_TASK);
+                        			out.println(LEVEL_4_ADMIN_TASK);
+                        			break;
+                        		}
+                        		}
+	                        	%>
+	                        </ul>
+	                    </li>
+                        <%
+                        }
+                        %>
+	                
 	                	<li class="nav-item">
 	                        <a class="nav-link" href="<%=JspPageInfo.GetJspPageURL(request, 21)%>">공지사항</a>
 	                    </li>
@@ -289,7 +382,7 @@
 	    <!-- Home -->
 	    <!-- Background Random Image API: style="background-image: url(<%=JspPageInfo.GetJspPageURL(request, 23)%>?type=2);" -->
 	    <!-- No uploaded only: <a class="btn" href="#" onclick="updateMsgBox()">Download App</a> -->
-	    <section style="background-image: url(<%=request.getContextPath()%>/webpage/resources/assets/main/assets/images/background.jpg);" class="home py-5 d-flex align-items-center" id="header">
+	    <section style="background-image: url(<%=mainImageSetting == 0 ? String.format("%s/webpage/resources/assets/main/assets/images/background.jpg", request.getContextPath()) : String.format("%s?type=2", JspPageInfo.GetJspPageURL(request, 23))%>);" class="home py-5 d-flex align-items-center" id="header">
 	        <div class="container text-light py-5"  data-aos="fade-right"> 
 	            <h1 class="headline"><span class="home_text">RHYA.Network</span><br>Welcome to rhya server</h1>
 	            
@@ -396,6 +489,76 @@
 	    </section> <!-- end of about -->
 	
 	
+		<!-- Plans -->
+	    <section class="plans d-flex align-items-center py-5" id="plans">
+	        <div class="container text-light" >
+	            <div class="text-center pb-4">
+	                <p>RANDOM IMAGE</p>
+	                <h2 class="py-2">Today random image</h2>
+	                <p class="para-light">매일 매일 새로운 일러스트/이미지를 만나보세요. PIXIV Daily Top 50 이미지도 만나보실 수 있습니다. 이전 이미지들은 1개월 동안 다시 나오지 않습니다. 또한 해당 이미지는 매일 오전 12:00분에 갱신됩니다.</p>
+	            </div>
+	            <div class="row gy-4" data-aos="zoom-in">
+	                <div class="col-lg-4">
+	                    <div class="card bg-transparent px-4">
+	                        <h4 class="py-2">Today random image 1</h4>
+	                        <p class="py-3">오늘의 1번째 랜덤 이미지를 확인해보세요.</p>
+	                        
+	                       	<img 
+	                        	src="<%=todayRandomImageURL1%>"
+	                        	style="object-fit: cover; max-width: 300; max-height: 300;"
+	                            loading="lazy"
+	                            alt="Anime Image"
+	                            width="100%"
+	                            height="300"/>
+	                            
+	                        <div class="my-3">
+	                            <a class="btn" onClick="showRandomImageForMsgBox('<%=todayRandomImageURL1%>');">VIEW MORE</a>
+	                        </div>
+	                    </div>  
+	                </div>
+	
+   	                <div class="col-lg-4">
+	                    <div class="card bg-transparent px-4">
+	                        <h4 class="py-2">Today random image 2</h4>
+	                        <p class="py-3">오늘의 2번째 랜덤 이미지를 확인해보세요.</p>
+	                        
+	                        <img 
+	                        	src="<%=todayRandomImageURL2%>"
+	                        	style="object-fit: cover; max-width: 300; max-height: 300;"
+	                            loading="lazy"
+	                            alt="Anime Image"
+	                            width="100%"
+	                            height="300"/>
+	                            
+	                        <div class="my-3">
+	                            <a class="btn" onClick="showRandomImageForMsgBox('<%=todayRandomImageURL2%>');">VIEW MORE</a>
+	                        </div>
+	                    </div>  
+	                </div>
+	
+	                <div class="col-lg-4">
+	                    <div class="card bg-transparent px-4">
+	                        <h4 class="py-2">Today random image 3</h4>
+	                        <p class="py-3">오늘의 3번째 랜덤 이미지를 확인해보세요.</p>
+	                        
+	                        <img 
+	                        	src="<%=todayRandomImageURL3%>"
+	                        	style="object-fit: cover; max-width: 300; max-height: 300;"
+	                            loading="lazy"
+	                            alt="Anime Image"
+	                            width="100%"
+	                            height="300"/>
+
+	                        <div class="my-3">
+	                            <a class="btn" onClick="showRandomImageForMsgBox('<%=todayRandomImageURL3%>');">VIEW MORE</a>
+	                        </div>
+	                    </div>  
+	                </div>
+	            </div> <!-- end of row -->
+	        </div> <!-- end of container -->
+	    </section> <!-- end of plans -->
+	    
+	
 		<!-- MEMBER -->
 	    <div class="slider-1 testimonial text-light d-flex align-items-center">
 	        <div class="container">
@@ -452,7 +615,7 @@
 	                                </div> <!-- end of swiper-slide -->
 	                                <!-- end of slide -->
 	                                
-	                                	        	                    <!-- Slide -->
+	                                <!-- Slide -->
 	                                <div class="swiper-slide">
 	                                    <div class="testimonial-card p-4">
 	                                        <p>마른 하늘에 고양이 발바닥</p>
@@ -499,6 +662,7 @@
 	        </div> <!-- end of container -->
 	    </div> <!-- end of testimonials -->
 	
+	
 		<!-- Footer -->
 	    <section class="footer text-light">
 	        <div class="container">
@@ -528,15 +692,7 @@
 	                        <h4 class="py-2">Quick Links</h4>
 	                        <div class="d-flex align-items-center py-2">
 	                            <i class="fas fa-caret-right"></i>
-	                            <a href="#online_attendance"><p class="ms-3">Online Attendance</p></a>
-	                        </div>
-	                        <div class="d-flex align-items-center py-2">
-	                            <i class="fas fa-caret-right"></i>
-	                            <a href="#utaite_player"><p class="ms-3">Utaite Player</p></a>
-	                        </div>
-                            <div class="d-flex align-items-center py-2">
-	                            <i class="fas fa-caret-right"></i>
-	                            <a href="#bbedu_alert"><p class="ms-3">BBEDU Alerts</p></a>
+	                            <a href="<%=JspPageInfo.GetJspPageURL(request, 21)%>"><p class="ms-3">공지사항</p></a>
 	                        </div>
 	                        <div class="d-flex align-items-center py-2">
 	                            <i class="fas fa-caret-right"></i>
@@ -550,11 +706,7 @@
 	                        <h4 class="py-2">Useful Links</h4>
 	                        <div class="d-flex align-items-center py-2">
 	                            <i class="fas fa-caret-right"></i>
-	                            <a href="<%=request.getContextPath()%>/webpage/jsp/main/rhya_network_pp.jsp"><p class="ms-3">Privacy</p></a>
-	                        </div>
-	                        <div class="d-flex align-items-center py-2">
-	                            <i class="fas fa-caret-right"></i>
-	                            <a href="<%=request.getContextPath()%>/webpage/jsp/main/rhya_network_pp.jsp"><p class="ms-3">Terms</p></a>
+	                            <a href="<%=request.getContextPath()%>/webpage/jsp/main/rhya_network_pp.jsp" target="_blank"><p class="ms-3">Privacy & terms</p></a>
 	                        </div>
 	                    </div>
 	                </div> <!-- end of col -->
@@ -608,11 +760,19 @@
 	    		    icon: "info"
 	    		});
 			}
+	    	
+	    	function showRandomImageForMsgBox(url) {
+	    		Swal.fire({
+	    			  imageUrl: url,
+	    			  imageAlt: 'Anime Image',
+    			});
+	    	}
 	    </script>
 	    <script src="<%=request.getContextPath()%>/webpage/resources/assets/main/js/bootstrap.min.js"></script><!-- Bootstrap framework -->
 	    <script src="<%=request.getContextPath()%>/webpage/resources/assets/main/js/purecounter.min.js"></script> <!-- Purecounter counter for statistics numbers -->
 	    <script src="<%=request.getContextPath()%>/webpage/resources/assets/main/js/swiper.min.js"></script><!-- Swiper for image and text sliders -->
 	    <script src="<%=request.getContextPath()%>/webpage/resources/assets/main/js/aos.js"></script><!-- AOS on Animation Scroll -->
 	    <script src="<%=request.getContextPath()%>/webpage/resources/assets/main/js/script.js"></script>  <!-- Custom scripts -->
+		<script type="text/javascript" src='<%=request.getContextPath()%>/webpage/resources/assets/main/js/pageTransitionAnim.js'></script>
 	</body>
 </html>

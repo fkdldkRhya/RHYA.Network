@@ -133,7 +133,7 @@ try {
 			
 			// 孽府 汲沥
 			stat = cont.GetConnection().prepareStatement(sql.toString());
-			stat.setInt(1, JspPageInfo.PageID_Rhya_Network_Auth_Check_Token);
+			stat.setInt(1, JspPageInfo.PageID_Rhya_Network_Auth_Token_For_Check_User_Permission);
 			// 孽府 积己 StringBuilder 檬扁拳
 			sql.delete(0,sql.length());
 			// 孽府 角青

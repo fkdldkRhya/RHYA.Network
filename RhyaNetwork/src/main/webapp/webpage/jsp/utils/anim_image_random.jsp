@@ -26,6 +26,7 @@
 <%@ page import="kro.kr.rhya_network.util.LoginChecker"%>
 <%@ page import="kro.kr.rhya_network.security.IPBlockChecker"%>
 <%@ page import="kro.kr.rhya_network.util.PathManager"%>
+<%@ page import="kro.kr.rhya_network.utils.db.DatabaseManager"%>
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
@@ -145,57 +146,84 @@ if (cont != null) {
 Gson gson = new Gson();
 JsonObject obj = new JsonObject();
 
+out.clear(); 
+out = pageContext.pushBody();
+
 // 예외 처리
 try {
 	int typeInt = 0;
 	String type = request.getParameter("type");
+	String todayrandomimage = request.getParameter("todayrandomimage");
+	
 	if (type != null) {
 		typeInt = Integer.parseInt(type);
 	}
 	
-	File dir;
-	switch (typeInt) {
-		default:
-		case 0: {
-			dir = new File(PathManager.ANIM_RANDOM_IMAGE_PATH);
-			break;
-		}
+	if (todayrandomimage != null) {
+		int todayrandomimageForInt = Integer.parseInt(todayrandomimage);
 		
-		case 1: {
-			dir = new File(PathManager.ANIM_RANDOM_IMAGE_WIDTH_TYPE_PATH);
-			break;
-		}
+		DatabaseManager.DatabaseConnection databaseConnection = new DatabaseManager.DatabaseConnection();
+		databaseConnection.init();
+		databaseConnection.connection();
+		databaseConnection.setPreparedStatement("SELECT * FROM today_random_image;");
+		databaseConnection.setResultSet();
 		
-		case 2: {
-			dir = new File(PathManager.ANIM_RANDOM_IMAGE_HIGH_TYPE_PATH);
-			break;
+		String todayRandomImageName = null;
+		if (databaseConnection.getResultSet().next()) {
+			todayRandomImageName = databaseConnection.getResultSet().getString(String.format("image%d", todayrandomimageForInt));
 		}
-	}
+		databaseConnection.allClose();
+		
+		File file = new File(PathManager.ANIM_RANDOM_IMAGE_PATH, todayRandomImageName);
+		response.setHeader("Content-Type", "image/png;");
+		
+		byte[] image = IOUtils.toByteArray(new FileInputStream(file));
+		response.getOutputStream().write(image);
+		
+		// 로그 출력
+		rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, String.format("특정 일러스트 출력 - %s", file.getName())));
+	}else {
+		File dir;
+		switch (typeInt) {
+			default:
+			case 0: {
+				dir = new File(PathManager.ANIM_RANDOM_IMAGE_PATH);
+				break;
+			}
+			
+			case 1: {
+				dir = new File(PathManager.ANIM_RANDOM_IMAGE_WIDTH_TYPE_PATH);
+				break;
+			}
+			
+			case 2: {
+				dir = new File(PathManager.ANIM_RANDOM_IMAGE_HIGH_TYPE_PATH);
+				break;
+			}
+		}
 
-	FileFilter filter = new FileFilter() {
-	    public boolean accept(File f) {
-	        return f.getName().endsWith("png") || f.getName().endsWith("jpg");
-	    }
-	};
-	
-	out.clear(); 
-	out = pageContext.pushBody();
-	
-	// 연결 종료
-	rs.close();
-	stat.close();
-	cont.Close();
-	
-	File files[] = dir.listFiles(filter);
-	Random rand = new Random();
-	File getFile = files[rand.nextInt(files.length)];
-	response.setHeader("Content-Type", "image/png;");
-	
-	byte[] image = IOUtils.toByteArray(new FileInputStream(getFile));
-	response.getOutputStream().write(image);
-	
-	// 로그 출력
-	rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, String.format("랜덤 일러스트 출력 - %s", getFile.getName())));
+		FileFilter filter = new FileFilter() {
+		    public boolean accept(File f) {
+		        return f.getName().endsWith("png") || f.getName().endsWith("jpg");
+		    }
+		};
+		
+		// 연결 종료
+		rs.close();
+		stat.close();
+		cont.Close();
+		
+		File files[] = dir.listFiles(filter);
+		Random rand = new Random();
+		File getFile = files[rand.nextInt(files.length)];
+		response.setHeader("Content-Type", "image/png;");
+		
+		byte[] image = IOUtils.toByteArray(new FileInputStream(getFile));
+		response.getOutputStream().write(image);
+		
+		// 로그 출력
+		rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, String.format("랜덤 일러스트 출력 - %s", getFile.getName())));
+	}
 }catch (Exception ex) {
 	// 로그 출력
 	rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, ex.toString()));
