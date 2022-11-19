@@ -2155,6 +2155,126 @@ public class UtaitePlayerManager extends HttpServlet {
 							
 							break;
 						}
+						
+						
+						
+						/**
+						 * 우타이테 플레이어 관리 모드 : 23
+						 * 
+						 * 설명 :
+						 * 		우타이테 플레이어 드라이버 다운로드
+						 * 
+						 * 파라미터 :
+						 *      bit         --> 64비트 운영체제 : x64 , 32비트 운영체제 : x86
+						 */
+						case 23: {
+							// 파일 업로드된 경로
+						    final String root_x64 = PathManager.UTAITE_PLAYER_MANAGER_DRIVER_VCREDIST_x64_PATH;
+						    final String root_x32 = PathManager.UTAITE_PLAYER_MANAGER_DRIVER_VCREDIST_x86_PATH;
+						    // 실제 내보낼 파일명
+						    final String orgfilename_x64 = "up_windows_driver_vcredist_x64.exe";
+						    final String orgfilename_x32 = "up_windows_driver_vcredist_x32.exe";
+							try {
+								String bit = request.getParameter("bit");
+								
+								File file = new File(bit.equals("x64") ? root_x64 : root_x32);
+								if (file.isFile()) {
+									byte b[] = new byte[(int) file.length()];
+									String orgfilename = bit.equals("x64") ? orgfilename_x64 : orgfilename_x32;
+	
+									orgfilename = java.net.URLEncoder.encode(orgfilename, "UTF-8");
+									response.setHeader("Content-Disposition", "attachment;filename=".concat(orgfilename));
+									response.setHeader("Content-Type", "application/octet-stream; charset=utf-8");
+									response.setContentLength((int) file.length());
+									
+									BufferedInputStream fin = new BufferedInputStream(new FileInputStream(file));
+									BufferedOutputStream outs = new BufferedOutputStream(response.getOutputStream());
+									int read = 0;
+									while ((read = fin.read(b)) != -1) {
+										outs.write(b, 0, read);
+									}
+									outs.close();
+									fin.close();
+									
+									// 로그 출력
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "우타이테 플레이어 드라이버 파일 다운로드 성공!"));
+								} else {
+									// 로그 출력
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "우타이테 플레이어 드라이버 파일 다운로드 실패! File does not exist!"));
+									
+									obj.addProperty(keyName_Result, failMessage);
+								}
+							} catch (IOException e) {
+								// 로그 출력
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "우타이테 플레이어 드라이버 파일 다운로드 실패! 알 수 없는 오류가 발생하였습니다.", e.toString()));
+								
+								obj.addProperty(keyName_Result, failMessage);
+							}
+							
+							
+							// JSON 데이터 출력
+							PrintWriter out = response.getWriter(); 
+							out.println(gson.toJson(obj));
+							
+							break;
+						}
+						
+						
+						
+						/**
+						 * 우타이테 플레이어 관리 모드 : 24
+						 * 
+						 * 설명 :
+						 * 		우타이테 플레이어 Windows 버전 ZIP 파일 다운로드
+						 * 
+						 * 파라미터 :
+						 *      <없음>
+						 */
+						case 24: {
+							// 파일 업로드된 경로
+						    final String root = PathManager.UTAITE_PLAYER_MANAGER_INSATLL_ZIP_PATH;
+						    // 실제 내보낼 파일명
+						    String orgfilename = "up_windows_install_zip.zip";
+							try {
+								File file = new File(root);
+								if (file.isFile()) {
+									byte b[] = new byte[(int) file.length()];
+									orgfilename = java.net.URLEncoder.encode(orgfilename, "UTF-8");
+									response.setHeader("Content-Disposition", "attachment;filename=".concat(orgfilename));
+									response.setHeader("Content-Type", "application/octet-stream; charset=utf-8");
+									response.setContentLength((int) file.length());
+									
+									BufferedInputStream fin = new BufferedInputStream(new FileInputStream(file));
+									BufferedOutputStream outs = new BufferedOutputStream(response.getOutputStream());
+									int read = 0;
+									while ((read = fin.read(b)) != -1) {
+										outs.write(b, 0, read);
+									}
+									outs.close();
+									fin.close();
+									
+									// 로그 출력
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "우타이테 플레이어 ZIP 설치 파일 다운로드 성공!"));
+								} else {
+									// 로그 출력
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "우타이테 플레이어 ZIP 설치 파일 다운로드 실패! File does not exist!"));
+									
+									obj.addProperty(keyName_Result, failMessage);
+								}
+							} catch (IOException e) {
+								// 로그 출력
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "우타이테 플레이어 ZIP 설치 파일 다운로드 실패! 알 수 없는 오류가 발생하였습니다.", e.toString()));
+								
+								obj.addProperty(keyName_Result, failMessage);
+							}
+							
+							
+							// JSON 데이터 출력
+							PrintWriter out = response.getWriter(); 
+							out.println(gson.toJson(obj));
+							
+							break;
+						}
 					}
 				}
 			}else { // 페이지 초기화 실패

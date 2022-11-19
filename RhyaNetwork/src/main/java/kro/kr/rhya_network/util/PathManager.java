@@ -38,6 +38,33 @@ public class PathManager {
 	
 	
 	/**
+	 * 우타이테 플레이어 드라이버 x64 파일
+	 * 
+	 * WINDOWS --> "<NULL>"
+	 * LINUX   --> "/usr/local/resources/utaite_player_update/up_windows_driver_vcredist_x64.exe"
+	 */
+	public static final String UTAITE_PLAYER_MANAGER_DRIVER_VCREDIST_x64_PATH = "/usr/local/resources/utaite_player_update/up_windows_driver_vcredist_x64.exe";
+	
+	
+	/**
+	 * 우타이테 플레이어 드라이버 x86 파일
+	 * 
+	 * WINDOWS --> "<NULL>"
+	 * LINUX   --> "/usr/local/resources/utaite_player_update/up_windows_driver_vcredist_x86.exe"
+	 */
+	public static final String UTAITE_PLAYER_MANAGER_DRIVER_VCREDIST_x86_PATH = "/usr/local/resources/utaite_player_update/up_windows_driver_vcredist_x86.exe";
+	
+	
+	/**
+	 * 우타이테 플레이어 ZIP 설치 파일
+	 * 
+	 * WINDOWS --> "<NULL>"
+	 * LINUX   --> "/usr/local/resources/utaite_player_update/up_windows_install_zip.zip"
+	 */
+	public static final String UTAITE_PLAYER_MANAGER_INSATLL_ZIP_PATH = "/usr/local/resources/utaite_player_update/up_windows_install_zip.zip";
+	
+	
+	/**
 	 * 우타이테 플레이어 ZIP 파일
 	 * 
 	 * WINDOWS --> "<NULL>"
