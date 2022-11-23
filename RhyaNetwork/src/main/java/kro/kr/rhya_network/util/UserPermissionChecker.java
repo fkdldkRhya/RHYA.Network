@@ -5,9 +5,9 @@ import kro.kr.rhya_network.utils.db.DatabaseManager.DatabaseConnection;
 
 public class UserPermissionChecker {
 	/**
-	 * »ç¿ëÀÚ ±ÇÇÑ °¡Á®¿À´Â ÇÔ¼ö
-	 * @param userUUID »ç¿ëÀÚ UUID
-	 * @return ±ÇÇÑ LEVEL ( -1 : ¾Ë ¼ö ¾ø´Â ¿À·ù ¹× ±ÇÇÑ Á¤º¸¸¦ °¡Á®¿Ã ¼ö ¾øÀ½ )
+	 * ì‚¬ìš©ì ê¶Œí•œ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
+	 * @param userUUID ì‚¬ìš©ì UUID
+	 * @return ê¶Œí•œ LEVEL ( -1 : ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ ë° ê¶Œí•œ ì •ë³´ë¥¼ ê°€ì ¸ì˜¬ ìˆ˜ ì—†ìŒ )
 	 */
 	public int getUserPermission(String userUUID) {
 		try {

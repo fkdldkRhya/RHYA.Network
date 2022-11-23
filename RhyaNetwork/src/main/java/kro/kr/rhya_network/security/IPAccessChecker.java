@@ -84,7 +84,7 @@ public class IPAccessChecker {
 				return isAccessIP(request, response, user_id, user_pw, user_uuid, ip);
 			}
 		}catch (Exception e) {
-			// ¿À·ù ¹ß»ı
+			// ì˜¤ë¥˜ ë°œìƒ
 			e.printStackTrace();
 		
 			

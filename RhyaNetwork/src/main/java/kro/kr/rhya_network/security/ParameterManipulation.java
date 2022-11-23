@@ -1,11 +1,11 @@
 package kro.kr.rhya_network.security;
 
 public class ParameterManipulation {
-	// ÆÄ¶ó¹ÌÅÍ º¯Á¶ ¹æÁö ÆÄ¶ó¹ÌÅÍ ¹× HTML ID
+	// íŒŒë¼ë¯¸í„° ë³€ì¡° ë°©ì§€ íŒŒë¼ë¯¸í„° ë° HTML ID
 	public static final String RSAPrivateKeySession = "_RSA_WEB_Key_";
 	public static final String INTRandomKeySession = "_INT_WEB_Key_";
 	public static final String INTRandomKeyParameter = "key";
 	
-	// µ¥ÀÌÅÍ ¾ÏÈ£È­ Å°
+	// ë°ì´í„° ì•”í˜¸í™” í‚¤
 	public static final String AESEncrypt_KEY = "<bMt~h6,`=&!Aa#f)BUVQKY)Y^y?<SE~";
 }

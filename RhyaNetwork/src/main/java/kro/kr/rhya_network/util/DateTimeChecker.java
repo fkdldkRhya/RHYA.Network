@@ -6,24 +6,24 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateTimeChecker {
-	// ½Ã°£ È®ÀÎ ÇÔ¼ö
+	// ì‹œê°„ í™•ì¸ í•¨ìˆ˜
 	public static boolean isTime_H(String input_date, int hours) throws ParseException {
-		// ÇöÀç ½Ã°£
+		// í˜„ì¬ ì‹œê°„
 		Date get_now_date = new Date();
-		// ÀÔ·ÂµÈ ½Ã°£ ´õÇÏ±â
+		// ì…ë ¥ëœ ì‹œê°„ ë”í•˜ê¸°
 		Calendar calendar = Calendar.getInstance();
-		// String to Date º¯È¯
+		// String to Date ë³€í™˜
 		Date input_date_time = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).parse(input_date);
 		calendar.setTime(input_date_time);
-		// ½Ã°£ ´õÇÏ±â
+		// ì‹œê°„ ë”í•˜ê¸°
 		calendar.add(Calendar.HOUR, hours);
 		input_date_time = calendar.getTime();
-		// ½Ã°£ ºñ±³
+		// ì‹œê°„ ë¹„êµ
 		if (get_now_date.compareTo(input_date_time) >= 0) {
-			// ½Ã°£ Áö³²
+			// ì‹œê°„ ì§€ë‚¨
 			return false;
 		}else {
-			// ½Ã°£ Áö³ªÁö ¾ÊÀ½
+			// ì‹œê°„ ì§€ë‚˜ì§€ ì•ŠìŒ
 			return true;
 		}
 	}

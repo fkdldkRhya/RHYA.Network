@@ -1,43 +1,43 @@
 package kro.kr.rhya_network.utils.online_attendance;
 
 public class OnlineAttendanceStudentVO {
-	// ÇĞ»ı ±¸ºĞ UUID
+	// í•™ìƒ êµ¬ë¶„ UUID
 	private String uuid;
-	// ÇĞ»ı ¹İ ±¸ºĞ UUID
+	// í•™ìƒ ë°˜ êµ¬ë¶„ UUID
 	private String class_uuid;
-	// ÇĞ»ı ¹øÈ£
+	// í•™ìƒ ë²ˆí˜¸
 	private int number;
-	// ÇĞ»ı ÀÌ¸§
+	// í•™ìƒ ì´ë¦„
 	private String name;
-	// ÇĞ»ı ÀÌ¹ÌÁö URL [ Auth Token ÇÊ¿ä ]
+	// í•™ìƒ ì´ë¯¸ì§€ URL [ Auth Token í•„ìš” ]
 	private String image;
-	// ÇĞ»ı ¼ºº°
+	// í•™ìƒ ì„±ë³„
 	private int gender;
-	// ÇĞ»ı ÀüÇĞ ¿©ºÎ
+	// í•™ìƒ ì „í•™ ì—¬ë¶€
 	private int move_out;
-	// ³âµµ
+	// ë…„ë„
 	private int year;
-	// ÇĞ»ı ±âÅ¸ »çÇ×
+	// í•™ìƒ ê¸°íƒ€ ì‚¬í•­
 	private String note;
-	// ÇĞ»ı µ¥ÀÌÅÍ º¯°æ °¨Áö
+	// í•™ìƒ ë°ì´í„° ë³€ê²½ ê°ì§€
 	private int version;
 	
 	
 	
 	
 	/**
-	 * »ı¼ºÀÚ
+	 * ìƒì„±ì
 	 * 
-	 * @param uuid ÇĞ»ı UUID
-	 * @param class_uuid ÇĞ»ı ¹İ UUID
-	 * @param number ÇĞ»ı ¹øÈ£
-	 * @param name ÇĞ»ı ÀÌ¸§
-	 * @param image ÇĞ»ı ÀÌ¹ÌÁö
-	 * @param gender ÇĞ»ı ¼ºº°
-	 * @param move_out ÀüÇĞ ¿©ºÎ
-	 * @param year ³âµµ
-	 * @param note ±âÅ¸ »çÇ×
-	 * @param version µ¥ÀÌÅÍ º¯°æ °¨Áö ¹öÀü
+	 * @param uuid í•™ìƒ UUID
+	 * @param class_uuid í•™ìƒ ë°˜ UUID
+	 * @param number í•™ìƒ ë²ˆí˜¸
+	 * @param name í•™ìƒ ì´ë¦„
+	 * @param image í•™ìƒ ì´ë¯¸ì§€
+	 * @param gender í•™ìƒ ì„±ë³„
+	 * @param move_out ì „í•™ ì—¬ë¶€
+	 * @param year ë…„ë„
+	 * @param note ê¸°íƒ€ ì‚¬í•­
+	 * @param version ë°ì´í„° ë³€ê²½ ê°ì§€ ë²„ì „
 	 */
 	public OnlineAttendanceStudentVO(String uuid, String class_uuid, int number, String name, String image, int gender,
 									 int move_out, int year, String note, int version) {

@@ -18,7 +18,7 @@ public class RhyaRSA {
         byte[] encryptedBytes = hexToByteArray(securedValue);
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
-        String decryptedValue = new String(decryptedBytes, "utf-8"); // ¹®ÀÚ ÀÎÄÚµù ÁÖÀÇ.
+        String decryptedValue = new String(decryptedBytes, "utf-8"); // ë¬¸ì ì¸ì½”ë”© ì£¼ì˜.
         return decryptedValue;
     }
 	

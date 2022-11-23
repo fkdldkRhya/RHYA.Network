@@ -29,26 +29,26 @@ import kro.kr.rhya_network.page.PageParameter;
 import kro.kr.rhya_network.security.RhyaAES;
 
 public class LoginChecker {
-	// ·Î±×ÀÎ °á°ú
+	// ë¡œê·¸ì¸ ê²°ê³¼
 	public static final String LOGIN_RESULT_SUCCESS = "success";
 	public static final String LOGIN_RESULT_FAIL = "fail";
 	public static final String LOGIN_RESULT_NOMESSAGE = "no_message";
-	// Session ÀÌ¸§
+	// Session ì´ë¦„
 	public static final String LOGIN_SESSION_NAME = "_LOGIN_DATA_";
-	// ÅäÅ« À¯È¿±â°£
+	// í† í° ìœ íš¨ê¸°ê°„
 	public static final int LOGIN_TOKEN_TIME = 24;
 	
 	
-	// ·Î±×ÀÎ ÇÔ¼ö
+	// ë¡œê·¸ì¸ í•¨ìˆ˜
 	public static String[] IsLoginUser(String id, String pw, HttpServletResponse rsp, boolean isNoCreateToken) throws SQLException, ClassNotFoundException {
-		// º¯¼ö ¼±¾ğ
+		// ë³€ìˆ˜ ì„ ì–¸
 		String user_uuid = "";
 		String[] result = null;
 		DatabaseConnection cont = new DatabaseConnection();
 		PreparedStatement stat = null;
 		ResultSet rs = null;
 		StringBuilder sql = new StringBuilder();
-		// Äõ¸® »ı¼º
+		// ì¿¼ë¦¬ ìƒì„±
 		sql.append("SELECT * FROM ");
 		sql.append(DatabaseInfo.DATABASE_TABLE_NAME_USER);
 		sql.append(" WHERE ");
@@ -56,7 +56,7 @@ public class LoginChecker {
 		sql.append(" = ? AND ");
 		sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_PW);
 		sql.append(" = ?;");
-		// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+		// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 		cont.Connection(DatabaseInfo.DATABASE_DRIVER_CLASS_NAME,
 						DatabaseInfo.DATABASE_CONNECTION_URL,
 						DatabaseInfo.DATABASE_ROOT_ACCOUNT_ID,
@@ -64,44 +64,44 @@ public class LoginChecker {
 		stat = cont.GetConnection().prepareStatement(sql.toString());
 		stat.setString(1, id);
 		stat.setString(2, pw);
-		// Äõ¸® ½ÇÇà
+		// ì¿¼ë¦¬ ì‹¤í–‰
 		rs = stat.executeQuery();
 		if (rs.next()) {
-			// Äõ¸® »ı¼º StringBuilder ÃÊ±âÈ­
+			// ì¿¼ë¦¬ ìƒì„± StringBuilder ì´ˆê¸°í™”
 			sql.delete(0,sql.length());
-			// Äõ¸® »ı¼º
+			// ì¿¼ë¦¬ ìƒì„±
 			sql.append("SELECT * FROM ");
 			sql.append(DatabaseInfo.DATABASE_TABLE_NAME_USER_INFO);
 			sql.append(" WHERE ");
 			sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_INFO_UUID);
 			sql.append(" = ?;");
-			// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+			// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 			stat = cont.GetConnection().prepareStatement(sql.toString());
 			stat.setString(1, rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_UUID));
-			// °èÁ¤ ¾ÆÀÌµğ
+			// ê³„ì • ì•„ì´ë””
 			user_uuid = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_UUID);
-			// Äõ¸® ½ÇÇà
+			// ì¿¼ë¦¬ ì‹¤í–‰
 			rs = stat.executeQuery();
 		}else {
-			// ·Î±×ÀÎ ½ÇÆĞ
-			result = new String[] { LOGIN_RESULT_FAIL , "¾ÆÀÌµğ ¶Ç´Â ºñ¹Ğ¹øÈ£°¡ Àß¸øµÇ¾ú½À´Ï´Ù." };
+			// ë¡œê·¸ì¸ ì‹¤íŒ¨
+			result = new String[] { LOGIN_RESULT_FAIL , "ì•„ì´ë”” ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸ê°€ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 		}
 		
-		// Äõ¸® °á°ú
+		// ì¿¼ë¦¬ ê²°ê³¼
 		if (rs.next()) {
-			// Â÷´Ü È®ÀÎ
+			// ì°¨ë‹¨ í™•ì¸
 			if (rs.getInt(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_BLOCKED) == 0) {
-				// °èÁ¤ È°¼ºÈ­ È®ÀÎ
+				// ê³„ì • í™œì„±í™” í™•ì¸
 				if (rs.getInt(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_EMAIL_AUTHENTICATION) != 1) {
-					// ·Î±×ÀÎ ½ÇÆĞ
-					result = new String[] { LOGIN_RESULT_FAIL , "°èÁ¤ÀÌ È°¼ºÈ­µÇ¾îÀÖÁö ¾Ê½À´Ï´Ù. ¸ŞÀÏ·Î ¹ß¼ÛµÈ °èÁ¤ È°¼ºÈ­ ¸µÅ©¸¦ ´­·¯ÁÖ½Ã±æ ¹Ù¶ø´Ï´Ù." };
+					// ë¡œê·¸ì¸ ì‹¤íŒ¨
+					result = new String[] { LOGIN_RESULT_FAIL , "ê³„ì •ì´ í™œì„±í™”ë˜ì–´ìˆì§€ ì•ŠìŠµë‹ˆë‹¤. ë©”ì¼ë¡œ ë°œì†¡ëœ ê³„ì • í™œì„±í™” ë§í¬ë¥¼ ëˆŒëŸ¬ì£¼ì‹œê¸¸ ë°”ëë‹ˆë‹¤." };
 				}
 			}else {
-				// ·Î±×ÀÎ ½ÇÆĞ
+				// ë¡œê·¸ì¸ ì‹¤íŒ¨
 				StringBuilder sb = new StringBuilder();
-				sb.append("ÇØ´ç °èÁ¤Àº °ü¸®ÀÚ¿¡ ÀÇÇØ ÀÌ¿ëÀÌ Á¦ÇÑµÇ¾îÀÖ½À´Ï´Ù.");
+				sb.append("í•´ë‹¹ ê³„ì •ì€ ê´€ë¦¬ìì— ì˜í•´ ì´ìš©ì´ ì œí•œë˜ì–´ìˆìŠµë‹ˆë‹¤.");
 				sb.append("<br>");
-				sb.append("»çÀ¯: ");
+				sb.append("ì‚¬ìœ : ");
 				sb.append(rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_BLOCKED_REASON));
 				
 				result = new String[] { LOGIN_RESULT_FAIL , sb.toString() };
@@ -109,30 +109,30 @@ public class LoginChecker {
 				sb = null;
 			}
 		}else {
-			// ·Î±×ÀÎ ½ÇÆĞ
-			result = new String[] { LOGIN_RESULT_FAIL , "¾ÆÀÌµğ ¶Ç´Â ºñ¹Ğ¹øÈ£°¡ Àß¸øµÇ¾ú½À´Ï´Ù." };
+			// ë¡œê·¸ì¸ ì‹¤íŒ¨
+			result = new String[] { LOGIN_RESULT_FAIL , "ì•„ì´ë”” ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸ê°€ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 		}
 		
-		// ÀÛ¾÷ ÀüÈ¯
+		// ì‘ì—… ì „í™˜
 		if (result == null) {
-			// »ç¿ëÀÚ Á¤º¸
+			// ì‚¬ìš©ì ì •ë³´
 			String userName = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_NAME);
 			String userEmail = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_EMAIL);
 			String userBirthday = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_BIRTHDAY);
 			String userRegDate = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_REGDATE);
-			// Äõ¸® »ı¼º StringBuilder ÃÊ±âÈ­
+			// ì¿¼ë¦¬ ìƒì„± StringBuilder ì´ˆê¸°í™”
 			sql.delete(0,sql.length());
 			String uuid = null;
-			// Token »ı¼º ¿©ºÎ È®ÀÎ
+			// Token ìƒì„± ì—¬ë¶€ í™•ì¸
 			if (isNoCreateToken) {
-				// µ¥ÀÌÅÍ ¼³Á¤
+				// ë°ì´í„° ì„¤ì •
 				uuid = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_AUTO_LOGIN_UUID);
-				// µ¥ÀÌÅÍ È®ÀÎ
+				// ë°ì´í„° í™•ì¸
 				if (uuid == null || uuid.replace(" ", "").equals("")) {
-					// µ¥ÀÌÅÍ »ı¼º
+					// ë°ì´í„° ìƒì„±
 					UUID uuid_ = UUID.randomUUID();
 					uuid = uuid_.toString();
-					// Äõ¸® »ı¼º
+					// ì¿¼ë¦¬ ìƒì„±
 					sql.append("UPDATE ");
 					sql.append(DatabaseInfo.DATABASE_TABLE_NAME_USER_INFO);
 					sql.append(" SET ");
@@ -142,14 +142,14 @@ public class LoginChecker {
 					sql.append(" = ? WHERE ");
 					sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_INFO_UUID);
 					sql.append("= ?;");
-					// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+					// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 					stat.close();
 					stat = cont.GetConnection().prepareStatement(sql.toString());
 					stat.setString(1, uuid);
 					stat.setString(2, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 					stat.setString(3, user_uuid);
 				}else {
-					// Äõ¸® »ı¼º
+					// ì¿¼ë¦¬ ìƒì„±
 					sql.append("UPDATE ");
 					sql.append(DatabaseInfo.DATABASE_TABLE_NAME_USER_INFO);
 					sql.append(" SET ");
@@ -157,14 +157,14 @@ public class LoginChecker {
 					sql.append(" = ? WHERE ");
 					sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_INFO_UUID);
 					sql.append("= ?;");
-					// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+					// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 					stat.close();
 					stat = cont.GetConnection().prepareStatement(sql.toString());
 					stat.setString(1, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 					stat.setString(2, user_uuid);	
 				}
 			}else {
-				// Äõ¸® »ı¼º
+				// ì¿¼ë¦¬ ìƒì„±
 				sql.append("UPDATE ");
 				sql.append(DatabaseInfo.DATABASE_TABLE_NAME_USER_INFO);
 				sql.append(" SET ");
@@ -174,73 +174,73 @@ public class LoginChecker {
 				sql.append(" = ? WHERE ");
 				sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_INFO_UUID);
 				sql.append("= ?;");
-				// µ¥ÀÌÅÍ »ı¼º
+				// ë°ì´í„° ìƒì„±
 				UUID uuid_ = UUID.randomUUID();
 				uuid = uuid_.toString();
-				// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+				// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 				stat.close();
 				stat = cont.GetConnection().prepareStatement(sql.toString());
 				stat.setString(1, uuid_.toString());
 				stat.setString(2, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 				stat.setString(3, user_uuid);
 			}
-			// Äõ¸® ½ÇÇà
+			// ì¿¼ë¦¬ ì‹¤í–‰
 			stat.executeUpdate();
-			// ¿¬°á ÇØÁ¦
+			// ì—°ê²° í•´ì œ
 			rs.close();
 			stat.close();
 			cont.Close();
 			
-			// Null È®ÀÎ
+			// Null í™•ì¸
 			if (rsp != null) {
-				// ÄíÅ° »ı¼º È®ÀÎ
+				// ì¿ í‚¤ ìƒì„± í™•ì¸
 				// ==========================================================================
-				// ÄíÅ° »ı¼º
+				// ì¿ í‚¤ ìƒì„±
 			    Cookie c1 = new Cookie("AutoLogin_UserUUID", user_uuid);
-			    // ÄíÅ°¿¡ °æ·Î Ãß°¡
+			    // ì¿ í‚¤ì— ê²½ë¡œ ì¶”ê°€
 			    c1.setPath("/");
-			    // ÄíÅ°¿¡ ¼³¸íÀ» Ãß°¡
+			    // ì¿ í‚¤ì— ì„¤ëª…ì„ ì¶”ê°€
 			    c1.setComment("UserUUID");
-			    // ÄíÅ° À¯È¿±â°£À» ¼³Á¤
+			    // ì¿ í‚¤ ìœ íš¨ê¸°ê°„ì„ ì„¤ì •
 			    c1.setMaxAge(60);
-				// ÄíÅ° »ı¼º
+				// ì¿ í‚¤ ìƒì„±
 			    Cookie c2 = new Cookie("AutoLogin_TokenUUID", uuid.toString());
-			    // ÄíÅ°¿¡ °æ·Î Ãß°¡
+			    // ì¿ í‚¤ì— ê²½ë¡œ ì¶”ê°€
 			    c2.setPath("/");
-			    // ÄíÅ°¿¡ ¼³¸íÀ» Ãß°¡
+			    // ì¿ í‚¤ì— ì„¤ëª…ì„ ì¶”ê°€
 			    c2.setComment("UserUUID");
-			    // ÄíÅ° À¯È¿±â°£À» ¼³Á¤
+			    // ì¿ í‚¤ ìœ íš¨ê¸°ê°„ì„ ì„¤ì •
 			    c2.setMaxAge(60);
-			    // ÀÀ´äÇì´õ¿¡ ÄíÅ°¸¦ Ãß°¡
+			    // ì‘ë‹µí—¤ë”ì— ì¿ í‚¤ë¥¼ ì¶”ê°€
 			    rsp.addCookie(c1);
 			    rsp.addCookie(c2);
 				// ==========================================================================	
 			}
 			
-			// »ç¿ëÀÚ ±ÇÇÑ °¡Á®¿À±â
+			// ì‚¬ìš©ì ê¶Œí•œ ê°€ì ¸ì˜¤ê¸°
 			UserPermissionChecker userPermissionChecker = new UserPermissionChecker();
 			int permissionResult = userPermissionChecker.getUserPermission(user_uuid);
 			
-			// ·Î±×ÀÎ ¼º°ø
+			// ë¡œê·¸ì¸ ì„±ê³µ
 			result = new String[] { LOGIN_RESULT_SUCCESS , user_uuid, uuid.toString(), id, userName, userEmail, userBirthday, userRegDate, pw, String.valueOf(permissionResult) };
 			
-			// µ¥ÀÌÅÍ ¹İÈ¯
+			// ë°ì´í„° ë°˜í™˜
 			return result;
 		}else {
-			// ¿¬°á ÇØÁ¦
+			// ì—°ê²° í•´ì œ
 			rs.close();
 			stat.close();
 			cont.Close();
 			
-			// µ¥ÀÌÅÍ ¹İÈ¯
+			// ë°ì´í„° ë°˜í™˜
 			return result;
 		}
 	}
 	
 	
-	// ÀÚµ¿ ·Î±×ÀÎ
+	// ìë™ ë¡œê·¸ì¸
 	public static String[] IsAutoLogin(String TokenKey, String UserUUID, HttpServletResponse rsp, boolean isNoCreateToken) throws ClassNotFoundException, SQLException, ParseException {
-		// º¯¼ö ¼±¾ğ
+		// ë³€ìˆ˜ ì„ ì–¸
 		String getID = null;
 		String getPW = null;
 		String getTokenKey = null;
@@ -250,99 +250,99 @@ public class LoginChecker {
 		PreparedStatement stat = null;
 		ResultSet rs = null;
 		StringBuilder sql = new StringBuilder();
-		// Äõ¸® »ı¼º
+		// ì¿¼ë¦¬ ìƒì„±
 		sql.append("SELECT * FROM ");
 		sql.append(DatabaseInfo.DATABASE_TABLE_NAME_USER);
 		sql.append(" WHERE ");
 		sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_UUID);
 		sql.append(" = ?;");
-		// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+		// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 		cont.Connection(DatabaseInfo.DATABASE_DRIVER_CLASS_NAME,
 						DatabaseInfo.DATABASE_CONNECTION_URL,
 						DatabaseInfo.DATABASE_ROOT_ACCOUNT_ID,
 						DatabaseInfo.DATABASE_ROOT_ACCOUNT_PW);
 		stat = cont.GetConnection().prepareStatement(sql.toString());
 		stat.setString(1, UserUUID);
-		// Äõ¸® ½ÇÇà
+		// ì¿¼ë¦¬ ì‹¤í–‰
 		rs = stat.executeQuery();
-		// °á°ú Ã³¸®
+		// ê²°ê³¼ ì²˜ë¦¬
 		if (rs.next()) {
 			getID = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_ID);
 			getPW = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_PW);
 		}
-		// Äõ¸® »ı¼º StringBuilder ÃÊ±âÈ­
+		// ì¿¼ë¦¬ ìƒì„± StringBuilder ì´ˆê¸°í™”
 		sql.delete(0,sql.length());
-		// Äõ¸® »ı¼º
+		// ì¿¼ë¦¬ ìƒì„±
 		sql.append("SELECT * FROM ");
 		sql.append(DatabaseInfo.DATABASE_TABLE_NAME_USER_INFO);
 		sql.append(" WHERE ");
 		sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_INFO_UUID);
 		sql.append(" = ?;");
-		// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+		// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 		stat.close();
 		stat = cont.GetConnection().prepareStatement(sql.toString());
 		stat.setString(1, UserUUID);
-		// Äõ¸® ½ÇÇà
+		// ì¿¼ë¦¬ ì‹¤í–‰
 		rs = stat.executeQuery();
-		// °á°ú Ã³¸®
+		// ê²°ê³¼ ì²˜ë¦¬
 		if (rs.next()) {
 			getTokenKey = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_AUTO_LOGIN_UUID);
 			getTokenDate = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_AUTO_LOGIN_DATE);
 		}
-		// Null È®ÀÎ
+		// Null í™•ì¸
 		if (getTokenDate != null && getTokenKey != null && getID != null && getPW != null) {
-			// ÅäÅ«°ª È®ÀÎ
+			// í† í°ê°’ í™•ì¸
 			if (getTokenKey.equals(TokenKey)) {
-				// ÅäÅ« »ı¼º ³¯ÀÚ È®ÀÎ
+				// í† í° ìƒì„± ë‚ ì í™•ì¸
 				if (DateTimeChecker.isTime_H(getTokenDate, LOGIN_TOKEN_TIME)) {
-					// ¿¬°á ÇØÁ¦
+					// ì—°ê²° í•´ì œ
 					rs.close();
 					stat.close();
 					cont.Close();
 					
-					// ·Î±×ÀÎ ÁøÇà ¹× °á°ú ¹İÈ¯
+					// ë¡œê·¸ì¸ ì§„í–‰ ë° ê²°ê³¼ ë°˜í™˜
 					return IsLoginUser(getID, getPW, rsp, isNoCreateToken);
 				}else {
-					// ¿¬°á ÇØÁ¦
+					// ì—°ê²° í•´ì œ
 					rs.close();
 					stat.close();
 					cont.Close();
-					// °á°ú »ı¼º
+					// ê²°ê³¼ ìƒì„±
 					result = new String[] { LOGIN_RESULT_NOMESSAGE };
 					
-					// °á°ú ¹İÈ¯
+					// ê²°ê³¼ ë°˜í™˜
 					return result;
 				}
 			}else {
-				// ¿¬°á ÇØÁ¦
+				// ì—°ê²° í•´ì œ
 				rs.close();
 				stat.close();
 				cont.Close();
-				// °á°ú »ı¼º
-				result = new String[] { LOGIN_RESULT_FAIL , "ÅäÅ«°ª ¶Ç´Â °èÁ¤ ¾ÆÀÌµğ°¡ Àß¸øµÇ¾ú½À´Ï´Ù." };
+				// ê²°ê³¼ ìƒì„±
+				result = new String[] { LOGIN_RESULT_FAIL , "í† í°ê°’ ë˜ëŠ” ê³„ì • ì•„ì´ë””ê°€ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 				
-				// °á°ú ¹İÈ¯
+				// ê²°ê³¼ ë°˜í™˜
 				return result;
 			}
 		}else {
-			// ¿¬°á ÇØÁ¦
+			// ì—°ê²° í•´ì œ
 			rs.close();
 			stat.close();
 			cont.Close();
-			// °á°ú »ı¼º
-			result = new String[] { LOGIN_RESULT_FAIL , "ÅäÅ«°ª ¶Ç´Â °èÁ¤ ¾ÆÀÌµğ°¡ Àß¸øµÇ¾ú½À´Ï´Ù." };
+			// ê²°ê³¼ ìƒì„±
+			result = new String[] { LOGIN_RESULT_FAIL , "í† í°ê°’ ë˜ëŠ” ê³„ì • ì•„ì´ë””ê°€ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 			
-			// °á°ú ¹İÈ¯
+			// ê²°ê³¼ ë°˜í™˜
 			return result;
 		}
 	}
 	
 	
-	// JSP ÀÚµ¿ ·Î±×ÀÎ ÇÔ¼ö
+	// JSP ìë™ ë¡œê·¸ì¸ í•¨ìˆ˜
 	public static void AutoLoginTask(RhyaLogger rl, HttpSession session, HttpServletRequest req, HttpServletResponse rsp, boolean thisPageLoginOnly, boolean urlNext, String url, boolean isNoCreateToken) throws InvalidKeyException, ClassNotFoundException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, SQLException, ParseException, IOException {
 		String[] login_session;
 		
-		// ÄíÅ° µ¥ÀÌÅÍ È®ÀÎ
+		// ì¿ í‚¤ ë°ì´í„° í™•ì¸
 		try {
 			String uuid = null;
 			String token = null;
@@ -360,84 +360,84 @@ public class LoginChecker {
 				if (uuid != null && token != null) {
 					login_session = new String[] { uuid, token };
 				}else {
-					// ÀÚµ¿ ·Î±×ÀÎ È®ÀÎ
+					// ìë™ ë¡œê·¸ì¸ í™•ì¸
 					login_session = (String[]) session.getAttribute(LOGIN_SESSION_NAME);
 				}
 			}else {
-				// ÀÚµ¿ ·Î±×ÀÎ È®ÀÎ
+				// ìë™ ë¡œê·¸ì¸ í™•ì¸
 				login_session = (String[]) session.getAttribute(LOGIN_SESSION_NAME);
 			}
 		}catch (Exception e) {
 			// TODO: handle exception
 			
-			// ÀÚµ¿ ·Î±×ÀÎ È®ÀÎ
+			// ìë™ ë¡œê·¸ì¸ í™•ì¸
 			login_session = (String[]) session.getAttribute(LOGIN_SESSION_NAME);
 		}
 
-		// Null °ª È®ÀÎ
+		// Null ê°’ í™•ì¸
 		if (login_session != null) {
-			// ±âÁ¸ ¼¼¼Ç Á¦°Å
+			// ê¸°ì¡´ ì„¸ì…˜ ì œê±°
 			session.removeAttribute(LOGIN_SESSION_NAME);
-			// ÀÚµ¿ ·Î±×ÀÎ
+			// ìë™ ë¡œê·¸ì¸
 			String[] auto_login_result = IsAutoLogin(RhyaAES.AES_Decode(login_session[1]), RhyaAES.AES_Decode(login_session[0]), rsp, isNoCreateToken);
-			// ÀÚµ¿ ·Î±×ÀÎ °á°ú È®ÀÎ
+			// ìë™ ë¡œê·¸ì¸ ê²°ê³¼ í™•ì¸
 			if (auto_login_result[0].equals(LOGIN_RESULT_SUCCESS)) {
-				// µ¥ÀÌÅÍ ¾ÏÈ£È­
+				// ë°ì´í„° ì•”í˜¸í™”
 				String enc_value_1 = RhyaAES.AES_Encode(auto_login_result[1]);
 				String enc_value_2 = RhyaAES.AES_Encode(auto_login_result[2]);
-				// ¼¼¼Ç µî·Ï
+				// ì„¸ì…˜ ë“±ë¡
 				session.setAttribute(LOGIN_SESSION_NAME, new String[] { enc_value_1, enc_value_2 } );
 				/*
-				// ÄíÅ° »ı¼º
+				// ì¿ í‚¤ ìƒì„±
 				// ==========================================================================
 			    Cookie c3 = new Cookie("RhyaAutoLoginCookie_UserUUID", enc_value_1);
-			    // ÄíÅ°¿¡ °æ·Î Ãß°¡
+			    // ì¿ í‚¤ì— ê²½ë¡œ ì¶”ê°€
 			    c3.setPath("/");
-			    // ÄíÅ°¿¡ ¼³¸íÀ» Ãß°¡
+			    // ì¿ í‚¤ì— ì„¤ëª…ì„ ì¶”ê°€
 			    c3.setComment("UserUUID");
-			    // ÄíÅ° À¯È¿±â°£À» ¼³Á¤
+			    // ì¿ í‚¤ ìœ íš¨ê¸°ê°„ì„ ì„¤ì •
 			    c3.setMaxAge(60 * 60 * 24 * 7);
-				// ÄíÅ° »ı¼º
+				// ì¿ í‚¤ ìƒì„±
 			    Cookie c4 = new Cookie("RhyaAutoLoginCookie_ToeknUUID", enc_value_2);
-			    // ÄíÅ°¿¡ °æ·Î Ãß°¡
+			    // ì¿ í‚¤ì— ê²½ë¡œ ì¶”ê°€
 			    c4.setPath("/");
-			    // ÄíÅ°¿¡ ¼³¸íÀ» Ãß°¡
+			    // ì¿ í‚¤ì— ì„¤ëª…ì„ ì¶”ê°€
 			    c4.setComment("TokenUUID");
-			    // ÄíÅ° À¯È¿±â°£À» ¼³Á¤
+			    // ì¿ í‚¤ ìœ íš¨ê¸°ê°„ì„ ì„¤ì •
 			    c4.setMaxAge(60 * 60 * 24 * 7);
-			    // ÀÀ´äÇì´õ¿¡ ÄíÅ°¸¦ Ãß°¡
+			    // ì‘ë‹µí—¤ë”ì— ì¿ í‚¤ë¥¼ ì¶”ê°€
 			    rsp.addCookie(c3);
 			    rsp.addCookie(c4);		
 			    */
-				// ÄíÅ° »ı¼º °ü¸®ÀÚ
+				// ì¿ í‚¤ ìƒì„± ê´€ë¦¬ì
 				PageParameter.SignIn signinV = new PageParameter.SignIn();
 				CookieGenerator cookieGen = new CookieGenerator();
-				// ÄíÅ° »ı¼º
+				// ì¿ í‚¤ ìƒì„±
 				cookieGen.createCookie(rsp, rl, GetClientIPAddress.getClientIp(req), signinV.COOKIE_NAME_USER, auto_login_result[1], "/", signinV.COOKIE_NAME_USER, 60);
 			    cookieGen.createCookie(rsp, rl, GetClientIPAddress.getClientIp(req), signinV.COOKIE_NAME_TOKEN, auto_login_result[2], "/", signinV.COOKIE_NAME_TOKEN, 60);
 				// ==========================================================================
-				// ·Î±× ÀÛ¼º
-				rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(GetClientIPAddress.getClientIp(req),"ÀÚµ¿ ·Î±×ÀÎ ¼º°ø : USER_UUID = ", auto_login_result[1]));
-				// ÆäÀÌÁö ÀÌµ¿ È®ÀÎ
+				// ë¡œê·¸ ì‘ì„±
+				rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(GetClientIPAddress.getClientIp(req),"ìë™ ë¡œê·¸ì¸ ì„±ê³µ : USER_UUID = ", auto_login_result[1]));
+				// í˜ì´ì§€ ì´ë™ í™•ì¸
 				if (urlNext) {
-					// ÆäÀÌÁö ÀÌµ¿
+					// í˜ì´ì§€ ì´ë™
 					rsp.sendRedirect(url);
 				}
 			}else {
-				// ÀÚµ¿ ·Î±×ÀÎ ½ÇÆĞ
+				// ìë™ ë¡œê·¸ì¸ ì‹¤íŒ¨
 				if (thisPageLoginOnly) {
-					// ·Î±× ÀÛ¼º
-					rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(GetClientIPAddress.getClientIp(req),"ÀÚµ¿ ·Î±×ÀÎ ½ÇÆĞ : RESULT != LOGIN_RESULT_SUCCESS"));
-					// ÀÚµ¿ ·Î±×ÀÎ ½ÇÆĞ --> ·Î±×ÀÎ ÆäÀÌÁö ÀÌµ¿
+					// ë¡œê·¸ ì‘ì„±
+					rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(GetClientIPAddress.getClientIp(req),"ìë™ ë¡œê·¸ì¸ ì‹¤íŒ¨ : RESULT != LOGIN_RESULT_SUCCESS"));
+					// ìë™ ë¡œê·¸ì¸ ì‹¤íŒ¨ --> ë¡œê·¸ì¸ í˜ì´ì§€ ì´ë™
 					rsp.sendRedirect(JspPageInfo.GetJspPageURL(req, 0));	
 				}
 			}
 		}else {
-			// ÀÚµ¿ ·Î±×ÀÎ ½ÇÆĞ
+			// ìë™ ë¡œê·¸ì¸ ì‹¤íŒ¨
 			if (thisPageLoginOnly) {
-				// ·Î±× ÀÛ¼º
-				rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(GetClientIPAddress.getClientIp(req),"ÀÚµ¿ ·Î±×ÀÎ ½ÇÆĞ : LOGIN_SESSION == null"));
-				// ÀÚµ¿ ·Î±×ÀÎ ½ÇÆĞ --> ·Î±×ÀÎ ÆäÀÌÁö ÀÌµ¿
+				// ë¡œê·¸ ì‘ì„±
+				rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(GetClientIPAddress.getClientIp(req),"ìë™ ë¡œê·¸ì¸ ì‹¤íŒ¨ : LOGIN_SESSION == null"));
+				// ìë™ ë¡œê·¸ì¸ ì‹¤íŒ¨ --> ë¡œê·¸ì¸ í˜ì´ì§€ ì´ë™
 				rsp.sendRedirect(JspPageInfo.GetJspPageURL(req, 0));	
 			}
 		}

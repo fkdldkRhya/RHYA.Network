@@ -6,20 +6,20 @@ import javax.servlet.http.HttpServletResponse;
 import kro.kr.rhya_network.logger.RhyaLogger;
 
 public class CookieGenerator {
-	// ÄíÅ° »ı¼º ÇÔ¼ö
+	// ì¿ í‚¤ ìƒì„± í•¨ìˆ˜
 	public void createCookie(HttpServletResponse rsp, RhyaLogger rl, String clientIP, String cookieName, String cookieValue, String cookiePath, String cookieComment, int maxAge) {
-		// ÄíÅ° »ı¼º
+		// ì¿ í‚¤ ìƒì„±
 	    Cookie cookie = new Cookie(cookieName, cookieValue);
-	    // ÄíÅ°¿¡ °æ·Î Ãß°¡
+	    // ì¿ í‚¤ì— ê²½ë¡œ ì¶”ê°€
 	    cookie.setPath(cookiePath);
-	    // ÄíÅ°¿¡ ¼³¸íÀ» Ãß°¡
+	    // ì¿ í‚¤ì— ì„¤ëª…ì„ ì¶”ê°€
 	    cookie.setComment(cookieComment);
-	    // ÄíÅ° À¯È¿±â°£À» ¼³Á¤
+	    // ì¿ í‚¤ ìœ íš¨ê¸°ê°„ì„ ì„¤ì •
 	    cookie.setMaxAge(60);
-	    // ÀÀ´äÇì´õ¿¡ ÄíÅ°¸¦ Ãß°¡
+	    // ì‘ë‹µí—¤ë”ì— ì¿ í‚¤ë¥¼ ì¶”ê°€
 	    rsp.addCookie(cookie);
 	    
-	    // ÄíÅ° Ãâ·Â
-		rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "Cookie Generator : Cookie »ı¼º ¼º°ø!"));
+	    // ì¿ í‚¤ ì¶œë ¥
+		rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "Cookie Generator : Cookie ìƒì„± ì„±ê³µ!"));
 	}
 }
