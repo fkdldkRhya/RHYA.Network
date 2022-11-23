@@ -1,4 +1,4 @@
-<%@page import="java.net.URLEncoder"%>
+<%@ page import="java.net.URLEncoder"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.Random"%>
 <%@ page import="java.util.ArrayList"%>
