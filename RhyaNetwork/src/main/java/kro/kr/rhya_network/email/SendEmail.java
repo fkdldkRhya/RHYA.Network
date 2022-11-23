@@ -11,7 +11,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
-	// SMTP Á¤º¸ ¹× ÀÌ¸ŞÀÏ ¹ß¼Û Á¤º¸
+	// SMTP ì •ë³´ ë° ì´ë©”ì¼ ë°œì†¡ ì •ë³´
 	public final String SEND_EMAIL_ADDRESS = "rhya.no.reply.mail@gmail.com";
 	public final String SMTP_SERVER_INFO_HOST = "smtp.gmail.com";
 	public final String SMTP_SERVER_INFO_PORT = "465";
@@ -25,7 +25,7 @@ public class SendEmail {
 	
 	
 	
-	// ¸ŞÀÏ Àü¼Û ¼³Á¤
+	// ë©”ì¼ ì „ì†¡ ì„¤ì •
 	public Properties GetProperties() {
 		System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
 		System.setProperty("jsse.enableSNIExtension", "false");
@@ -47,19 +47,19 @@ public class SendEmail {
 	}
 	
 	
-	// ¸ŞÀÏ Àü¼Û
+	// ë©”ì¼ ì „ì†¡
 	public void Send(Properties Iproperties, String html, String title, String from_addr) throws MessagingException {
 		Properties properties = Iproperties;
 		Authenticator auth = new SMTPAuthenticatior();
 	    Session ses = Session.getInstance(properties, auth);
 	    ses.setDebug(true);
-	    MimeMessage msg = new MimeMessage(ses); // ¸ŞÀÏÀÇ ³»¿ëÀ» ´ãÀ» °´Ã¼
-	    msg.setSubject(title); // Á¦¸ñ
+	    MimeMessage msg = new MimeMessage(ses); // ë©”ì¼ì˜ ë‚´ìš©ì„ ë‹´ì„ ê°ì²´
+	    msg.setSubject(title); // ì œëª©
 	    Address fromAddr = new InternetAddress(SEND_EMAIL_ADDRESS);
-	    msg.setFrom(fromAddr); // º¸³»´Â »ç¶÷
+	    msg.setFrom(fromAddr); // ë³´ë‚´ëŠ” ì‚¬ëŒ
 	    Address toAddr = new InternetAddress(from_addr);
-	    msg.addRecipient(Message.RecipientType.TO, toAddr); // ¹Ş´Â »ç¶÷
-	    msg.setContent(html, "text/html;charset=UTF-8"); // ³»¿ë°ú ÀÎÄÚµù
-	    Transport.send(msg); // Àü¼Û
+	    msg.addRecipient(Message.RecipientType.TO, toAddr); // ë°›ëŠ” ì‚¬ëŒ
+	    msg.setContent(html, "text/html;charset=UTF-8"); // ë‚´ìš©ê³¼ ì¸ì½”ë”©
+	    Transport.send(msg); // ì „ì†¡
 	}
 }

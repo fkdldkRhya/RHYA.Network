@@ -19,24 +19,24 @@ import kro.kr.rhya_network.security.IPBlockChecker;
 
 public class JSPUtilsInitTask {
 	public boolean initTask(RhyaLogger rl, HttpServletRequest request, HttpServletResponse response, int pageID) throws ServletException, IOException, SQLException {
-		// Äõ¸® ÀÛ¼º StringBuilder
+		// ì¿¼ë¦¬ ì‘ì„± StringBuilder
 		StringBuilder sql = new StringBuilder();
 
-		// Å¬¶óÀÌ¾ğÆ® ¾ÆÀÌÇÇ
+		// í´ë¼ì´ì–¸íŠ¸ ì•„ì´í”¼
 		String clientIP = GetClientIPAddress.getClientIp(request);
 
-		// µ¥ÀÌÅÍº£ÀÌ½º Ä¿³ØÅÍ º¯¼ö ¼±¾ğ
+		// ë°ì´í„°ë² ì´ìŠ¤ ì»¤ë„¥í„° ë³€ìˆ˜ ì„ ì–¸
 		DatabaseConnection cont = new DatabaseConnection();
-		// µ¥ÀÌÅÍº£ÀÌ½º Äõ¸® ½ÇÇà º¯¼ö ¼±¾ğ
+		// ë°ì´í„°ë² ì´ìŠ¤ ì¿¼ë¦¬ ì‹¤í–‰ ë³€ìˆ˜ ì„ ì–¸
 		PreparedStatement stat = null;
 		ResultSet rs = null;
 
 
 		//------------------------------------------------
 		if (!IPBlockChecker.isIPBlock(clientIP)) {
-			// ·Î±× Ãâ·Â
-			rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "IP Â÷´Ü ¸ñ·Ï¿¡ ÀÖ´Â È£½ºÆ®°¡ Á¢¼ÓÀ» ½ÃµµÇÏ¿´½À´Ï´Ù. ÇØ´ç È£½ºÆ®ÀÇ Á¢¼ÓÀ» ½Ã½ºÅÛÀÌ °ÅºÎÇß½À´Ï´Ù."));
-			// ÆäÀÌÁö ÀÌµ¿
+			// ë¡œê·¸ ì¶œë ¥
+			rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "IP ì°¨ë‹¨ ëª©ë¡ì— ìˆëŠ” í˜¸ìŠ¤íŠ¸ê°€ ì ‘ì†ì„ ì‹œë„í•˜ì˜€ìŠµë‹ˆë‹¤. í•´ë‹¹ í˜¸ìŠ¤íŠ¸ì˜ ì ‘ì†ì„ ì‹œìŠ¤í…œì´ ê±°ë¶€í–ˆìŠµë‹ˆë‹¤."));
+			// í˜ì´ì§€ ì´ë™
 			RequestDispatcher rd = request.getRequestDispatcher(JspPageInfo.GetJspPageURL(request, 22).replace(request.getContextPath().subSequence(0, request.getContextPath().length()), ""));
 			rd.forward(request,response);
 			return false;
@@ -44,40 +44,40 @@ public class JSPUtilsInitTask {
 		//------------------------------------------------
 
 
-		// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó ¿¹¿Ü Ã³¸®
+		// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì† ì˜ˆì™¸ ì²˜ë¦¬
 		try {
-			// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+			// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 			cont.Connection(DatabaseInfo.DATABASE_DRIVER_CLASS_NAME,
 							DatabaseInfo.DATABASE_CONNECTION_URL,
 							DatabaseInfo.DATABASE_ROOT_ACCOUNT_ID,
 							DatabaseInfo.DATABASE_ROOT_ACCOUNT_PW);
 		}catch (SQLException ex1) {
-			// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó ¿À·ù Ã³¸®
+			// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì† ì˜¤ë¥˜ ì²˜ë¦¬
 			cont.Close();
 			sql = null;
-			// ·Î±× ÀÛ¼º
+			// ë¡œê·¸ ì‘ì„±
 			rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv4(clientIP, JspPageInfo.ERROR_PAGE_PATH_HTTP_500, ex1.toString()));
-			// ÆäÀÌÁö ÀÌµ¿
+			// í˜ì´ì§€ ì´ë™
 			RequestDispatcher rd = request.getRequestDispatcher(JspPageInfo.GetJspPageURL(request, 22).replace(request.getContextPath().subSequence(0, request.getContextPath().length()), ""));
 		  	rd.forward(request,response);
 		  	
 			return false;
 		}catch (ClassNotFoundException ex2) {
-			// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó ¿À·ù Ã³¸®
+			// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì† ì˜¤ë¥˜ ì²˜ë¦¬
 			cont.Close();
 			sql = null;
-			// ·Î±× ÀÛ¼º
+			// ë¡œê·¸ ì‘ì„±
 			rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv4(clientIP, JspPageInfo.ERROR_PAGE_PATH_HTTP_500, ex2.toString()));
-			// ÆäÀÌÁö ÀÌµ¿
+			// í˜ì´ì§€ ì´ë™
 			RequestDispatcher rd = request.getRequestDispatcher(JspPageInfo.GetJspPageURL(request, 22).replace(request.getContextPath().subSequence(0, request.getContextPath().length()), ""));
 		  	rd.forward(request,response);
 		  	
 			return false;
 		}
 
-		// ÆäÀÌÁö »óÅÂ È®ÀÎ
+		// í˜ì´ì§€ ìƒíƒœ í™•ì¸
 		if (cont != null) {
-			// Äõ¸® »ı¼º
+			// ì¿¼ë¦¬ ìƒì„±
 			sql.append("SELECT * FROM ");
 			sql.append(DatabaseInfo.DATABASE_TABLE_NAME_JSP_PAGE_SETTING);
 			sql.append(" WHERE ");
@@ -86,32 +86,32 @@ public class JSPUtilsInitTask {
 			sql.append("?;");
 
 			
-			// Äõ¸® ¼³Á¤
+			// ì¿¼ë¦¬ ì„¤ì •
 			stat = cont.GetConnection().prepareStatement(sql.toString());
 			stat.setInt(1, pageID);
-			// Äõ¸® »ı¼º StringBuilder ÃÊ±âÈ­
+			// ì¿¼ë¦¬ ìƒì„± StringBuilder ì´ˆê¸°í™”
 			sql.delete(0,sql.length());
-			// Äõ¸® ½ÇÇà
+			// ì¿¼ë¦¬ ì‹¤í–‰
 			rs = stat.executeQuery();
-			// Äõ¸® ½ÇÇà °á°ú
+			// ì¿¼ë¦¬ ì‹¤í–‰ ê²°ê³¼
 			int state = 0;
 			if (rs.next()) {
 				state = rs.getInt(DatabaseInfo.DATABASE_TABLE_COLUMN_JSP_PAGE_SETTING_PAGE_STATE);
-				// ¿¬°á Á¾·á
+				// ì—°ê²° ì¢…ë£Œ
 				rs.close();
 				stat.close();
 				cont.Close();
 			}
-			// »óÅÂ È®ÀÎ - °á°ú Ã³¸®
+			// ìƒíƒœ í™•ì¸ - ê²°ê³¼ ì²˜ë¦¬
 			if (!JspPageInfo.JspPageStateManager(state)) {
-				// ¿¬°á Á¾·á
+				// ì—°ê²° ì¢…ë£Œ
 				rs.close();
 				stat.close();
 				cont.Close();
 				rl = null;
 				sql = null;
 
-				// ÆäÀÌÁö ÀÌµ¿
+				// í˜ì´ì§€ ì´ë™
 				RequestDispatcher rd = request.getRequestDispatcher(JspPageInfo.GetJspPageURL(request, 22).replace(request.getContextPath().subSequence(0, request.getContextPath().length()), ""));
 			  	rd.forward(request,response);
 				return false;

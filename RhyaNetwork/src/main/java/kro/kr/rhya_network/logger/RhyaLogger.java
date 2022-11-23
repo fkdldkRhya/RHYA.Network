@@ -10,26 +10,26 @@ import kro.kr.rhya_network.util.PathManager;
 
 
 public class RhyaLogger {
-	// ·Î±× ÆÄÀÏ »ı¼º °æ·Î
+	// ë¡œê·¸ íŒŒì¼ ìƒì„± ê²½ë¡œ
 	private final String PATH = PathManager.RHYA_LOGGER_SAVE_PATH;
-	// ÆÄÀÏ »ı¼º ³¯ÀÚ Çü½Ä
+	// íŒŒì¼ ìƒì„± ë‚ ì í˜•ì‹
 	private final SimpleDateFormat FILEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	// Å¬·¹½º ÀÌ¸§
+	// í´ë ˆìŠ¤ ì´ë¦„
 	public String ClassName;
-	// ·Î±× Ãâ·Â Çü½Ä
+	// ë¡œê·¸ ì¶œë ¥ í˜•ì‹
 	public Boolean LogConsole;
 	public Boolean LogFile;
-	// ·Î±× Ãâ·Â JSP ÆäÀÌÁö ÀÌ¸§
+	// ë¡œê·¸ ì¶œë ¥ JSP í˜ì´ì§€ ì´ë¦„
 	public String JspName;
-	// ³¯ÀÚ Ãâ·Â Çü½Ä
+	// ë‚ ì ì¶œë ¥ í˜•ì‹
 	public SimpleDateFormat Format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	
-	// ·Î±× Á¾·ù
+	// ë¡œê·¸ ì¢…ë¥˜
 	public enum Type { Info, Warning, Error, Fatal, Debug }
 	
 	
-	// ·Î±× ¹®ÀÚ¿­ »ı¼º
+	// ë¡œê·¸ ë¬¸ìì—´ ìƒì„±
 	private String LogStrMaker(Type type, String message) {
 		String className = this.getClass().getName();
 		if (ClassName != null) {
@@ -44,13 +44,13 @@ public class RhyaLogger {
 	}
 	
 	
-	// ·Î±× Ãâ·Â ÇÔ¼ö - Console
+	// ë¡œê·¸ ì¶œë ¥ í•¨ìˆ˜ - Console
 	private void WriteConsoleLogger(Type type, String message) {
 		System.out.println(LogStrMaker(type, message));
 	}
 	
 	
-	// ·Î±× Ãâ·Â ÇÔ¼ö - File
+	// ë¡œê·¸ ì¶œë ¥ í•¨ìˆ˜ - File
 	private void WriteFileLogger(Type type, String message) throws IOException {
 		final String fileName = "jsp-log-";
 		String nowDate = FILEFORMAT.format(new Date());
@@ -72,7 +72,7 @@ public class RhyaLogger {
 	}
 	
 	
-	// ·Î±× Ãâ·Â
+	// ë¡œê·¸ ì¶œë ¥
 	public void Log(Type type, String message) {
 		if (LogConsole) {
 			WriteConsoleLogger(type, message);
@@ -89,10 +89,10 @@ public class RhyaLogger {
 	}
 	
 	
-	// ·Î±× ³»¿ë »ı¼º v1
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v1
 	public String CreateLogTextv1(String ip, String[] parm, String[] parm_v) {
 		StringBuilder log_sb = new StringBuilder();
-		log_sb.append("Å¬¶óÀÌ¾ğÆ® Á¢¼Ó [ OK! ]  ÆÄ¶ó¹ÌÅÍ: ");
+		log_sb.append("í´ë¼ì´ì–¸íŠ¸ ì ‘ì† [ OK! ]  íŒŒë¼ë¯¸í„°: ");
 		
 		for (int i = 0; i < parm.length; i ++) {
 			log_sb.append(parm[i]);
@@ -107,40 +107,40 @@ public class RhyaLogger {
 		return log_sb.toString();
 	}
 	
-	// ·Î±× ³»¿ë »ı¼º v2
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v2
 	public String CreateLogTextv2(String ip, String url) {
 		StringBuilder log_sb = new StringBuilder();
-		log_sb.append("ÀÎÁõÅ°°¡ ÀÏÄ¡ÇÏÁö ¾ÊÀ½ '");
+		log_sb.append("ì¸ì¦í‚¤ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŒ '");
 		log_sb.append(url);
-		log_sb.append("'À¸·Î ÀÌµ¿ / IP -> ");
+		log_sb.append("'ìœ¼ë¡œ ì´ë™ / IP -> ");
 		log_sb.append(ip);
 		
 		return log_sb.toString();
 	}
 	
-	// ·Î±× ³»¿ë »ı¼º v3
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v3
 	public String CreateLogTextv3(String ip) {
 		StringBuilder log_sb = new StringBuilder();
-		log_sb.append("ÀÎÁõÅ°°¡ ÀÏÄ¡ÇÏÁö ¾ÊÀ½");
+		log_sb.append("ì¸ì¦í‚¤ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŒ");
 		log_sb.append(" / IP -> ");
 		log_sb.append(ip);
 		
 		return log_sb.toString();
 	}
 	
-	// ·Î±× ³»¿ë »ı¼º v4
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v4
 	public String CreateLogTextv4(String ip, String url, String message) {
 		StringBuilder log_sb = new StringBuilder();
 		log_sb.append(message);
 		log_sb.append(" '");
 		log_sb.append(url);
-		log_sb.append("'À¸·Î ÀÌµ¿ / IP -> ");
+		log_sb.append("'ìœ¼ë¡œ ì´ë™ / IP -> ");
 		log_sb.append(ip);
 		
 		return log_sb.toString();
 	}
 	
-	// ·Î±× ³»¿ë »ı¼º v5
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v5
 	public String CreateLogTextv5(String ip, String message) {
 		StringBuilder log_sb = new StringBuilder();
 		log_sb.append(message);
@@ -150,28 +150,28 @@ public class RhyaLogger {
 		return log_sb.toString();
 	}
 	
-	// ·Î±× ³»¿ë »ı¼º v6
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v6
 	public String CreateLogTextv6(String ip, String url) {
 		StringBuilder log_sb = new StringBuilder();
-		log_sb.append("Àß¸øµÈ ÀÎÀÚ °ª : Null '");
+		log_sb.append("ì˜ëª»ëœ ì¸ì ê°’ : Null '");
 		log_sb.append(url);
-		log_sb.append("'À¸·Î ÀÌµ¿ / IP -> ");
+		log_sb.append("'ìœ¼ë¡œ ì´ë™ / IP -> ");
 		log_sb.append(ip);
 		
 		return log_sb.toString();
 	}
 	
-	// ·Î±× ³»¿ë »ı¼º v7
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v7
 	public String CreateLogTextv7(String ip) {
 		StringBuilder log_sb = new StringBuilder();
-		log_sb.append("Àß¸øµÈ ÀÎÀÚ °ª : Null");
+		log_sb.append("ì˜ëª»ëœ ì¸ì ê°’ : Null");
 		log_sb.append(" / IP -> ");
 		log_sb.append(ip);
 		
 		return log_sb.toString();
 	}
 	
-	// ·Î±× ³»¿ë »ı¼º v8
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v8
 	public String CreateLogTextv8(String ip, String msg, String msg2) {
 		StringBuilder log_sb = new StringBuilder();
 		log_sb.append(msg);
@@ -183,7 +183,7 @@ public class RhyaLogger {
 		return log_sb.toString();
 	}
 	
-	// ·Î±× ³»¿ë »ı¼º v9
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v9
 	public String CreateLogTextv9(String ip, String msg, String msg2, String msg3, String msg4) {
 		StringBuilder log_sb = new StringBuilder();
 		log_sb.append(msg);
@@ -199,7 +199,7 @@ public class RhyaLogger {
 		return log_sb.toString();
 	}
 	
-	// ·Î±× ³»¿ë »ı¼º v10
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v10
 	public String CreateLogTextv10(String ip, String msg, String msg2, String msg3, String msg4, String msg5) {
 		StringBuilder log_sb = new StringBuilder();
 		log_sb.append(msg);
@@ -217,7 +217,7 @@ public class RhyaLogger {
 		return log_sb.toString();
 	}
 	
-	// ·Î±× ³»¿ë »ı¼º v11
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v11
 	public String CreateLogTextv11(String ip, String msg, String msg2, String msg3, String msg4, String msg5, String msg6, String msg7, String msg8, String msg9, String msg10) {
 		StringBuilder log_sb = new StringBuilder();
 		log_sb.append(msg);
@@ -245,7 +245,7 @@ public class RhyaLogger {
 		return log_sb.toString();
 	}
 	
-	// ·Î±× ³»¿ë »ı¼º v10
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v10
 	public String CreateLogTextv12(String ip, String msg, String msg2, String msg3, String msg4, String msg5, String msg6) {
 		StringBuilder log_sb = new StringBuilder();
 		log_sb.append(msg);
@@ -265,7 +265,7 @@ public class RhyaLogger {
 		return log_sb.toString();
 	}
 	
-	// ·Î±× ³»¿ë »ı¼º v13
+	// ë¡œê·¸ ë‚´ìš© ìƒì„± v13
 	public String CreateLogTextv13(String ip, String msg, String msg2, String msg3, String msg4, String msg5, String msg6, String msg7, String msg8, String msg9, String msg10, String msg11) {
 		StringBuilder log_sb = new StringBuilder();
 		log_sb.append(msg);

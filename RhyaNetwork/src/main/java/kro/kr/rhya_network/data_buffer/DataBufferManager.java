@@ -49,7 +49,7 @@ public class DataBufferManager {
 		connection.closePreparedStatement();
 		connection.closeResultSet();
 		
-		// º¯°æ»çÇ× ÀúÀå
+		// ë³€ê²½ì‚¬í•­ ì €ìž¥
 		if (result != null) {
 			index = index + 1;
 			connection.setPreparedStatement("UPDATE data_buffer SET data_buffer.data = ?, data_buffer.index = ? WHERE data_buffer.request_code = ?;");

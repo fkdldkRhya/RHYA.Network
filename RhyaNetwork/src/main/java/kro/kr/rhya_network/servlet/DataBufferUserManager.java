@@ -41,17 +41,17 @@ public class DataBufferUserManager extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		// Rhya ·Î°Å º¯¼ö ¼±¾ğ
+		// Rhya ë¡œê±° ë³€ìˆ˜ ì„ ì–¸
 		RhyaLogger rl = new RhyaLogger();
-		// Rhya ·Î°Å ¼³Á¤
+		// Rhya ë¡œê±° ì„¤ì •
 		rl.JspName = request.getServletPath();
 		rl.LogConsole = true;
 		rl.LogFile = true;
 
-		// Å¬¶óÀÌ¾ğÆ® ¾ÆÀÌÇÇ
+		// í´ë¼ì´ì–¸íŠ¸ ì•„ì´í”¼
 		String clientIP = GetClientIPAddress.getClientIp(request);
 
-		// Ãâ·Â °á°ú
+		// ì¶œë ¥ ê²°ê³¼
 		Gson gson = new Gson();
 		JsonObject obj = new JsonObject();
 		final String successMessage = "success";
@@ -62,28 +62,28 @@ public class DataBufferUserManager extends HttpServlet {
 		try {
 			JSPUtilsInitTask jspUtilsInitTask = new JSPUtilsInitTask();
 			if (jspUtilsInitTask.initTask(rl, request, response, JspPageInfo.PageID_Online_Attendance)) {
-				// ¸í·É¾î
+				// ëª…ë ¹ì–´
 				int command = Integer.parseInt(request.getParameter("mode"));
-				// ¸í·É¾î ±¸ºĞ
+				// ëª…ë ¹ì–´ êµ¬ë¶„
 				switch (command) {
 					default: {
 						obj.addProperty(keyName_Result, failMessage);
-						obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¾ø´Â ¸í·ÉÀÔ´Ï´Ù. mode ÆÄ¶ó¹ÌÅÍ¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.", "UTF-8"));
+						obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ì—†ëŠ” ëª…ë ¹ì…ë‹ˆë‹¤. mode íŒŒë¼ë¯¸í„°ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”.", "UTF-8"));
 						PrintWriter out = response.getWriter(); 
 						out.println(gson.toJson(obj));
 						
-						rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¾Ë ¼ö ¸í·ÉÀÔ´Ï´Ù. mode ÆÄ¶ó¹ÌÅÍ¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä."));
+						rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ì•Œ ìˆ˜ ëª…ë ¹ì…ë‹ˆë‹¤. mode íŒŒë¼ë¯¸í„°ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”."));
 						break;
 					}
 					
 					/**
-					 * Data-Buffer °ü¸®ÀÚ : 0
+					 * Data-Buffer ê´€ë¦¬ì : 0
 					 * 
-					 * ¼³¸í :
-					 * 		µ¥ÀÌÅÍ µî·Ï
+					 * ì„¤ëª… :
+					 * 		ë°ì´í„° ë“±ë¡
 					 * 
-					 * ÆÄ¶ó¹ÌÅÍ :
-					 * 		default  --> ±âº» µ¥ÀÌÅÍ ÀÔ·Â
+					 * íŒŒë¼ë¯¸í„° :
+					 * 		default  --> ê¸°ë³¸ ë°ì´í„° ì…ë ¥
 					 */
 					case 0: {
 						String getParmInput = request.getParameter("default");
@@ -97,24 +97,24 @@ public class DataBufferUserManager extends HttpServlet {
 						PrintWriter out = response.getWriter(); 
 						out.println(gson.toJson(obj));
 						
-						rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "Data-Buffer µ¥ÀÌÅÍ »ı¼º ¼º°ø! / RequestCode: ", key));
+						rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "Data-Buffer ë°ì´í„° ìƒì„± ì„±ê³µ! / RequestCode: ", key));
 						break;
 					}
 					
 					
 					/**
-					 * Data-Buffer °ü¸®ÀÚ : 1
+					 * Data-Buffer ê´€ë¦¬ì : 1
 					 * 
-					 * ¼³¸í :
-					 * 		µ¥ÀÌÅÍ µî·Ï
+					 * ì„¤ëª… :
+					 * 		ë°ì´í„° ë“±ë¡
 					 * 
-					 * ÆÄ¶ó¹ÌÅÍ :
-					 * 		request  --> ¿äÃ» Å°
-					 * 		input    --> ÀÔ·Â µ¥ÀÌÅÍ
+					 * íŒŒë¼ë¯¸í„° :
+					 * 		request  --> ìš”ì²­ í‚¤
+					 * 		input    --> ì…ë ¥ ë°ì´í„°
 					 * 		index    --> index
 					 */
 					case 1: {
-						// ÆÄ¶ó¹ÌÅÍ ÃßÃâ
+						// íŒŒë¼ë¯¸í„° ì¶”ì¶œ
 						String getParmRequestCode = request.getParameter("request");
 						String getParmInput = request.getParameter("input");
 						String getParmIndex = request.getParameter("index");
@@ -129,13 +129,13 @@ public class DataBufferUserManager extends HttpServlet {
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv12(clientIP, "Data-Buffer µ¥ÀÌÅÍ Ãß°¡ ¼º°ø! / RequestCode: ", getParmRequestCode, ", Input: ", getParmInput, ", Index: ", String.valueOf(getParmIndex)));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv12(clientIP, "Data-Buffer ë°ì´í„° ì¶”ê°€ ì„±ê³µ! / RequestCode: ", getParmRequestCode, ", Input: ", getParmInput, ", Index: ", String.valueOf(getParmIndex)));
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv12(clientIP, "Data-Buffer µ¥ÀÌÅÍ Ãß°¡ ½ÇÆĞ! [NotFoundRequestCode] / RequestCode: ", getParmRequestCode, ", Input: ", getParmInput, ", Index: ", String.valueOf(getParmIndex)));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv12(clientIP, "Data-Buffer ë°ì´í„° ì¶”ê°€ ì‹¤íŒ¨! [NotFoundRequestCode] / RequestCode: ", getParmRequestCode, ", Input: ", getParmInput, ", Index: ", String.valueOf(getParmIndex)));
 						}
 						
 						break;
@@ -143,13 +143,13 @@ public class DataBufferUserManager extends HttpServlet {
 					
 					
 					/**
-					 * Data-Buffer °ü¸®ÀÚ : 2
+					 * Data-Buffer ê´€ë¦¬ì : 2
 					 * 
-					 * ¼³¸í :
-					 * 		µ¥ÀÌÅÍ ºÒ·¯¿À±â
+					 * ì„¤ëª… :
+					 * 		ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸°
 					 * 
-					 * ÆÄ¶ó¹ÌÅÍ :
-					 * 		request  --> ¿äÃ» Å°
+					 * íŒŒë¼ë¯¸í„° :
+					 * 		request  --> ìš”ì²­ í‚¤
 					 */
 					case 2: {
 						String getParmRequestCode = request.getParameter("default");
@@ -163,25 +163,25 @@ public class DataBufferUserManager extends HttpServlet {
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "Data-Buffer µ¥ÀÌÅÍ Ãâ·Â ¼º°ø! / RequestCode: ", getParmRequestCode));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "Data-Buffer ë°ì´í„° ì¶œë ¥ ì„±ê³µ! / RequestCode: ", getParmRequestCode));
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "Data-Buffer µ¥ÀÌÅÍ Ãâ·Â ½ÇÆĞ! [NoFoundRequestCode] / RequestCode: ", getParmRequestCode));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "Data-Buffer ë°ì´í„° ì¶œë ¥ ì‹¤íŒ¨! [NoFoundRequestCode] / RequestCode: ", getParmRequestCode));
 						}
 						
 						break;
 					}
 				}
 			}else {
-				rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "JSP ÆäÀÌÁö ÃÊ±âÈ­ Áß ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù."));
+				rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "JSP í˜ì´ì§€ ì´ˆê¸°í™” ì¤‘ ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤."));
 			}
 		}catch (Exception ex) {
 			// TODO: handle exception
 			obj.addProperty(keyName_Result, failMessage);
-			obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ı ÇÏ¿´½À´Ï´Ù. ".concat(ex.getMessage()), "UTF-8"));
+			obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒ í•˜ì˜€ìŠµë‹ˆë‹¤. ".concat(ex.getMessage()), "UTF-8"));
 			PrintWriter out = response.getWriter(); 
 			out.println(gson.toJson(obj));
 			

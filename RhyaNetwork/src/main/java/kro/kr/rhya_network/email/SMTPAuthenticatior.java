@@ -4,8 +4,8 @@ import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
  
 public class SMTPAuthenticatior extends Authenticator{
-	// °èÁ¤ ºñ¹Ð¹øÈ£ : ;jXFk#D4-M9qHQ$((g]q]CwFrmu/4s{C
-	// ¾Û ºñ¹Ð¹øÈ£ : tmtskruzosiyoafu
+	// ê³„ì • ë¹„ë°€ë²ˆí˜¸ : ;jXFk#D4-M9qHQ$((g]q]CwFrmu/4s{C
+	// ì•± ë¹„ë°€ë²ˆí˜¸ : tmtskruzosiyoafu
     @Override
     protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication("rhya.no.reply.mail", "tmtskruzosiyoafu");

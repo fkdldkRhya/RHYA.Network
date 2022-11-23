@@ -7,84 +7,84 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface DatabaseManager {
-	// µ¥ÀÌÅÍº£ÀÌ½º ¼­¹ö Á¤º¸
+	// ë°ì´í„°ë² ì´ìŠ¤ ì„œë²„ ì •ë³´
 	final String db_driver = "com.mysql.cj.jdbc.Driver";
 	final String db_url = "jdbc:mysql://192.168.0.19:3306/rhya_network_server?serverTimezone=UTC";
 	final String db_id = "RHYA_NETWORK";
 	final String db_pw = "QC-CN7U$fu=Hx>aWgXmz=h^ZW{A/4URZ";
 	
-	// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó °ü¸®
+	// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì† ê´€ë¦¬
 	public class DatabaseConnection {
-		// µ¥ÀÌÅÍº£ÀÌ½º º¯¼ö
+		// ë°ì´í„°ë² ì´ìŠ¤ ë³€ìˆ˜
 		Connection connection = null;
 		PreparedStatement preparableStatement = null;
 		ResultSet resultSet = null;
-		// SQL »ı¼º º¯¼ö
+		// SQL ìƒì„± ë³€ìˆ˜
 		public StringBuilder stringBuilder = null;
 		
-		// ÃÊ±âÈ­
+		// ì´ˆê¸°í™”
 		public void init() {
 			stringBuilder = new StringBuilder();
 		}
 		
-		// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+		// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 		public void connection() throws ClassNotFoundException, SQLException {
 			Class.forName(db_driver);
 			connection = DriverManager.getConnection(db_url, db_id, db_pw);
 		}
 		
 		
-		// µ¥ÀÌÅÍº£ÀÌ½º Connection
+		// ë°ì´í„°ë² ì´ìŠ¤ Connection
 		public Connection getConnection() {
 			return connection;
 		}
 		
-		// µ¥ÀÌÅÍº£ÀÌ½º Connection ´İ±â
+		// ë°ì´í„°ë² ì´ìŠ¤ Connection ë‹«ê¸°
 		public void closeConntection() throws SQLException {
 			connection.close();
 		}
 		
-		// µ¥ÀÌÅÍº£ÀÌ½º PreparedStatement ¼³Á¤
+		// ë°ì´í„°ë² ì´ìŠ¤ PreparedStatement ì„¤ì •
 		public void setPreparedStatement(String sql) throws SQLException {
 			preparableStatement = connection.prepareStatement(sql);
 		}
 		
-		// µ¥ÀÌÅÍº£ÀÌ½º PreparedStatement °¡Á®¿À±â
+		// ë°ì´í„°ë² ì´ìŠ¤ PreparedStatement ê°€ì ¸ì˜¤ê¸°
 		public PreparedStatement getPreparedStatement() {
 			return preparableStatement;
 		}
 		
-		// µ¥ÀÌÅÍº£ÀÌ½º PreparedStatement ´İ±â
+		// ë°ì´í„°ë² ì´ìŠ¤ PreparedStatement ë‹«ê¸°
 		public void closePreparedStatement() throws SQLException {
 			preparableStatement.close();
 		}
 		
-		// µ¥ÀÌÅÍ º£ÀÌ½º Äõ¸® ½ÇÇà - Update, Insert µî
+		// ë°ì´í„° ë² ì´ìŠ¤ ì¿¼ë¦¬ ì‹¤í–‰ - Update, Insert ë“±
 		public int executeUpdate() throws SQLException {
 			return preparableStatement.executeUpdate();
 		}
 		
-		// µ¥ÀÌÅÍº£ÀÌ½º ResultSet ¼³Á¤
+		// ë°ì´í„°ë² ì´ìŠ¤ ResultSet ì„¤ì •
 		public void setResultSet() throws SQLException {
 			resultSet = preparableStatement.executeQuery();
 		}
 		
-		// µ¥ÀÌÅÍº£ÀÌ½º ResultSet °¡Á®¿À±â
+		// ë°ì´í„°ë² ì´ìŠ¤ ResultSet ê°€ì ¸ì˜¤ê¸°
 		public ResultSet getResultSet() {
 			return resultSet;
 		}
 		
-		// µ¥ÀÌÅÍº£ÀÌ½º ResultSet ´İ±â
+		// ë°ì´í„°ë² ì´ìŠ¤ ResultSet ë‹«ê¸°
 		public void closeResultSet() throws SQLException {
 			resultSet.close();
 		}
 		
-		// StringBuilder ÃÊ±âÈ­
+		// StringBuilder ì´ˆê¸°í™”
 		public void initStringBuilder() {
 			stringBuilder.delete(0, stringBuilder.length());
 		}
 		
-		// ÀüÃ¼ ´İ±â
+		// ì „ì²´ ë‹«ê¸°
 		public void allClose() throws SQLException {
 			if (connection != null) connection.close();
 			if (preparableStatement != null) connection.close();

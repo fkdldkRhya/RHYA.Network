@@ -1,20 +1,20 @@
 package kro.kr.rhya_network.database;
 
 public class DatabaseInfo {
-	// µ¥ÀÌÅÍº£ÀÌ½º ¼­¹ö Á¤º¸
+	// ë°ì´í„°ë² ì´ìŠ¤ ì„œë²„ ì •ë³´
 	public static final String DATABASE_DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
 	public static final String DATABASE_CONNECTION_URL = "jdbc:mysql://192.168.0.19:3306/rhya_network_server?serverTimezone=UTC";
 	public static final String DATABASE_ROOT_ACCOUNT_ID = "RHYA_NETWORK";
 	public static final String DATABASE_ROOT_ACCOUNT_PW = "QC-CN7U$fu=Hx>aWgXmz=h^ZW{A/4URZ";
 	
 	
-	// µ¥ÀÌÅÍº£ÀÌ½º Å×ÀÌºí Á¤º¸
-	/* JSP ¼­¹ö ÆäÀÌÁö »óÅÂ °ü¸® */
+	// ë°ì´í„°ë² ì´ìŠ¤ í…Œì´ë¸” ì •ë³´
+	/* JSP ì„œë²„ í˜ì´ì§€ ìƒíƒœ ê´€ë¦¬ */
 	public static final String DATABASE_TABLE_NAME_JSP_PAGE_SETTING = "jsp_page_setting";
 	public static final String DATABASE_TABLE_COLUMN_JSP_PAGE_SETTING_PAGE_ID = "page_id";
 	public static final String DATABASE_TABLE_COLUMN_JSP_PAGE_SETTING_PAGE_NAME = "page_name";
 	public static final String DATABASE_TABLE_COLUMN_JSP_PAGE_SETTING_PAGE_STATE = "page_state";
-	/* RHYA.Network °èÁ¤ Á¤º¸ */
+	/* RHYA.Network ê³„ì • ì •ë³´ */
 	public static final String DATABASE_TABLE_NAME_USER = "user";
 	public static final String DATABASE_TABLE_NAME_USER_INFO = "user_info";
 	public static final String DATABASE_TABLE_COLUMN_USER_UUID = "uuid";

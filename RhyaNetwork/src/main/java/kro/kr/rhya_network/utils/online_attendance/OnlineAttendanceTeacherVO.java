@@ -1,54 +1,54 @@
 package kro.kr.rhya_network.utils.online_attendance;
 
 public class OnlineAttendanceTeacherVO {
-	// ¼±»ı´Ô ±¸ºĞ UUID
+	// ì„ ìƒë‹˜ êµ¬ë¶„ UUID
 	private String uuid;
-	// ¼±»ı´Ô ÀÌ¸§
+	// ì„ ìƒë‹˜ ì´ë¦„
 	private String name;
-	// ¼±»ı´Ô ÀÌ¸§ [ Áßº¹ ¹æÁö ÀÌ¸§ ]
+	// ì„ ìƒë‹˜ ì´ë¦„ [ ì¤‘ë³µ ë°©ì§€ ì´ë¦„ ]
 	private String name2;
-	// ¼±»ı´Ô ÀÌ¹ÌÁö URL [ Auth Token ÇÊ¿ä ]
+	// ì„ ìƒë‹˜ ì´ë¯¸ì§€ URL [ Auth Token í•„ìš” ]
 	private String image;
-	// ¼±»ı´Ô ¼³¸í
+	// ì„ ìƒë‹˜ ì„¤ëª…
 	private String description;
-	// ¼±»ı´Ô ¼Ò¼Ó ºÎ¼­ UUID
+	// ì„ ìƒë‹˜ ì†Œì† ë¶€ì„œ UUID
 	private String department1;
 	private String department2;
-	// ¼±»ı´Ô ÀÌ¸ŞÀÏ ÁÖ¼Ò
+	// ì„ ìƒë‹˜ ì´ë©”ì¼ ì£¼ì†Œ
 	private String email;
-	// ¼±»ı´Ô ÈŞ´ëÀüÈ­ ÀüÈ­¹øÈ£
+	// ì„ ìƒë‹˜ íœ´ëŒ€ì „í™” ì „í™”ë²ˆí˜¸
 	private String mobile_phone;
-	// ¼±»ı´Ô ºÎ¼­ ³»¼± ÀüÈ­¹øÈ£
+	// ì„ ìƒë‹˜ ë¶€ì„œ ë‚´ì„  ì „í™”ë²ˆí˜¸
 	private String office_phone;
-	// ¼±»ı´Ô ¿ªÇÒ
+	// ì„ ìƒë‹˜ ì—­í• 
 	private String position;
-	// ¼±»ı´Ô ´ã´ç °ú¸ñ
+	// ì„ ìƒë‹˜ ë‹´ë‹¹ ê³¼ëª©
 	private String subject;
-	// ¼±»ı´Ô ¼Ò¼Ó ÇĞ±³
+	// ì„ ìƒë‹˜ ì†Œì† í•™êµ
 	private int school_id;
-	// ¼±»ı´Ô µ¥ÀÌÅÍ º¯°æ °¨Áö
+	// ì„ ìƒë‹˜ ë°ì´í„° ë³€ê²½ ê°ì§€
 	private int version;
 	
 	
 	
 	
 	/**
-	 * »ı¼ºÀÚ 
+	 * ìƒì„±ì 
 	 * 
-	 * @param uuid ¼±»ı´Ô UUID
-	 * @param name ¼±»ı´Ô ÀÌ¸§
-	 * @param name2 ¼±»ı´Ô ÀÌ¸§ [ Áßº¹ ¹æÁö ÀÌ¸§ ]
-	 * @param image ¼±»ı´Ô ÀÌ¹ÌÁö URL
-	 * @param description ¼±»ı´Ô ¼³¸í
-	 * @param department1 ¼±»ı´Ô ¼Ò¼Ó ºÎ¼­ UUID
-	 * @param department2 ¼±»ı´Ô ¼Ò¼Ó ºÎ¼­ UUID
-	 * @param email ¼±»ı´Ô ÀÌ¸ŞÀÏ ÁÖ¼Ò
-	 * @param mobile_phone ¼±»ı´Ô ÈŞ´ëÀüÈ­ ÀüÈ­¹øÈ£
-	 * @param office_phone ¼±»ı´Ô ºÎ¼­ ³»¼± ÀüÈ­¹øÈ£
-	 * @param position ¼±»ı´Ô ¿ªÇÒ
-	 * @param subject ¼±»ı´Ô ´ã´ç °ú¸ñ
-	 * @param school_id ¼±»ı´Ô ¼Ò¼Ó ÇĞ±³
-	 * @param version ¼±»ı´Ô µ¥ÀÌÅÍ º¯°æ °¨Áö ¹öÀü
+	 * @param uuid ì„ ìƒë‹˜ UUID
+	 * @param name ì„ ìƒë‹˜ ì´ë¦„
+	 * @param name2 ì„ ìƒë‹˜ ì´ë¦„ [ ì¤‘ë³µ ë°©ì§€ ì´ë¦„ ]
+	 * @param image ì„ ìƒë‹˜ ì´ë¯¸ì§€ URL
+	 * @param description ì„ ìƒë‹˜ ì„¤ëª…
+	 * @param department1 ì„ ìƒë‹˜ ì†Œì† ë¶€ì„œ UUID
+	 * @param department2 ì„ ìƒë‹˜ ì†Œì† ë¶€ì„œ UUID
+	 * @param email ì„ ìƒë‹˜ ì´ë©”ì¼ ì£¼ì†Œ
+	 * @param mobile_phone ì„ ìƒë‹˜ íœ´ëŒ€ì „í™” ì „í™”ë²ˆí˜¸
+	 * @param office_phone ì„ ìƒë‹˜ ë¶€ì„œ ë‚´ì„  ì „í™”ë²ˆí˜¸
+	 * @param position ì„ ìƒë‹˜ ì—­í• 
+	 * @param subject ì„ ìƒë‹˜ ë‹´ë‹¹ ê³¼ëª©
+	 * @param school_id ì„ ìƒë‹˜ ì†Œì† í•™êµ
+	 * @param version ì„ ìƒë‹˜ ë°ì´í„° ë³€ê²½ ê°ì§€ ë²„ì „
 	 */
 	public OnlineAttendanceTeacherVO(String uuid, String name, String name2, String image, String description,
 			String department1, String department2, String email, String mobile_phone, String office_phone,

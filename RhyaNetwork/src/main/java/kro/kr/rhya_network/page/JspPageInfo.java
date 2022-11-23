@@ -3,11 +3,11 @@ package kro.kr.rhya_network.page;
 import javax.servlet.http.HttpServletRequest;
 
 public class JspPageInfo {
-	// URL Á¤º¸
+	// URL ì •ë³´
 	public static final String ServerURL = "https://rhya-network.kro.kr";
 
-	// ÆäÀÌÁö ¾ÆÀÌµğ
-	/* RHYA.Network ·Î±×ÀÎ, È¸¿ø°¡ÀÔ, ºñ¹Ğ¹øÈ£ Ã£±â */
+	// í˜ì´ì§€ ì•„ì´ë””
+	/* RHYA.Network ë¡œê·¸ì¸, íšŒì›ê°€ì…, ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° */
 	public static final int PageID_User_Account_Sign_In = 0;
 	public static final int PageID_User_Account_Sign_Up = 1;
 	public static final int PageID_User_Account_Sign_In_Task = 2;
@@ -20,91 +20,91 @@ public class JspPageInfo {
 	public static final int PageID_User_Account_Sign_Up_Email = 9;
 	public static final int PageID_User_Account_Sign_In_Callback = 10;
 	public static final int PageID_User_Account_Logout = 11;
-	/* ¸ŞÀÎ ÆäÀÌÁö */
+	/* ë©”ì¸ í˜ì´ì§€ */
 	public static final int PageID_Rhya_Network_Main = 12;
 	/* RHYA.Network terms */
 	public static final int PageID_Rhya_Network_Terms = 13;
-	/* RHYA.Network auth token ¹ß±Ş */
+	/* RHYA.Network auth token ë°œê¸‰ */
 	public static final int PageID_Rhya_Network_Auth_Get_Token = 14;
 	public static final int PageID_Rhya_Network_Auth_Check_Token = 15;
-	/* RHYA.Network »ç¿ëÀÚ °èÁ¤ Á¤º¸ º¯°æ */
+	/* RHYA.Network ì‚¬ìš©ì ê³„ì • ì •ë³´ ë³€ê²½ */
 	public static final int PageID_User_Account_Info_Edit = 16;
 	public static final int PageID_User_Account_Info_Edit_Task = 17;
-	/* RHYA.Network auth token Á¤º¸ °¡Á®¿À±â */
+	/* RHYA.Network auth token ì •ë³´ ê°€ì ¸ì˜¤ê¸° */
 	public static final int PageID_User_Account_Auth_Get_Info_Token = 18;
 	/* RHYA.Network utaite player */
 	public static final int PageID_Rhya_Utaite_Player = 19;
-	/* RHYA.Network »ç¿ëÀÚ °èÁ¤ Á¤º¸ º¯°æ */
+	/* RHYA.Network ì‚¬ìš©ì ê³„ì • ì •ë³´ ë³€ê²½ */
 	public static final int PageID_User_Account_Info_Edit_PW_Task = 20;
-	/* RHYA.Network °øÁö»çÇ× */
+	/* RHYA.Network ê³µì§€ì‚¬í•­ */
 	public static final int PageID_Rhya_Network_Announcement = 21;
-	/* RHYA.Network ÆäÀÌÁö Á¢±Ù Â÷´Ü */
+	/* RHYA.Network í˜ì´ì§€ ì ‘ê·¼ ì°¨ë‹¨ */
 	public static final int PageID_Rhya_Network_Page_Blocked = 22;
-	/* RHYA.Network ·£´ı ¾Ö´Ï »çÁø */
+	/* RHYA.Network ëœë¤ ì• ë‹ˆ ì‚¬ì§„ */
 	public static final int PageID_Random_Anim_Image = 23;
-	/* ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ÀÌ¹ÌÁö */
+	/* ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì´ë¯¸ì§€ */
 	public static final int PageID_Utaite_Player_Get_Image = 24;
-	/* ¿Â¶óÀÎ Ãâ¼®ºÎ ÀÌ¹ÌÁö */
+	/* ì˜¨ë¼ì¸ ì¶œì„ë¶€ ì´ë¯¸ì§€ */
 	public static final int PageID_Online_Attendance_Image = 25;
-	/* ¿Â¶óÀÎ Ãâ¼®ºÎ °èÁ¤ µ¿±âÈ­ Àü¿ë ÆäÀÌÁö */
+	/* ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê³„ì • ë™ê¸°í™” ì „ìš© í˜ì´ì§€ */
 	public static final int PageID_Online_Attendance_Account_Sync = 26;
 	public static final int PageID_Online_Attendance_Account_Sync_Email_Task = 27;
 	/* RHYA.Network online attendance */
 	public static final int PageID_Online_Attendance = 28;
-	/* RHYA.Network ¼­¹ö Á¤º¸ ÆäÀÌÁö */
+	/* RHYA.Network ì„œë²„ ì •ë³´ í˜ì´ì§€ */
 	public static final int PageID_Rhya_Network_Server_Info = 29;
-	/* RHYA.Network IP Çã¿ë ÀÛ¾÷ Ã³¸® ÆäÀÌÁö */
+	/* RHYA.Network IP í—ˆìš© ì‘ì—… ì²˜ë¦¬ í˜ì´ì§€ */
 	public static final int PageID_Rhya_IP_Access_Allow = 30;
-	/* RHYA.Network ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ¿ÀÆù¼Ò½º ¶óÀÌ¼¾½º ÆäÀÌÁö */
+	/* RHYA.Network ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì˜¤í°ì†ŒìŠ¤ ë¼ì´ì„¼ìŠ¤ í˜ì´ì§€ */
 	public static final int PageID_Utaite_Player_Licenses = 31;
-	/* RHYA.Network ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ³ë·¡ ½ÅÃ» ÆäÀÌÁö */
+	/* RHYA.Network ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ë…¸ë˜ ì‹ ì²­ í˜ì´ì§€ */
 	public static final int PageID_Utaite_Player_Song_Add_Manager = 32;
-	/* RHYA.Network ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ³ë·¡ ½ÅÃ» [ÆÄÀÏ ¾÷·Îµå] ÆäÀÌÁö */
+	/* RHYA.Network ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ë…¸ë˜ ì‹ ì²­ [íŒŒì¼ ì—…ë¡œë“œ] í˜ì´ì§€ */
 	public static final int PageID_Utaite_Player_Song_Add_Manager_File_Upload = 33;
-	/* RHYA.Network ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ³ë·¡ ½ÅÃ» ÆäÀÌÁö [°ü¸®ÀÚ] ÀÛ¾÷ */
+	/* RHYA.Network ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ë…¸ë˜ ì‹ ì²­ í˜ì´ì§€ [ê´€ë¦¬ì] ì‘ì—… */
 	public static final int PageID_Utaite_Player_Song_Add_Manager_Admin = 34;
-	/* RHYA.Network ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ³ë·¡ ½ÅÃ» ÆäÀÌÁö [°ü¸®ÀÚ] ÀÛ¾÷ Ã³¸® */
+	/* RHYA.Network ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ë…¸ë˜ ì‹ ì²­ í˜ì´ì§€ [ê´€ë¦¬ì] ì‘ì—… ì²˜ë¦¬ */
 	public static final int PageID_Utaite_Player_Song_Add_Manager_Admin_Task = 35;
-	/* RHYA.Network ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ÀÌ¿ë±Ç ½ÅÃ» ÆäÀÌÁö */
+	/* RHYA.Network ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì´ìš©ê¶Œ ì‹ ì²­ í˜ì´ì§€ */
 	public static final int PageID_Utaite_Player_Licenses_Application = 36;
-	/* RHYA.Network ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ÀÌ¿ë±Ç ½ÅÃ» ÆäÀÌÁö ÀÛ¾÷ Ã³¸® */
+	/* RHYA.Network ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì´ìš©ê¶Œ ì‹ ì²­ í˜ì´ì§€ ì‘ì—… ì²˜ë¦¬ */
 	public static final int PageID_Utaite_Player_Licenses_Application_Task = 37;
-	/* RHYA.Network ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ÀÌ¿ë±Ç ½ÅÃ» ÆäÀÌÁö [°ü¸®ÀÚ] ÀÛ¾÷ Ã³¸® */
+	/* RHYA.Network ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì´ìš©ê¶Œ ì‹ ì²­ í˜ì´ì§€ [ê´€ë¦¬ì] ì‘ì—… ì²˜ë¦¬ */
 	public static final int PageID_Utaite_Player_Licenses_Application_Admin_Task = 38;
-	/* RHYA.Network ÇÁ·Î±×·¥ ´Ù¿î·Î´õ */
+	/* RHYA.Network í”„ë¡œê·¸ë¨ ë‹¤ìš´ë¡œë” */
 	public static final int PageID_Other_Service_Downloader = 39;
-	/* RHYA.Network ÇÁ·Î±×·¥ ´Ù¿î·Î´õ */
+	/* RHYA.Network í”„ë¡œê·¸ë¨ ë‹¤ìš´ë¡œë” */
 	public static final int PageID_Rhya_Network_VPN_Access_Manager = 40;
-	/* RHYA.Network »ç¿ëÀÚ °èÁ¤À» ¸ğµç ±â±â¿¡¼­ ·Î±×¾Æ¿ô ÀÛ¾÷ ÁøÇà */
+	/* RHYA.Network ì‚¬ìš©ì ê³„ì •ì„ ëª¨ë“  ê¸°ê¸°ì—ì„œ ë¡œê·¸ì•„ì›ƒ ì‘ì—… ì§„í–‰ */
 	public static final int PageID_Rhya_Network_Logout_All_Edit = 41;
-	/* RHYA.Network Auth TokenÀ» ÀÌ¿ëÇÑ »ç¿ëÀÚ ±ÇÇÑ È®ÀÎ */
+	/* RHYA.Network Auth Tokenì„ ì´ìš©í•œ ì‚¬ìš©ì ê¶Œí•œ í™•ì¸ */
 	public static final int PageID_Rhya_Network_Auth_Token_For_Check_User_Permission = 42;
-	/* RHYA.Network °ü¸®ÀÚ µµ±¸ - RHYA.Network Web server background main image manager */
+	/* RHYA.Network ê´€ë¦¬ì ë„êµ¬ - RHYA.Network Web server background main image manager */
 	public static final int PageID_Rhya_Network_Admin_Tool_Server_Background_Image_Manager = 43;
-	/* RHYA.Network °ü¸®ÀÚ µµ±¸ - RHYA.Network Web server announcement editor */
+	/* RHYA.Network ê´€ë¦¬ì ë„êµ¬ - RHYA.Network Web server announcement editor */
 	public static final int PageID_Rhya_Network_Admin_Tool_Announcement_Editor = 44;
 	
-	// ¿À·ù ÆäÀÌÁö °æ·Î
-	/* HTTP 400 ¿¡·¯ */
+	// ì˜¤ë¥˜ í˜ì´ì§€ ê²½ë¡œ
+	/* HTTP 400 ì—ëŸ¬ */
 	public static final String ERROR_PAGE_PATH_HTTP_400 = "/RhyaNetwork/webpage/error_page_400.html";
-	/* HTTP 403 ¿¡·¯ */
+	/* HTTP 403 ì—ëŸ¬ */
 	public static final String ERROR_PAGE_PATH_HTTP_403 = "/RhyaNetwork/webpage/error_page_403.html";
-	/* HTTP 404 ¿¡·¯ */
+	/* HTTP 404 ì—ëŸ¬ */
 	public static final String ERROR_PAGE_PATH_HTTP_404 = "/RhyaNetwork/webpage/error_page_404.html";
-	/* HTTP 408 ¿¡·¯ */
+	/* HTTP 408 ì—ëŸ¬ */
 	public static final String ERROR_PAGE_PATH_HTTP_408 = "/RhyaNetwork/webpage/error_page_408.html";
-	/* HTTP 500 ¿¡·¯ */
+	/* HTTP 500 ì—ëŸ¬ */
 	public static final String ERROR_PAGE_PATH_HTTP_500 = "/RhyaNetwork/webpage/error_page_500.html";
 	
 	
 	
-	// ÆäÀÌÁö »óÅÂ °ü¸® ÇÔ¼ö
+	// í˜ì´ì§€ ìƒíƒœ ê´€ë¦¬ í•¨ìˆ˜
 	public static boolean JspPageStateManager(int Istate) {
 		if (Istate == 0) {
-			// Çã¿ë
+			// í—ˆìš©
 			return true;
 		}else if (Istate == 1) {
-			// Á¢±Ù °ÅºÎ
+			// ì ‘ê·¼ ê±°ë¶€
 			return false;
 		}else {
 			return true;
@@ -113,7 +113,7 @@ public class JspPageInfo {
 	
 	
 	
-	// ÆäÀÌÁö URL °¡Áö°í ¿À´Â ÇÔ¼ö
+	// í˜ì´ì§€ URL ê°€ì§€ê³  ì˜¤ëŠ” í•¨ìˆ˜
 	public static String GetJspPageURL(HttpServletRequest req, int id) {
 		StringBuilder sb = new StringBuilder();
 		
@@ -382,7 +382,7 @@ public class JspPageInfo {
 	
 	
 	
-	// ÆäÀÌÁö Ajax Åë½Å °á°ú Ãâ·Â ÇÔ¼ö
+	// í˜ì´ì§€ Ajax í†µì‹  ê²°ê³¼ ì¶œë ¥ í•¨ìˆ˜
 	public static String GetAjaxResult(String[] result, String split) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(split);

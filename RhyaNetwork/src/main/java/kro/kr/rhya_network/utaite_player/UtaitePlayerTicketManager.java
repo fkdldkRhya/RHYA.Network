@@ -52,32 +52,32 @@ public class UtaitePlayerTicketManager {
 			int checker = databaseConnection.getResultSet().getInt("user_access_var");
 			String date = databaseConnection.getResultSet().getString("user_access_date");
 			
-			// ³¯ÀÚ ¹× º¯¼ö È®ÀÎ
+			// ë‚ ì ë° ë³€ìˆ˜ í™•ì¸
 			if (checker == 1) {
 				if (!date.equals("[null]")) {
 					if (date.equals("[unlimited]")) {
-						// »ç¿ë Çã°¡
+						// ì‚¬ìš© í—ˆê°€
 						isUse = true;
 					}else {
-						// ÇöÀç ³¯ÀÚ
+						// í˜„ì¬ ë‚ ì
 						Date nowDate = new Date();		
 						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 						Date getdate = simpleDateFormat.parse(date);
-						// ³¯ÀÚ È®ÀÎ
+						// ë‚ ì í™•ì¸
 						if (getdate.compareTo(nowDate) >= 0) {
-							// »ç¿ë Çã°¡
+							// ì‚¬ìš© í—ˆê°€
 							isUse = true;
 						}else {
-							// ÀÌ¿ë Â÷´Ü
+							// ì´ìš© ì°¨ë‹¨
 							isUse = false;
 						}
 					}
 				}else {
-					// ÀÌ¿ë Â÷´Ü
+					// ì´ìš© ì°¨ë‹¨
 					isUse = false;
 				}
 			}else {
-				// ÀÌ¿ë Â÷´Ü
+				// ì´ìš© ì°¨ë‹¨
 				isUse = false;
 			}
 		}else {

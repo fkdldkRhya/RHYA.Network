@@ -7,14 +7,14 @@ import kro.kr.rhya_network.utils.db.DatabaseManager;
 
 public class ServiceAccessChecker {
 	/**
-	 * RHYA.Network ¼­ºñ½º Á¢±Ù È®ÀÎ
+	 * RHYA.Network ì„œë¹„ìŠ¤ ì ‘ê·¼ í™•ì¸
 	 * 
-	 * @param type ¼­ºñ½º
-	 * 		 - 0 : ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î
-	 * 		 - 1 : ¿Â¶óÀÎ Ãâ¼®ºÎ
+	 * @param type ì„œë¹„ìŠ¤
+	 * 		 - 0 : ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´
+	 * 		 - 1 : ì˜¨ë¼ì¸ ì¶œì„ë¶€
 	 * @return boolean
-	 * @throws SQLException DB Á¢¼Ó ¿À·ù
-	 * @throws ClassNotFoundException DB Á¢¼Ó ¿À·ù
+	 * @throws SQLException DB ì ‘ì† ì˜¤ë¥˜
+	 * @throws ClassNotFoundException DB ì ‘ì† ì˜¤ë¥˜
 	 */
 	public boolean isAccessService(int type) throws ClassNotFoundException, SQLException {
 		DatabaseManager.DatabaseConnection connection = new DatabaseManager.DatabaseConnection();
@@ -28,7 +28,7 @@ public class ServiceAccessChecker {
 		switch (type) {
 			default: isResult = false;
 			
-			// ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î
+			// ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´
 			case 0: {
 				if (connection.getResultSet().next()) {
 					isResult = connection.getResultSet().getInt("service_online_utaite_player") == 0;
@@ -39,7 +39,7 @@ public class ServiceAccessChecker {
 				break;
 			}
 			
-			// ¿Â¶óÀÎ Ãâ¼®ºÎ
+			// ì˜¨ë¼ì¸ ì¶œì„ë¶€
 			case 1: {
 				if (connection.getResultSet().next()) {
 					isResult = connection.getResultSet().getInt("service_online_online_attendance") == 0;

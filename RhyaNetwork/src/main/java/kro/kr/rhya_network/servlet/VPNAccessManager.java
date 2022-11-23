@@ -31,7 +31,7 @@ import kro.kr.rhya_network.utils.db.DatabaseManager.DatabaseConnection;
 @WebServlet("/vpn_access_manager")
 public class VPNAccessManager extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	// JSON ¹İÈ¯ °á°ú
+	// JSON ë°˜í™˜ ê²°ê³¼
 	private final String successMessage = "success";
 	private final String failMessage = "fail";
        
@@ -49,37 +49,37 @@ public class VPNAccessManager extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		// Rhya ·Î°Å º¯¼ö ¼±¾ğ
+		// Rhya ë¡œê±° ë³€ìˆ˜ ì„ ì–¸
 		RhyaLogger rl = new RhyaLogger();
-		// Rhya ·Î°Å ¼³Á¤
+		// Rhya ë¡œê±° ì„¤ì •
 		rl.JspName = request.getServletPath();
 		rl.LogConsole = true;
 		rl.LogFile = true;
 		
 		
-		// Å¬¶óÀÌ¾ğÆ® IP
+		// í´ë¼ì´ì–¸íŠ¸ IP
 		String clientIP = GetClientIPAddress.getClientIp(request);
 		
 		
-		// JSON °á°ú
+		// JSON ê²°ê³¼
 		final String keyName_Result = "result";
 		final String keyName_Message = "message";
-		// JSON º¯¼ö
+		// JSON ë³€ìˆ˜
 		Gson gson = new Gson();
 		JsonObject obj = new JsonObject();
 
 		
-		// DB °ü¸®ÀÚ ¼±¾ğ
+		// DB ê´€ë¦¬ì ì„ ì–¸
 		DatabaseManager.DatabaseConnection databaseConnection = new DatabaseManager.DatabaseConnection();
 		databaseConnection.init();
 		
 		
-		// ÀüÃ¼ ¿¹¿Ü Ã³¸®
+		// ì „ì²´ ì˜ˆì™¸ ì²˜ë¦¬
 		try {
-			// ÆäÀÌÁö ÃÊ±âÈ­
+			// í˜ì´ì§€ ì´ˆê¸°í™”
 			JSPUtilsInitTask jspUtilsInitTask = new JSPUtilsInitTask();
-			if (jspUtilsInitTask.initTask(rl, request, response, JspPageInfo.PageID_Rhya_Network_VPN_Access_Manager)) { // ÆäÀÌÁö ÃÊ±âÈ­ ¼º°ø
-				// DB Á¢¼Ó
+			if (jspUtilsInitTask.initTask(rl, request, response, JspPageInfo.PageID_Rhya_Network_VPN_Access_Manager)) { // í˜ì´ì§€ ì´ˆê¸°í™” ì„±ê³µ
+				// DB ì ‘ì†
 				try {
 					databaseConnection.init();
 					databaseConnection.connection();
@@ -89,28 +89,28 @@ public class VPNAccessManager extends HttpServlet {
 					
 					databaseConnection = null;
 					
-					// ·Î±× Ãâ·Â
-					rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á Áß ¿À·ù ¹ß»ı! ", e.toString()));
+					// ë¡œê·¸ ì¶œë ¥
+					rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²° ì¤‘ ì˜¤ë¥˜ ë°œìƒ! ", e.toString()));
 				}
 				
-				// Null È®ÀÎ
+				// Null í™•ì¸
 				if (databaseConnection != null) {
-					// Main ÆÄ¶ó¹ÌÅÍ ÃßÃâ
+					// Main íŒŒë¼ë¯¸í„° ì¶”ì¶œ
 					int inputMode = Integer.parseInt(request.getParameter("mode"));
-					// ·Î±× Ãâ·Â
-					rl.Log(RhyaLogger.Type.Debug, rl.CreateLogTextv8(clientIP, "Å¬¶óÀÌ¾ğÆ®°¡ ÇØ´ç ÆÄ¶ó¹ÌÅÍ·Î Á¢¼ÓÇÔ Mode:", Integer.toString(inputMode)));
+					// ë¡œê·¸ ì¶œë ¥
+					rl.Log(RhyaLogger.Type.Debug, rl.CreateLogTextv8(clientIP, "í´ë¼ì´ì–¸íŠ¸ê°€ í•´ë‹¹ íŒŒë¼ë¯¸í„°ë¡œ ì ‘ì†í•¨ Mode:", Integer.toString(inputMode)));
 				
-					// ÆÄ¶ó¹ÌÅÍ ±¸ºĞ
+					// íŒŒë¼ë¯¸í„° êµ¬ë¶„
 					switch (inputMode) {
 						/**
-						 * ¾Ë ¼ö ¾ø´Â ¸í·É¾î
+						 * ì•Œ ìˆ˜ ì—†ëŠ” ëª…ë ¹ì–´
 						 */
 						default: {
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ÀÔ·ÂÇÑ ¸í·ÉÀ» ºĞ¼®ÇÒ ¼ö ¾ø½À´Ï´Ù. Mode:", Integer.toString(inputMode)));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ì…ë ¥í•œ ëª…ë ¹ì„ ë¶„ì„í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. Mode:", Integer.toString(inputMode)));
 							
 							obj.addProperty(keyName_Result, failMessage);
-							obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¸í·ÉÀÔ´Ï´Ù. mode ÆÄ¶ó¹ÌÅÍ¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.", "UTF-8"));
+							obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ëª…ë ¹ì…ë‹ˆë‹¤. mode íŒŒë¼ë¯¸í„°ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”.", "UTF-8"));
 							
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
@@ -120,57 +120,57 @@ public class VPNAccessManager extends HttpServlet {
 						
 						
 						/**
-						 * VPN ¼­ºñ½º °ü¸® ¸ğµå : 0
+						 * VPN ì„œë¹„ìŠ¤ ê´€ë¦¬ ëª¨ë“œ : 0
 						 * 
-						 * ¼³¸í :
-						 * 		OpenVPN Á¤º¸ ºÒ·¯¿À±â
+						 * ì„¤ëª… :
+						 * 		OpenVPN ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
+						 * íŒŒë¼ë¯¸í„° :
 						 * 		authToken   --> Auth Token
 						 */
 						case 0: {
-							// Auth token È®ÀÎ
+							// Auth token í™•ì¸
 							String authToken = request.getParameter("auth");
 							PageParameter.AuthToken authTokenParm = new PageParameter.AuthToken();
 							AuthTokenChecker authTokenChecker = new AuthTokenChecker();
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
 									result[2].equals(authTokenParm.SERVICE.get(2)) &&
-									isAccessUserForVPNService(result[1])) { // ·Î±×ÀÎ ¼º°ø
-								// µ¥ÀÌÅÍ Á¸Àç ¿©ºÎ È®ÀÎ
+									isAccessUserForVPNService(result[1])) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// ë°ì´í„° ì¡´ì¬ ì—¬ë¶€ í™•ì¸
 								databaseConnection.setPreparedStatement("SELECT * FROM vpn_service_info;");
 								databaseConnection.setResultSet();
 								if (databaseConnection.getResultSet().next()) {
 									if (databaseConnection.getResultSet().getInt("access") != 0) {
-										// JSON µ¥ÀÌÅÍ ¼³Á¤
+										// JSON ë°ì´í„° ì„¤ì •
 										obj.addProperty(keyName_Result, failMessage);
-										obj.addProperty(keyName_Message, URLEncoder.encode("OpenVPN Á¤º¸ Ãâ·Â ½ÇÆĞ! [Á¢±Ù °ÅºÎ]", "UTF-8"));
+										obj.addProperty(keyName_Message, URLEncoder.encode("OpenVPN ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ì ‘ê·¼ ê±°ë¶€]", "UTF-8"));
 									}else {
-										// JSON µ¥ÀÌÅÍ ¼³Á¤
+										// JSON ë°ì´í„° ì„¤ì •
 										obj.addProperty(keyName_Result, successMessage);
 										byte[] encodedBytes = Base64.encodeBase64(databaseConnection.getResultSet().getString("open_vpn_config").getBytes());
 										obj.addProperty("open_vpn_config", URLEncoder.encode(new String(encodedBytes), "UTF-8"));
 										obj.addProperty("account_id", URLEncoder.encode(databaseConnection.getResultSet().getString("account_id"), "UTF-8"));
 										obj.addProperty("account_pw", URLEncoder.encode(databaseConnection.getResultSet().getString("account_pw"), "UTF-8"));
 										
-										// ·Î±× Ãâ·Â
-										rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "OpenVPN Á¤º¸ Ãâ·Â ¼º°ø! Auth Token:", authToken));
+										// ë¡œê·¸ ì¶œë ¥
+										rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "OpenVPN ì •ë³´ ì¶œë ¥ ì„±ê³µ! Auth Token:", authToken));
 									}
 								}else {
-									// JSON µ¥ÀÌÅÍ ¼³Á¤
+									// JSON ë°ì´í„° ì„¤ì •
 									obj.addProperty(keyName_Result, failMessage);
-									obj.addProperty(keyName_Message, URLEncoder.encode("OpenVPN Á¤º¸ Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ]", "UTF-8"));
+									obj.addProperty(keyName_Message, URLEncoder.encode("OpenVPN ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨]", "UTF-8"));
 								}
-							}else { // ·Î±×ÀÎ ½ÇÆĞ
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+							}else { // ë¡œê·¸ì¸ ì‹¤íŒ¨
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, failMessage);
-								obj.addProperty(keyName_Message, URLEncoder.encode("OpenVPN Á¤º¸ Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ]", "UTF-8"));
+								obj.addProperty(keyName_Message, URLEncoder.encode("OpenVPN ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨]", "UTF-8"));
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "OpenVPN Á¤º¸ Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "OpenVPN ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 							}
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -178,10 +178,10 @@ public class VPNAccessManager extends HttpServlet {
 						}
 					}
 				}
-			}else { // ÆäÀÌÁö ÃÊ±âÈ­ ½ÇÆĞ
+			}else { // í˜ì´ì§€ ì´ˆê¸°í™” ì‹¤íŒ¨
 				obj.addProperty(keyName_Result, failMessage);
 				
-				rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "JSP ÆäÀÌÁö ÃÊ±âÈ­ Áß ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù."));
+				rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "JSP í˜ì´ì§€ ì´ˆê¸°í™” ì¤‘ ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤."));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -190,8 +190,8 @@ public class VPNAccessManager extends HttpServlet {
 			PrintWriter out = response.getWriter(); 
 			out.println(gson.toJson(obj));
 			
-			// ·Î±× Ãâ·Â
-			rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "¾Ë ¼ö ¾ø´Â ¿À·ù ¹ß»ı!", e.toString()));
+			// ë¡œê·¸ ì¶œë ¥
+			rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ ë°œìƒ!", e.toString()));
 		}
 	}
 
@@ -227,9 +227,9 @@ public class VPNAccessManager extends HttpServlet {
 	// ----------------------------------------------------------------------- //
 	// ----------------------------------------------------------------------- //
 	/**
-	 * OpenVPN ¼­ºñ½º Á¢±Ù ÇÏ¿ë °èÁ¤ È®ÀÎ
-	 * @param user_uuid »ç¿ëÀÚ UUID
-	 * @return Á¢±Ù °¡´É ¿©ºÎ
+	 * OpenVPN ì„œë¹„ìŠ¤ ì ‘ê·¼ í•˜ìš© ê³„ì • í™•ì¸
+	 * @param user_uuid ì‚¬ìš©ì UUID
+	 * @return ì ‘ê·¼ ê°€ëŠ¥ ì—¬ë¶€
 	 */
 	private boolean isAccessUserForVPNService(String user_uuid) {
 		try {

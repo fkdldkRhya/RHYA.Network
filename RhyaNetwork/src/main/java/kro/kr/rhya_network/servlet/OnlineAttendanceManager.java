@@ -55,17 +55,17 @@ public class OnlineAttendanceManager extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		// Rhya ·Î°Å º¯¼ö ¼±¾ğ
+		// Rhya ë¡œê±° ë³€ìˆ˜ ì„ ì–¸
 		RhyaLogger rl = new RhyaLogger();
-		// Rhya ·Î°Å ¼³Á¤
+		// Rhya ë¡œê±° ì„¤ì •
 		rl.JspName = request.getServletPath();
 		rl.LogConsole = true;
 		rl.LogFile = true;
 
-		// Å¬¶óÀÌ¾ğÆ® ¾ÆÀÌÇÇ
+		// í´ë¼ì´ì–¸íŠ¸ ì•„ì´í”¼
 		String clientIP = GetClientIPAddress.getClientIp(request);
 
-		// Ãâ·Â °á°ú
+		// ì¶œë ¥ ê²°ê³¼
 		Gson gson = new Gson();
 		JsonObject obj = new JsonObject();
 		final String successMessage = "success";
@@ -76,10 +76,10 @@ public class OnlineAttendanceManager extends HttpServlet {
 		try {
 			JSPUtilsInitTask jspUtilsInitTask = new JSPUtilsInitTask();
 			if (jspUtilsInitTask.initTask(rl, request, response, JspPageInfo.PageID_Online_Attendance)) {
-				// ÆäÀÌÁö Á¢±Ù È®ÀÎ
+				// í˜ì´ì§€ ì ‘ê·¼ í™•ì¸
 				if (!new ServiceAccessChecker().isAccessService(1)) {
-					// ·Î±× Ãâ·Â
-					rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "¼­ºñ½º Á¢±Ù Â÷´ÜµÊ!"));
+					// ë¡œê·¸ ì¶œë ¥
+					rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "ì„œë¹„ìŠ¤ ì ‘ê·¼ ì°¨ë‹¨ë¨!"));
 					
 					obj.addProperty(keyName_Result, "service_access_block");
 					
@@ -89,30 +89,30 @@ public class OnlineAttendanceManager extends HttpServlet {
 					return;
 				}
 				
-				// ¸í·É¾î
+				// ëª…ë ¹ì–´
 				int command = Integer.parseInt(request.getParameter("mode"));
-				// ¸í·É¾î ±¸ºĞ
+				// ëª…ë ¹ì–´ êµ¬ë¶„
 				switch (command) {
 					default: {
 						obj.addProperty(keyName_Result, failMessage);
-						obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¸í·ÉÀÔ´Ï´Ù. mode ÆÄ¶ó¹ÌÅÍ¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.", "UTF-8"));
+						obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ëª…ë ¹ì…ë‹ˆë‹¤. mode íŒŒë¼ë¯¸í„°ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”.", "UTF-8"));
 						PrintWriter out = response.getWriter(); 
 						out.println(gson.toJson(obj));
 						
-						rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¾Ë ¼ö ¸í·ÉÀÔ´Ï´Ù. mode ÆÄ¶ó¹ÌÅÍ¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä."));
+						rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ì•Œ ìˆ˜ ëª…ë ¹ì…ë‹ˆë‹¤. mode íŒŒë¼ë¯¸í„°ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”."));
 						break;
 					}
 						
 					
 					case 0: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 0
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 0
 						 * 
-						 * ¼³¸í :
-						 * 		¾Û ¹öÀü, ¾Û ¼­¸í SHA Áö¹® Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		ì•± ë²„ì „, ì•± ì„œëª… SHA ì§€ë¬¸ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		<¾øÀ½>
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		<ì—†ìŒ>
 						 */
 						DatabaseManager.DatabaseConnection databaseConnection = new DatabaseManager.DatabaseConnection();
 						databaseConnection.init();
@@ -126,13 +126,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "App version, App sign SHA key Ãâ·Â ¼º°ø"));	
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "App version, App sign SHA key ì¶œë ¥ ì„±ê³µ"));	
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "App version, App sign SHA key Ãâ·Â ½ÇÆĞ"));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "App version, App sign SHA key ì¶œë ¥ ì‹¤íŒ¨"));
 						}
 						
 						databaseConnection.allClose();
@@ -143,14 +143,14 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 1: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 1
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 1
 						 * 
-						 * ¼³¸í :
-						 * 		ÀÔ·ÂµÈ ÇĞ±³¿¡ ¼Ò¼ÓµÇ¾îÀÖ´Â ¸ğµç ¼±»ı´Ô Á¤º¸ Ãâ·Â
-						 * 		(´Ü, ÀüÈ­¹øÈ£-ÀÌ¸ŞÀÏ ÁÖ¼Ò °°Àº ¹Î°¨ Á¤º¸´Â Á¦¿ÜµÊ.)
+						 * ì„¤ëª… :
+						 * 		ì…ë ¥ëœ í•™êµì— ì†Œì†ë˜ì–´ìˆëŠ” ëª¨ë“  ì„ ìƒë‹˜ ì •ë³´ ì¶œë ¥
+						 * 		(ë‹¨, ì „í™”ë²ˆí˜¸-ì´ë©”ì¼ ì£¼ì†Œ ê°™ì€ ë¯¼ê° ì •ë³´ëŠ” ì œì™¸ë¨.)
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		schoolid  --> ÇĞ±³ ¾ÆÀÌµğ ÀÔ·Â
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		schoolid  --> í•™êµ ì•„ì´ë”” ì…ë ¥
 						 * 		authToken --> Auth Token
 						 */
 						String authToken = request.getParameter("authToken");
@@ -251,13 +251,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 							obj.add("teacher", array);
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¸ğµç ¼±»ı´Ô Á¤º¸ Ãâ·Â ¼º°ø! School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ëª¨ë“  ì„ ìƒë‹˜ ì •ë³´ ì¶œë ¥ ì„±ê³µ! School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¸ğµç ¼±»ı´Ô Á¤º¸ Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ëª¨ë“  ì„ ìƒë‹˜ ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
 						}
 						
 						break;
@@ -266,14 +266,14 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 2: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 2
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 2
 						 * 
-						 * ¼³¸í :
-						 * 		¸ğµå 1¿¡¼­ Ãâ·ÂµÇÁö ¾ÊÀº ¹Î°¨Á¤º¸¸¦ Ãâ·ÂÇÏ´Â ÀÛ¾÷
-						 * 		(ÀüÈ­¹øÈ£, ÀÌ¸ŞÀÏÀÌ °ø°³°¡ Á¦ÇÑµÇ¾î ÀÖ´Ù¸é '[private]'À» ¹İÈ¯)
+						 * ì„¤ëª… :
+						 * 		ëª¨ë“œ 1ì—ì„œ ì¶œë ¥ë˜ì§€ ì•Šì€ ë¯¼ê°ì •ë³´ë¥¼ ì¶œë ¥í•˜ëŠ” ì‘ì—…
+						 * 		(ì „í™”ë²ˆí˜¸, ì´ë©”ì¼ì´ ê³µê°œê°€ ì œí•œë˜ì–´ ìˆë‹¤ë©´ '[private]'ì„ ë°˜í™˜)
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		teacherUUID  --> ¼±»ı´Ô UUID
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		teacherUUID  --> ì„ ìƒë‹˜ UUID
 						 * 		authToken    --> Auth Token
 						 */
 						String tUUID = request.getParameter("uuid");
@@ -337,13 +337,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 									out.println(gson.toJson(obj));
 								}
 								
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¹Î°¨Á¤º¸ Ãâ·Â ¼º°ø! Teacher UUID:", tUUID, ",Auth Token:", authToken));
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ë¯¼ê°ì •ë³´ ì¶œë ¥ ì„±ê³µ! Teacher UUID:", tUUID, ",Auth Token:", authToken));
 							}else {
 								obj.addProperty(keyName_Result, failMessage);
 								PrintWriter out = response.getWriter(); 
 								out.println(gson.toJson(obj));
 								
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¹Î°¨Á¤º¸ Ãâ·Â ½ÇÆĞ! [¼±»ı´Ô UUID °Ë»ö ½ÇÆĞ] Teacher UUID:", tUUID, ",Auth Token:", authToken));
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ë¯¼ê°ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ì„ ìƒë‹˜ UUID ê²€ìƒ‰ ì‹¤íŒ¨] Teacher UUID:", tUUID, ",Auth Token:", authToken));
 							}
 							
 							databaseConnection.allClose();
@@ -352,7 +352,7 @@ public class OnlineAttendanceManager extends HttpServlet {
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¹Î°¨Á¤º¸ Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Teacher UUID:", tUUID, ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ë¯¼ê°ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Teacher UUID:", tUUID, ",Auth Token:", authToken));
 						}
 						
 						break;
@@ -362,13 +362,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 3: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 3
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 3
 						 * 
-						 * ¼³¸í :
-						 * 		ÀÔ·ÂµÈ ÇĞ±³¿¡ ¼Ò¼ÓµÇ¾îÀÖ´Â ¸ğµç ÇĞ»ı Á¤º¸ Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		ì…ë ¥ëœ í•™êµì— ì†Œì†ë˜ì–´ìˆëŠ” ëª¨ë“  í•™ìƒ ì •ë³´ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		schoolid  --> ÇĞ±³ ¾ÆÀÌµğ ÀÔ·Â
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		schoolid  --> í•™êµ ì•„ì´ë”” ì…ë ¥
 						 * 		authToken --> Auth Token
 						 */
 						String authToken = request.getParameter("authToken");
@@ -452,13 +452,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 							obj.add("student", array);
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¸ğµç ÇĞ»ı Á¤º¸ Ãâ·Â ¼º°ø! School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ëª¨ë“  í•™ìƒ ì •ë³´ ì¶œë ¥ ì„±ê³µ! School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¸ğµç ÇĞ»ı Á¤º¸ Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ëª¨ë“  í•™ìƒ ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
 						}
 						
 						
@@ -468,13 +468,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 4: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 4
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 4
 						 * 
-						 * ¼³¸í :
-						 * 		ÀÔ·ÂµÈ ÇĞ±³¿¡ ¼Ò¼ÓµÇ¾îÀÖ´Â ¸ğµç ÇĞ»ı Á¤º¸ Ãâ·Â [ Version Á¤º¸¿Í UUID¸¸ Ãâ·Â ]
+						 * ì„¤ëª… :
+						 * 		ì…ë ¥ëœ í•™êµì— ì†Œì†ë˜ì–´ìˆëŠ” ëª¨ë“  í•™ìƒ ì •ë³´ ì¶œë ¥ [ Version ì •ë³´ì™€ UUIDë§Œ ì¶œë ¥ ]
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		schoolid  --> ÇĞ±³ ¾ÆÀÌµğ ÀÔ·Â
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		schoolid  --> í•™êµ ì•„ì´ë”” ì…ë ¥
 						 * 		authToken --> Auth Token
 						 */
 						String authToken = request.getParameter("authToken");
@@ -525,13 +525,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 							obj.add("student", array);
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¸ğµç ÇĞ»ı Á¤º¸ (UUID, Version) Ãâ·Â ¼º°ø! School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ëª¨ë“  í•™ìƒ ì •ë³´ (UUID, Version) ì¶œë ¥ ì„±ê³µ! School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¸ğµç ÇĞ»ı Á¤º¸ (UUID, Version) Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ëª¨ë“  í•™ìƒ ì •ë³´ (UUID, Version) ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
 						}
 						
 						
@@ -541,13 +541,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 5: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 5
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 5
 						 * 
-						 * ¼³¸í :
-						 * 		ÀÔ·ÂµÈ ÇĞ±³¿¡ ¼Ò¼ÓµÇ¾îÀÖ´Â ¸ğµç ¼±»ı´Ô Á¤º¸ Ãâ·Â [ Version Á¤º¸¿Í UUID¸¸ Ãâ·Â ]
+						 * ì„¤ëª… :
+						 * 		ì…ë ¥ëœ í•™êµì— ì†Œì†ë˜ì–´ìˆëŠ” ëª¨ë“  ì„ ìƒë‹˜ ì •ë³´ ì¶œë ¥ [ Version ì •ë³´ì™€ UUIDë§Œ ì¶œë ¥ ]
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		schoolid  --> ÇĞ±³ ¾ÆÀÌµğ ÀÔ·Â
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		schoolid  --> í•™êµ ì•„ì´ë”” ì…ë ¥
 						 * 		authToken --> Auth Token
 						 */
 						String authToken = request.getParameter("authToken");
@@ -585,13 +585,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 							obj.add("teacher", array);
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¸ğµç ¼±»ı´Ô Á¤º¸ (UUID, Version) Ãâ·Â ¼º°ø! School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ëª¨ë“  ì„ ìƒë‹˜ ì •ë³´ (UUID, Version) ì¶œë ¥ ì„±ê³µ! School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¸ğµç ¼±»ı´Ô Á¤º¸ (UUID, Version) Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ëª¨ë“  ì„ ìƒë‹˜ ì •ë³´ (UUID, Version) ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
 						}
 						
 						break;
@@ -600,14 +600,14 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 6: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 6
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 6
 						 * 
-						 * ¼³¸í :
-						 * 		Æ¯Á¤ ¼±»ı´Ô Á¤º¸ Ãâ·Â
-						 * 		(´Ü, ÀüÈ­¹øÈ£-ÀÌ¸ŞÀÏ ÁÖ¼Ò °°Àº ¹Î°¨ Á¤º¸´Â Á¦¿ÜµÊ.)
+						 * ì„¤ëª… :
+						 * 		íŠ¹ì • ì„ ìƒë‹˜ ì •ë³´ ì¶œë ¥
+						 * 		(ë‹¨, ì „í™”ë²ˆí˜¸-ì´ë©”ì¼ ì£¼ì†Œ ê°™ì€ ë¯¼ê° ì •ë³´ëŠ” ì œì™¸ë¨.)
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		teacherUUID  --> ¼±»ı´Ô UUID
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		teacherUUID  --> ì„ ìƒë‹˜ UUID
 						 * 		authToken    --> Auth Token
 						 */
 						String tUUID = request.getParameter("uuid");
@@ -699,7 +699,7 @@ public class OnlineAttendanceManager extends HttpServlet {
 								obj.addProperty(keyName_Result, successMessage);
 								out.println(gson.toJson(obj));
 								
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "Æ¯Á¤ ¼±»ı´Ô Á¤º¸ Ãâ·Â ¼º°ø! Teacher UUID:", tUUID, ",Auth Token:", authToken)); 
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "íŠ¹ì • ì„ ìƒë‹˜ ì •ë³´ ì¶œë ¥ ì„±ê³µ! Teacher UUID:", tUUID, ",Auth Token:", authToken)); 
 							}else {
 								databaseConnection.allClose();
 								
@@ -707,14 +707,14 @@ public class OnlineAttendanceManager extends HttpServlet {
 								obj.addProperty(keyName_Result, failMessage);
 								out.println(gson.toJson(obj));
 								
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "Æ¯Á¤ ¼±»ı´Ô Á¤º¸ Ãâ·Â ½ÇÆĞ! Teacher UUID:", tUUID, ",Auth Token:", authToken)); 
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "íŠ¹ì • ì„ ìƒë‹˜ ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! Teacher UUID:", tUUID, ",Auth Token:", authToken)); 
 							}
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "Æ¯Á¤ ¼±»ı´Ô Á¤º¸ Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Teacher UUID:", tUUID, ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "íŠ¹ì • ì„ ìƒë‹˜ ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Teacher UUID:", tUUID, ",Auth Token:", authToken));
 						}
 						
 						break;
@@ -723,13 +723,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 7: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 7
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 7
 						 * 
-						 * ¼³¸í :
-						 * 		Æ¯Á¤ ÇĞ»ı Á¤º¸ Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		íŠ¹ì • í•™ìƒ ì •ë³´ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		studentUUID  --> ÇĞ»ı UUID
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		studentUUID  --> í•™ìƒ UUID
 						 * 		authToken    --> Auth Token
 						 */
 						String sUUID = request.getParameter("uuid");
@@ -789,20 +789,20 @@ public class OnlineAttendanceManager extends HttpServlet {
 								obj.addProperty(keyName_Result, successMessage);
 								out.println(gson.toJson(obj));
 								
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "Æ¯Á¤ ÇĞ»ı Á¤º¸ Ãâ·Â ¼º°ø! Student UUID:", sUUID, ",Auth Token:", authToken)); 
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "íŠ¹ì • í•™ìƒ ì •ë³´ ì¶œë ¥ ì„±ê³µ! Student UUID:", sUUID, ",Auth Token:", authToken)); 
 							}else {
 								obj.addProperty(keyName_Result, failMessage);
 								PrintWriter out = response.getWriter(); 
 								out.println(gson.toJson(obj));
 								
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "Æ¯Á¤ ÇĞ»ı Á¤º¸ Ãâ·Â ¼º°ø! [·Î±×ÀÎ ½ÇÆĞ] Student UUID:", sUUID, ",Auth Token:", authToken));
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "íŠ¹ì • í•™ìƒ ì •ë³´ ì¶œë ¥ ì„±ê³µ! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Student UUID:", sUUID, ",Auth Token:", authToken));
 							}
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "Æ¯Á¤ ÇĞ»ı Á¤º¸ Ãâ·Â ¼º°ø! [·Î±×ÀÎ ½ÇÆĞ] Student UUID:", sUUID, ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "íŠ¹ì • í•™ìƒ ì •ë³´ ì¶œë ¥ ì„±ê³µ! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Student UUID:", sUUID, ",Auth Token:", authToken));
 						}
 						
 						break;
@@ -811,13 +811,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 8: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 8
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 8
 						 * 
-						 * ¼³¸í :
-						 * 		ÀÔ·ÂµÈ ÇĞ±³¿¡ Á¸ÀçÇÏ´Â ¸ğµç ¹İ Á¤º¸ Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		ì…ë ¥ëœ í•™êµì— ì¡´ì¬í•˜ëŠ” ëª¨ë“  ë°˜ ì •ë³´ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		schoolid  --> ÇĞ±³ ¾ÆÀÌµğ ÀÔ·Â
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		schoolid  --> í•™êµ ì•„ì´ë”” ì…ë ¥
 						 * 		authToken --> Auth Token
 						 */
 						String authToken = request.getParameter("authToken");
@@ -860,13 +860,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 							obj.add("class", array);
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¸ğµç ¹İ Á¤º¸ Ãâ·Â ¼º°ø! School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ëª¨ë“  ë°˜ ì •ë³´ ì¶œë ¥ ì„±ê³µ! School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¸ğµç ¹İ Á¤º¸ Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ëª¨ë“  ë°˜ ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
 						}
 						
 						break;
@@ -875,13 +875,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 9: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 9
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 9
 						 * 
-						 * ¼³¸í :
-						 * 		ÀÔ·ÂµÈ ÇĞ±³¿¡ Á¸ÀçÇÏ´Â ºÎ¼­ Á¤º¸ Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		ì…ë ¥ëœ í•™êµì— ì¡´ì¬í•˜ëŠ” ë¶€ì„œ ì •ë³´ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		schoolid  --> ÇĞ±³ ¾ÆÀÌµğ ÀÔ·Â
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		schoolid  --> í•™êµ ì•„ì´ë”” ì…ë ¥
 						 * 		authToken --> Auth Token
 						 */
 						String authToken = request.getParameter("authToken");
@@ -921,13 +921,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 							obj.add("department", array);
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¸ğµç ºÎ¼­ Á¤º¸ Ãâ·Â ¼º°ø! School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ëª¨ë“  ë¶€ì„œ ì •ë³´ ì¶œë ¥ ì„±ê³µ! School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "¸ğµç ºÎ¼­ Á¤º¸ Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "ëª¨ë“  ë¶€ì„œ ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] School ID:", String.valueOf(school_id), ",Auth Token:", authToken));
 						}
 						
 						break;
@@ -936,14 +936,14 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 10: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 10
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 10
 						 * 
-						 * ¼³¸í :
-						 * 		Æ¯Á¤ ¹İ¿¡ ´ëÇÑ Ãâ¼®ºÎ Á¤º¸ ºÒ·¯¿À±â
+						 * ì„¤ëª… :
+						 * 		íŠ¹ì • ë°˜ì— ëŒ€í•œ ì¶œì„ë¶€ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		date        --> ³¯ÀÚ
-						 * 		classUUID   --> ¹İ ±¸ºĞ ¾ÆÀÌµğ ÀÔ·Â
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		date        --> ë‚ ì
+						 * 		classUUID   --> ë°˜ êµ¬ë¶„ ì•„ì´ë”” ì…ë ¥
 						 * 		authToken   --> Auth Token
 						 */
 						
@@ -1124,13 +1124,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 							obj.add("student", array);
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "Æ¯Á¤ ¹İ¿¡ ´ëÇÑ Ãâ¼®ºÎ Á¤º¸ ºÒ·¯¿À±â ¼º°ø! Class UUID:", classUUID, ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "íŠ¹ì • ë°˜ì— ëŒ€í•œ ì¶œì„ë¶€ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸° ì„±ê³µ! Class UUID:", classUUID, ",Auth Token:", authToken));
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "Æ¯Á¤ ¹İ¿¡ ´ëÇÑ Ãâ¼®ºÎ Á¤º¸ ºÒ·¯¿À±â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Class UUID:", classUUID, ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv9(clientIP, "íŠ¹ì • ë°˜ì— ëŒ€í•œ ì¶œì„ë¶€ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Class UUID:", classUUID, ",Auth Token:", authToken));
 						}
 						
 						break;
@@ -1139,15 +1139,15 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 11: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 11
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 11
 						 * 
-						 * ¼³¸í :
-						 * 		Æ¯Á¤ ÇĞ»ı¿¡ ´ëÇÑ 'note' Á¤º¸ ¼öÁ¤
+						 * ì„¤ëª… :
+						 * 		íŠ¹ì • í•™ìƒì— ëŒ€í•œ 'note' ì •ë³´ ìˆ˜ì •
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		date        --> ³¯ÀÚ
-						 * 		studentUUID --> ÇĞ»ı ±¸ºĞ ¾ÆÀÌµğ ÀÔ·Â
-						 * 		description --> »ğÀÔ µ¥ÀÌÅÍ
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		date        --> ë‚ ì
+						 * 		studentUUID --> í•™ìƒ êµ¬ë¶„ ì•„ì´ë”” ì…ë ¥
+						 * 		description --> ì‚½ì… ë°ì´í„°
 						 * 		authToken   --> Auth Token
 						 */
 						
@@ -1230,13 +1230,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "Æ¯Á¤ ÇĞ»ı¿¡ ´ëÇÑ 'note' Á¤º¸ ¼öÁ¤ ¼º°ø! Student UUID:", studentUUID, ",Date:", date, ",Value:", description, ",IsNewInsert", String.valueOf(isTaskForInsert), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "íŠ¹ì • í•™ìƒì— ëŒ€í•œ 'note' ì •ë³´ ìˆ˜ì • ì„±ê³µ! Student UUID:", studentUUID, ",Date:", date, ",Value:", description, ",IsNewInsert", String.valueOf(isTaskForInsert), ",Auth Token:", authToken));
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "Æ¯Á¤ ÇĞ»ı¿¡ ´ëÇÑ 'note' Á¤º¸ ¼öÁ¤ ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Student UUID:", studentUUID, ",Date:", date, ",Value:", description, ",IsNewInsert", null, ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "íŠ¹ì • í•™ìƒì— ëŒ€í•œ 'note' ì •ë³´ ìˆ˜ì • ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Student UUID:", studentUUID, ",Date:", date, ",Value:", description, ",IsNewInsert", null, ",Auth Token:", authToken));
 						}
 						
 						break;
@@ -1245,16 +1245,16 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 12: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 12
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 12
 						 * 
-						 * ¼³¸í :
-						 * 		Æ¯Á¤ ÇĞ»ı¿¡ ´ëÇÑ Ãâ¼® Á¤º¸ ¼öÁ¤
+						 * ì„¤ëª… :
+						 * 		íŠ¹ì • í•™ìƒì— ëŒ€í•œ ì¶œì„ ì •ë³´ ìˆ˜ì •
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		date        --> ³¯ÀÚ
-						 * 		studentUUID --> ÇĞ»ı ±¸ºĞ ¾ÆÀÌµğ ÀÔ·Â
-						 * 		time        --> ¼ö¾÷ ½Ã°£
-						 * 		value       --> Ãâ¼®ºÎ ½Ã°£
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		date        --> ë‚ ì
+						 * 		studentUUID --> í•™ìƒ êµ¬ë¶„ ì•„ì´ë”” ì…ë ¥
+						 * 		time        --> ìˆ˜ì—… ì‹œê°„
+						 * 		value       --> ì¶œì„ë¶€ ì‹œê°„
 						 * 		authToken   --> Auth Token
 						 */
 						
@@ -1376,13 +1376,13 @@ public class OnlineAttendanceManager extends HttpServlet {
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "Æ¯Á¤ ÇĞ»ı¿¡ ´ëÇÑ Ãâ¼® Á¤º¸ ¼öÁ¤ ¼º°ø! Student UUID:", studentUUID, ",Date", date, ",Value:", String.valueOf(value), ",IsNewInsert", String.valueOf(isTaskForInsert), ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "íŠ¹ì • í•™ìƒì— ëŒ€í•œ ì¶œì„ ì •ë³´ ìˆ˜ì • ì„±ê³µ! Student UUID:", studentUUID, ",Date", date, ",Value:", String.valueOf(value), ",IsNewInsert", String.valueOf(isTaskForInsert), ",Auth Token:", authToken));
 						}else {
 							obj.addProperty(keyName_Result, failMessage);
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "Æ¯Á¤ ÇĞ»ı¿¡ ´ëÇÑ Ãâ¼® Á¤º¸ ¼öÁ¤ ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Student UUID:", studentUUID, ",Date", date, ",Value:", String.valueOf(value), ",IsNewInsert", null, ",Auth Token:", authToken));
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "íŠ¹ì • í•™ìƒì— ëŒ€í•œ ì¶œì„ ì •ë³´ ìˆ˜ì • ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Student UUID:", studentUUID, ",Date", date, ",Value:", String.valueOf(value), ",IsNewInsert", null, ",Auth Token:", authToken));
 						}
 						
 						break;
@@ -1392,16 +1392,16 @@ public class OnlineAttendanceManager extends HttpServlet {
 					
 					case 13: {
 						/**
-						 * ¿Â¶óÀÎ Ãâ¼®ºÎ °ü¸® ¸ğµå : 13
+						 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê´€ë¦¬ ëª¨ë“œ : 13
 						 * 
-						 * ¼³¸í :
-						 * 		¾Û ´Ù¿î·Îµå
+						 * ì„¤ëª… :
+						 * 		ì•± ë‹¤ìš´ë¡œë“œ
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		<¾øÀ½>
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		<ì—†ìŒ>
 						 */
 					    final String root = PathManager.ONLINE_ATTENDANCE_APK_PATH;
-					    // ½ÇÁ¦ ³»º¸³¾ ÆÄÀÏ¸í
+					    // ì‹¤ì œ ë‚´ë³´ë‚¼ íŒŒì¼ëª…
 					    String orgfilename = "oa_update_apk.apk";    
 						File file = new File(root);
 						if (file.isFile()) {
@@ -1420,14 +1420,14 @@ public class OnlineAttendanceManager extends HttpServlet {
 							outs.close();
 							fin.close();
 							
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¿Â¶óÀÎ Ãâ¼®ºÎ APK ÆÄÀÏ ´Ù¿î·Îµå ¼º°ø!"));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ì˜¨ë¼ì¸ ì¶œì„ë¶€ APK íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì„±ê³µ!"));
 						}else {
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "File does not exist! ´Ù½Ã ½ÃµµÇØÁÖ½Ê½Ã¿À. [ ¿Â¶óÀÎ Ãâ¼®ºÎ APK ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ ]"));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "File does not exist! ë‹¤ì‹œ ì‹œë„í•´ì£¼ì‹­ì‹œì˜¤. [ ì˜¨ë¼ì¸ ì¶œì„ë¶€ APK íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨ ]"));
 							
 							obj.addProperty(keyName_Result, failMessage);
-							obj.addProperty(keyName_Message, URLEncoder.encode("File does not exist! ´Ù½Ã ½ÃµµÇØÁÖ½Ê½Ã¿À.", "UTF-8"));
+							obj.addProperty(keyName_Message, URLEncoder.encode("File does not exist! ë‹¤ì‹œ ì‹œë„í•´ì£¼ì‹­ì‹œì˜¤.", "UTF-8"));
 							
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
@@ -1435,12 +1435,12 @@ public class OnlineAttendanceManager extends HttpServlet {
 					}
 				}
 			}else {
-				rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "JSP ÆäÀÌÁö ÃÊ±âÈ­ Áß ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù."));
+				rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "JSP í˜ì´ì§€ ì´ˆê¸°í™” ì¤‘ ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤."));
 			}
 		}catch (Exception e) {
 			// TODO: handle exception
 			obj.addProperty(keyName_Result, failMessage);
-			obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ı ÇÏ¿´½À´Ï´Ù. ".concat(e.getMessage()), "UTF-8"));
+			obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒ í•˜ì˜€ìŠµë‹ˆë‹¤. ".concat(e.getMessage()), "UTF-8"));
 			PrintWriter out = response.getWriter(); 
 			out.println(gson.toJson(obj));
 			
@@ -1451,7 +1451,7 @@ public class OnlineAttendanceManager extends HttpServlet {
 	
 	
 	
-	// ¼±»ı´Ô Á¤º¸ Ãâ·Â Á¦ÇÑ È®ÀÎ
+	// ì„ ìƒë‹˜ ì •ë³´ ì¶œë ¥ ì œí•œ í™•ì¸
 	private int checkTeacherPrivateInfo(String uuid) throws SQLException, ClassNotFoundException {
 		DatabaseManager.DatabaseConnection databaseConnection = new DatabaseManager.DatabaseConnection();
 		databaseConnection.init();

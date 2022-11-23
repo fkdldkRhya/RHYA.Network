@@ -20,7 +20,7 @@ public class reCaptChaInfo {
 	
 	// Google reCaptCha checker
 	public boolean reCaptChaChecker(String token) throws IOException, ParseException {
-		// ÅäÅ«°ú º¸¾ÈÅ°¸¦ °¡Áö°í ¼º°ø ¿©ºÎ¸¦ È®ÀÎ ÇÔ
+		// í† í°ê³¼ ë³´ì•ˆí‚¤ë¥¼ ê°€ì§€ê³  ì„±ê³µ ì—¬ë¶€ë¥¼ í™•ì¸ í•¨
 	    HttpURLConnection conn = (HttpURLConnection) new URL("https://www.google.com/recaptcha/api/siteverify").openConnection();
 	    
 	    StringBuilder sb = new StringBuilder();
@@ -40,10 +40,10 @@ public class reCaptChaInfo {
 	    wr.flush();
 	    wr.close();
 
-	    // °á°úÄÚµå È®ÀÎ(200 : ¼º°ø)
+	    // ê²°ê³¼ì½”ë“œ í™•ì¸(200 : ì„±ê³µ)
 	    int responseCode = conn.getResponseCode();
 	    if (responseCode == 200) {
-	        // µ¥ÀÌÅÍ ÃßÃâ
+	        // ë°ì´í„° ì¶”ì¶œ
 	        BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
 	        BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
 	        String line;
@@ -59,12 +59,12 @@ public class reCaptChaInfo {
 	        JSONObject obj =  (JSONObject) jsonParse.parse(sb.toString());
 	        sb = null;
 
-	        // ¼º°ø ¿©ºÎ
+	        // ì„±ê³µ ì—¬ë¶€
 	        if ((boolean) obj.get("success")) {
 	        	double score = (double) obj.get("score");
-	        	// Á¡¼ö ºñ±³
+	        	// ì ìˆ˜ ë¹„êµ
 	        	if (score >= 0.7) {
-	        		// °á°ú ¹ÝÈ¯
+	        		// ê²°ê³¼ ë°˜í™˜
 		        	jsonParse = null;
 		        	obj = null;
 
@@ -72,7 +72,7 @@ public class reCaptChaInfo {
 	        	}
 	        }
 	    }
-	    // °á°ú ¹ÝÈ¯
+	    // ê²°ê³¼ ë°˜í™˜
 	    return false;
 	}
 }

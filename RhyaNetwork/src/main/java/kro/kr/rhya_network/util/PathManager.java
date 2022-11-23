@@ -2,7 +2,7 @@ package kro.kr.rhya_network.util;
 
 public class PathManager {
 	/**
-	 * ·Î±× ÀúÀå
+	 * ë¡œê·¸ ì €ìž¥
 	 * 
 	 * WINDOWS --> "A:\\RHYA.Network_JSP_Server\\RhyaNetwork\\src\\main\\webapp\\WEB-INF\\serverlog"
 	 * LINUX   --> "/usr/local/resources/serverlog"
@@ -11,7 +11,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î MP3 ÀúÀå Æú´õ
+	 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ MP3 ì €ìž¥ í´ë”
 	 * 
 	 * WINDOWS --> "D:\\RHYA.Network_File_Save_Root_Directory\\utaite_player_mp3"
 	 * LINUX   --> "/usr/local/resources/utaite_player_mp3"
@@ -20,7 +20,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î APK ÆÄÀÏ
+	 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ APK íŒŒì¼
 	 * 
 	 * WINDOWS --> "D:\\RHYA.Network_File_Save_Root_Directory\\utaite_player_update\\up_update_apk.apk"
 	 * LINUX   --> "/usr/local/resources/utaite_player_update/up_update_apk.apk"
@@ -29,7 +29,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î APK ÆÄÀÏ
+	 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ APK íŒŒì¼
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/utaite_player_update/up_windows_setup.exe"
@@ -38,7 +38,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î µå¶óÀÌ¹ö x64 ÆÄÀÏ
+	 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ë“œë¼ì´ë²„ x64 íŒŒì¼
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/utaite_player_update/up_windows_driver_vcredist_x64.exe"
@@ -47,7 +47,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î µå¶óÀÌ¹ö x86 ÆÄÀÏ
+	 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ë“œë¼ì´ë²„ x86 íŒŒì¼
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/utaite_player_update/up_windows_driver_vcredist_x86.exe"
@@ -56,7 +56,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ZIP ¼³Ä¡ ÆÄÀÏ
+	 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ZIP ì„¤ì¹˜ íŒŒì¼
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/utaite_player_update/up_windows_install_zip.zip"
@@ -65,7 +65,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ZIP ÆÄÀÏ
+	 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ZIP íŒŒì¼
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/utaite_player_update/up_update_zip.zip"
@@ -74,7 +74,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ·£´ý ¾Ö´Ï¸ÞÀÌ¼Ç ÀÌ¹ÌÁö ÀúÀå Æú´õ
+	 * ëžœë¤ ì• ë‹ˆë©”ì´ì…˜ ì´ë¯¸ì§€ ì €ìž¥ í´ë”
 	 * 
 	 * WINDOWS --> "D:\\RHYA.Network_File_Save_Root_Directory\\anim_image"
 	 * LINUX   --> "/usr/local/resources/anim_image"
@@ -83,7 +83,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ·£´ý ¾Ö´Ï¸ÞÀÌ¼Ç ÀÌ¹ÌÁö ÀúÀå Æú´õ [ °¡·Î°¡ ±ä ÀÌ¹ÌÁö ]
+	 * ëžœë¤ ì• ë‹ˆë©”ì´ì…˜ ì´ë¯¸ì§€ ì €ìž¥ í´ë” [ ê°€ë¡œê°€ ê¸´ ì´ë¯¸ì§€ ]
 	 * 
 	 * WINDOWS --> "D:\\RHYA.Network_File_Save_Root_Directory\\anim_image\\width_image"
 	 * LINUX   --> "/usr/local/resources/anim_image/width_image"
@@ -92,7 +92,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ·£´ý ¾Ö´Ï¸ÞÀÌ¼Ç ÀÌ¹ÌÁö ÀúÀå Æú´õ [ °íÇØ»óµµ ÀÌ¹ÌÁö ]
+	 * ëžœë¤ ì• ë‹ˆë©”ì´ì…˜ ì´ë¯¸ì§€ ì €ìž¥ í´ë” [ ê³ í•´ìƒë„ ì´ë¯¸ì§€ ]
 	 * 
 	 * WINDOWS --> "D:\\RHYA.Network_File_Save_Root_Directory\\anim_image\\high_type"
 	 * LINUX   --> "/usr/local/resources/anim_image/high_type"
@@ -101,7 +101,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ÀÌ¹ÌÁö ·çÆ® Æú´õ
+	 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì´ë¯¸ì§€ ë£¨íŠ¸ í´ë”
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/utaite_player_image"
@@ -110,7 +110,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ³ë·¡ Ãß°¡ ·çÆ® Æú´õ
+	 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ë…¸ëž˜ ì¶”ê°€ ë£¨íŠ¸ í´ë”
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/utaite_player_add_song"
@@ -119,7 +119,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ÇÈ½Ãºê Top 50 ÀÌ¹ÌÁö ·çÆ®
+	 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ í”½ì‹œë¸Œ Top 50 ì´ë¯¸ì§€ ë£¨íŠ¸
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/pixiv_rank_daily_image"
@@ -128,7 +128,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¿Â¶óÀÎ Ãâ¼®ºÎ ÀÌ¹ÌÁö ·çÆ® Æú´õ
+	 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ì´ë¯¸ì§€ ë£¨íŠ¸ í´ë”
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/online_attendance_image"
@@ -137,7 +137,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¿Â¶óÀÎ Ãâ¼®ºÎ APK ÆÄÀÏ
+	 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ APK íŒŒì¼
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/online_attendance_update/oa_update_apk.apk"
@@ -146,7 +146,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¼­¿ïºÏºÎÁö¿ø±³À°Ã» ¾Ë¸®¹Ì APK ÆÄÀÏ
+	 * ì„œìš¸ë¶ë¶€ì§€ì›êµìœ¡ì²­ ì•Œë¦¬ë¯¸ APK íŒŒì¼
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/bbedu_alert_install/bbedu_alert_apk.apk"
@@ -155,7 +155,7 @@ public class PathManager {
 	
 	
 	/**
-	 * ¼­¿ïºÏºÎÁö¿ø±³À°Ã» ¾Ë¸®¹Ì MSI ÆÄÀÏ
+	 * ì„œìš¸ë¶ë¶€ì§€ì›êµìœ¡ì²­ ì•Œë¦¬ë¯¸ MSI íŒŒì¼
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/bbedu_alert_install/bbedu_alert_msi.msi"
@@ -164,7 +164,7 @@ public class PathManager {
 	
 	
 	/**
-	 * RHYA OpenVPN Client ZIP ÆÄÀÏ
+	 * RHYA OpenVPN Client ZIP íŒŒì¼
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/rhya_open_vpn_client/rhya_open_vpn_client.zip"
@@ -174,7 +174,7 @@ public class PathManager {
 	
 	
 	/**
-	 * WanaCry ·çÆ® Æú´õ
+	 * WanaCry ë£¨íŠ¸ í´ë”
 	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/wanacry_resources"

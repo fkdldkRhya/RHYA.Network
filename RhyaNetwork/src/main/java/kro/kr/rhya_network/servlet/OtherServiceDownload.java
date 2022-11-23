@@ -44,17 +44,17 @@ public class OtherServiceDownload extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		// Rhya ·Î°Å º¯¼ö ¼±¾ğ
+		// Rhya ë¡œê±° ë³€ìˆ˜ ì„ ì–¸
 		RhyaLogger rl = new RhyaLogger();
-		// Rhya ·Î°Å ¼³Á¤
+		// Rhya ë¡œê±° ì„¤ì •
 		rl.JspName = request.getServletPath();
 		rl.LogConsole = true;
 		rl.LogFile = true;
 
-		// Å¬¶óÀÌ¾ğÆ® ¾ÆÀÌÇÇ
+		// í´ë¼ì´ì–¸íŠ¸ ì•„ì´í”¼
 		String clientIP = GetClientIPAddress.getClientIp(request);
 		
-		// Ãâ·Â °á°ú
+		// ì¶œë ¥ ê²°ê³¼
 		Gson gson = new Gson();
 		JsonObject obj = new JsonObject();
 		final String failMessage = "fail";
@@ -64,27 +64,27 @@ public class OtherServiceDownload extends HttpServlet {
 		try {
 			JSPUtilsInitTask jspUtilsInitTask = new JSPUtilsInitTask();
 			if (jspUtilsInitTask.initTask(rl, request, response, JspPageInfo.PageID_Other_Service_Downloader)) {
-				// ¸í·É¾î
+				// ëª…ë ¹ì–´
 				int command = Integer.parseInt(request.getParameter("package"));
-				// ¸í·É¾î ±¸ºĞ
+				// ëª…ë ¹ì–´ êµ¬ë¶„
 				switch (command) {
 					default: {
 						obj.addProperty(keyName_Result, failMessage);
-						obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¾ø´Â ¸í·ÉÀÔ´Ï´Ù. mode ÆÄ¶ó¹ÌÅÍ¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.", "UTF-8"));
+						obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ì—†ëŠ” ëª…ë ¹ì…ë‹ˆë‹¤. mode íŒŒë¼ë¯¸í„°ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”.", "UTF-8"));
 						PrintWriter out = response.getWriter(); 
 						out.println(gson.toJson(obj));
 						
-						rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¾Ë ¼ö ¸í·ÉÀÔ´Ï´Ù. mode ÆÄ¶ó¹ÌÅÍ¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä."));
+						rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ì•Œ ìˆ˜ ëª…ë ¹ì…ë‹ˆë‹¤. mode íŒŒë¼ë¯¸í„°ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”."));
 						break;
 					}
 					
 					/**
-					 * ¼­¿ïºÏºÎÁö¿ø±³À°Ã» ¾Ë¸®¹Ì APK
+					 * ì„œìš¸ë¶ë¶€ì§€ì›êµìœ¡ì²­ ì•Œë¦¬ë¯¸ APK
 					 */
 					case 0: {
-						// ÆÄÀÏ ¾÷·ÎµåµÈ °æ·Î
+						// íŒŒì¼ ì—…ë¡œë“œëœ ê²½ë¡œ
 					    final String root = PathManager.BBEDU_ALERT_APK_PATH;
-					    // ½ÇÁ¦ ³»º¸³¾ ÆÄÀÏ¸í
+					    // ì‹¤ì œ ë‚´ë³´ë‚¼ íŒŒì¼ëª…
 					    String orgfilename = "bbedu_alert_apk.apk";    
 						try {
 							File file = new File(root);
@@ -104,24 +104,24 @@ public class OtherServiceDownload extends HttpServlet {
 								outs.close();
 								fin.close();
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¼­¿ïºÏºÎÁö¿ø±³À°Ã» ¾Ë¸®¹Ì APK ÆÄÀÏ ´Ù¿î·Îµå ¼º°ø!"));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ì„œìš¸ë¶ë¶€ì§€ì›êµìœ¡ì²­ ì•Œë¦¬ë¯¸ APK íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì„±ê³µ!"));
 							} else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "¼­¿ïºÏºÎÁö¿ø±³À°Ã» ¾Ë¸®¹Ì APK ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! File does not exist!"));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "ì„œìš¸ë¶ë¶€ì§€ì›êµìœ¡ì²­ ì•Œë¦¬ë¯¸ APK íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! File does not exist!"));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 						} catch (IOException e) {
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¼­¿ïºÏºÎÁö¿ø±³À°Ã» ¾Ë¸®¹Ì APK ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! ¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.", e.toString()));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ì„œìš¸ë¶ë¶€ì§€ì›êµìœ¡ì²­ ì•Œë¦¬ë¯¸ APK íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.", e.toString()));
 							e.printStackTrace();
 							
 							obj.addProperty(keyName_Result, failMessage);
 						}
 						
 						
-						// JSON µ¥ÀÌÅÍ Ãâ·Â
+						// JSON ë°ì´í„° ì¶œë ¥
 						PrintWriter out = response.getWriter(); 
 						out.println(gson.toJson(obj));
 						
@@ -130,12 +130,12 @@ public class OtherServiceDownload extends HttpServlet {
 					
 					
 					/**
-					 * ¼­¿ïºÏºÎÁö¿ø±³À°Ã» ¾Ë¸®¹Ì MSI
+					 * ì„œìš¸ë¶ë¶€ì§€ì›êµìœ¡ì²­ ì•Œë¦¬ë¯¸ MSI
 					 */
 					case 1: {
-						// ÆÄÀÏ ¾÷·ÎµåµÈ °æ·Î
+						// íŒŒì¼ ì—…ë¡œë“œëœ ê²½ë¡œ
 					    final String root = PathManager.BBEDU_ALERT_MSI_PATH;
-					    // ½ÇÁ¦ ³»º¸³¾ ÆÄÀÏ¸í
+					    // ì‹¤ì œ ë‚´ë³´ë‚¼ íŒŒì¼ëª…
 					    String orgfilename = "bbedu_alert_msi.msi";    
 						try {
 							File file = new File(root);
@@ -155,24 +155,24 @@ public class OtherServiceDownload extends HttpServlet {
 								outs.close();
 								fin.close();
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¼­¿ïºÏºÎÁö¿ø±³À°Ã» ¾Ë¸®¹Ì MSI ÆÄÀÏ ´Ù¿î·Îµå ¼º°ø!"));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ì„œìš¸ë¶ë¶€ì§€ì›êµìœ¡ì²­ ì•Œë¦¬ë¯¸ MSI íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì„±ê³µ!"));
 							} else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "¼­¿ïºÏºÎÁö¿ø±³À°Ã» ¾Ë¸®¹Ì MSI ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! File does not exist!"));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "ì„œìš¸ë¶ë¶€ì§€ì›êµìœ¡ì²­ ì•Œë¦¬ë¯¸ MSI íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! File does not exist!"));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 						} catch (IOException e) {
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¼­¿ïºÏºÎÁö¿ø±³À°Ã» ¾Ë¸®¹Ì MSI ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! ¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.", e.toString()));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ì„œìš¸ë¶ë¶€ì§€ì›êµìœ¡ì²­ ì•Œë¦¬ë¯¸ MSI íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.", e.toString()));
 							e.printStackTrace();
 							
 							obj.addProperty(keyName_Result, failMessage);
 						}
 						
 						
-						// JSON µ¥ÀÌÅÍ Ãâ·Â
+						// JSON ë°ì´í„° ì¶œë ¥
 						PrintWriter out = response.getWriter(); 
 						out.println(gson.toJson(obj));
 						
@@ -184,9 +184,9 @@ public class OtherServiceDownload extends HttpServlet {
 					 * RHYA OpenVPN Client ZIP
 					 */
 					case 2: {
-						// ÆÄÀÏ ¾÷·ÎµåµÈ °æ·Î
+						// íŒŒì¼ ì—…ë¡œë“œëœ ê²½ë¡œ
 					    final String root = PathManager.RHYA_OPEN_VPN_CLIENT_ZIP_PATH;
-					    // ½ÇÁ¦ ³»º¸³¾ ÆÄÀÏ¸í
+					    // ì‹¤ì œ ë‚´ë³´ë‚¼ íŒŒì¼ëª…
 					    String orgfilename = "rhya_open_vpn_client.zip";    
 						try {
 							File file = new File(root);
@@ -206,23 +206,23 @@ public class OtherServiceDownload extends HttpServlet {
 								outs.close();
 								fin.close();
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "RHYA OpenVPN Client ZIP ÆÄÀÏ ´Ù¿î·Îµå ¼º°ø!"));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "RHYA OpenVPN Client ZIP íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì„±ê³µ!"));
 							} else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "RHYA OpenVPN Client ZIP ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! File does not exist!"));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "RHYA OpenVPN Client ZIP íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! File does not exist!"));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 						} catch (IOException e) {
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "RHYA OpenVPN Client ZIP ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! ¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.", e.toString()));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "RHYA OpenVPN Client ZIP íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.", e.toString()));
 							
 							obj.addProperty(keyName_Result, failMessage);
 						}
 						
 						
-						// JSON µ¥ÀÌÅÍ Ãâ·Â
+						// JSON ë°ì´í„° ì¶œë ¥
 						PrintWriter out = response.getWriter(); 
 						out.println(gson.toJson(obj));
 						
@@ -235,9 +235,9 @@ public class OtherServiceDownload extends HttpServlet {
 					 * WanaCrypt0r EXE
 					 */
 					case 3: {
-						// ÆÄÀÏ ¾÷·ÎµåµÈ °æ·Î
+						// íŒŒì¼ ì—…ë¡œë“œëœ ê²½ë¡œ
 					    final String root = PathManager.WANACRY_ROOT_PATH;
-					    // ½ÇÁ¦ ³»º¸³¾ ÆÄÀÏ¸í
+					    // ì‹¤ì œ ë‚´ë³´ë‚¼ íŒŒì¼ëª…
 					    String orgfilename = "WanaCrypt0r.exe";    
 						try {
 							File file = new File(root, orgfilename);
@@ -257,23 +257,23 @@ public class OtherServiceDownload extends HttpServlet {
 								outs.close();
 								fin.close();
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "WanaCrypt0r EXE ÆÄÀÏ ´Ù¿î·Îµå ¼º°ø!"));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "WanaCrypt0r EXE íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì„±ê³µ!"));
 							} else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "WanaCrypt0r EXE ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! File does not exist!"));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "WanaCrypt0r EXE íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! File does not exist!"));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 						} catch (IOException e) {
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r EXE ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! ¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.", e.toString()));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "WanaCrypt0r EXE íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.", e.toString()));
 							
 							obj.addProperty(keyName_Result, failMessage);
 						}
 						
 						
-						// JSON µ¥ÀÌÅÍ Ãâ·Â
+						// JSON ë°ì´í„° ì¶œë ¥
 						PrintWriter out = response.getWriter(); 
 						out.println(gson.toJson(obj));
 						
@@ -284,7 +284,7 @@ public class OtherServiceDownload extends HttpServlet {
 		}catch (Exception ex) {
 			// TODO: handle exception
 			obj.addProperty(keyName_Result, failMessage);
-			obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ı ÇÏ¿´½À´Ï´Ù. ".concat(ex.getMessage()), "UTF-8"));
+			obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒ í•˜ì˜€ìŠµë‹ˆë‹¤. ".concat(ex.getMessage()), "UTF-8"));
 			PrintWriter out = response.getWriter(); 
 			out.println(gson.toJson(obj));
 			

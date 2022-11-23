@@ -1,14 +1,14 @@
 package kro.kr.rhya_network.security;
 
 public class URLFilter {
-	// URL Àü¿ë ÇÊÅÍ - º¯È¯
+	// URL ì „ìš© í•„í„° - ë³€í™˜
 	public String SetFilter(String Iurl) {
 		Iurl = Iurl.replaceAll("\\+", "_st_plus_01_");
 		return Iurl;
 	}
 	
 	
-	// URL Àü¿ë ÇÊÅÍ - º¹È£È­
+	// URL ì „ìš© í•„í„° - ë³µí˜¸í™”
 	public String GetFilter(String Iurl) {
 		Iurl = Iurl.replaceAll("_st_plus_01_", "+");
 		

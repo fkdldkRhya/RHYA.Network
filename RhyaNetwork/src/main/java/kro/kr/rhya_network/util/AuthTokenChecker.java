@@ -8,7 +8,7 @@ import kro.kr.rhya_network.database.DatabaseConnection;
 import kro.kr.rhya_network.database.DatabaseInfo;
 
 public class AuthTokenChecker {
-	// Auth °á°ú
+	// Auth ê²°ê³¼
 	public static final String AUTH_RESULT_SUCCESS = "success";
 	public static final String AUTH_RESULT_FAIL = "fail";
 	
@@ -20,97 +20,97 @@ public class AuthTokenChecker {
 		StringBuilder sql = new StringBuilder();
 		String id = null;
 		String password = null;
-		// Äõ¸® »ı¼º
+		// ì¿¼ë¦¬ ìƒì„±
 		sql.append("SELECT * FROM ");
 		sql.append(DatabaseInfo.DATABASE_TABLE_NAME_AUTH_TOKEN);
 		sql.append(" WHERE ");
 		sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_AUTH_TOKEN);
 		sql.append(" = ?;");
-		// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+		// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 		cont.Connection(DatabaseInfo.DATABASE_DRIVER_CLASS_NAME,
 						DatabaseInfo.DATABASE_CONNECTION_URL,
 						DatabaseInfo.DATABASE_ROOT_ACCOUNT_ID,
 						DatabaseInfo.DATABASE_ROOT_ACCOUNT_PW);
 		stat = cont.GetConnection().prepareStatement(sql.toString());
 		stat.setString(1, authToken);
-		// Äõ¸® ½ÇÇà
+		// ì¿¼ë¦¬ ì‹¤í–‰
 		rs = stat.executeQuery();
 		if (rs.next()) {
 			if (!rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_AUTH_TOKEN).equals(authToken)) {
-				// ¿¬°á Á¾·á
+				// ì—°ê²° ì¢…ë£Œ
 				rs.close();
 				stat.close();
 				cont.Close();
-				// ·Î±×ÀÎ ½ÇÆĞ
-				return new String[] { AUTH_RESULT_FAIL , "Auth tokenÀÌ Àß¸øµÇ¾ú½À´Ï´Ù." };
+				// ë¡œê·¸ì¸ ì‹¤íŒ¨
+				return new String[] { AUTH_RESULT_FAIL , "Auth tokenì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 			}else {
-				// °èÁ¤ Á¤º¸ È®ÀÎ
+				// ê³„ì • ì •ë³´ í™•ì¸
 				String user = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_AUTH_USER);
-				// Äõ¸® »ı¼º StringBuilder ÃÊ±âÈ­
+				// ì¿¼ë¦¬ ìƒì„± StringBuilder ì´ˆê¸°í™”
 				sql.delete(0,sql.length());
-				// Äõ¸® »ı¼º
+				// ì¿¼ë¦¬ ìƒì„±
 				sql.append("SELECT * FROM ");
 				sql.append(DatabaseInfo.DATABASE_TABLE_NAME_USER);
 				sql.append(" WHERE ");
 				sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_UUID);
 				sql.append(" = ?;");
-				// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+				// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 				stat.close();
 				stat = cont.GetConnection().prepareStatement(sql.toString());
 				stat.setString(1, user);
-				// Äõ¸® ½ÇÇà
+				// ì¿¼ë¦¬ ì‹¤í–‰
 				rs = stat.executeQuery();
-				// °á°ú ºñ±³
+				// ê²°ê³¼ ë¹„êµ
 				if (rs.next()) {
 					id = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_ID);
 					password = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_PW);
-					// ¿¬°á Á¾·á
+					// ì—°ê²° ì¢…ë£Œ
 					rs.close();
 					stat.close();
 					cont.Close();
 					
-					// ·Î±×ÀÎ ÁøÇà
+					// ë¡œê·¸ì¸ ì§„í–‰
 					String[] login_result = LoginChecker.IsLoginUser(id, password, null, true);
 					
 					if (login_result[0].equals(LoginChecker.LOGIN_RESULT_SUCCESS)) {
-						// ¿¬°á Á¾·á
+						// ì—°ê²° ì¢…ë£Œ
 						rs.close();
 						stat.close();
 						cont.Close();
 						
-						// ¿¬°á Á¾·á
+						// ì—°ê²° ì¢…ë£Œ
 						rs.close();
 						stat.close();
 						cont.Close();
 						
-						// ·Î±×ÀÎ ¼º°ø
+						// ë¡œê·¸ì¸ ì„±ê³µ
 						return new String[] { AUTH_RESULT_SUCCESS, login_result[1] };
 					}else {
-						// ¿¬°á Á¾·á
+						// ì—°ê²° ì¢…ë£Œ
 						rs.close();
 						stat.close();
 						cont.Close();
 						
-						// ·Î±×ÀÎ ½ÇÆĞ
+						// ë¡œê·¸ì¸ ì‹¤íŒ¨
 						return new String[] { AUTH_RESULT_FAIL , login_result[1]};
 					}
 				}else {
-					// ¿¬°á Á¾·á
+					// ì—°ê²° ì¢…ë£Œ
 					rs.close();
 					stat.close();
 					cont.Close();
 					
-					// ·Î±×ÀÎ ½ÇÆĞ
-					return new String[] { AUTH_RESULT_FAIL , "Auth tokenÀÌ Àß¸øµÇ¾ú½À´Ï´Ù." };
+					// ë¡œê·¸ì¸ ì‹¤íŒ¨
+					return new String[] { AUTH_RESULT_FAIL , "Auth tokenì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 				}
 			}
 		}else {
-			// ¿¬°á Á¾·á
+			// ì—°ê²° ì¢…ë£Œ
 			rs.close();
 			stat.close();
 			cont.Close();
-			// ·Î±×ÀÎ ½ÇÆĞ
-			return new String[] { AUTH_RESULT_FAIL , "Auth tokenÀÌ Àß¸øµÇ¾ú½À´Ï´Ù." };
+			// ë¡œê·¸ì¸ ì‹¤íŒ¨
+			return new String[] { AUTH_RESULT_FAIL , "Auth tokenì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 		}
 	}
 	
@@ -122,98 +122,98 @@ public class AuthTokenChecker {
 		StringBuilder sql = new StringBuilder();
 		String id = null;
 		String password = null;
-		// Äõ¸® »ı¼º
+		// ì¿¼ë¦¬ ìƒì„±
 		sql.append("SELECT * FROM ");
 		sql.append(DatabaseInfo.DATABASE_TABLE_NAME_AUTH_TOKEN);
 		sql.append(" WHERE ");
 		sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_AUTH_TOKEN);
 		sql.append(" = ?;");
-		// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+		// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 		cont.Connection(DatabaseInfo.DATABASE_DRIVER_CLASS_NAME,
 						DatabaseInfo.DATABASE_CONNECTION_URL,
 						DatabaseInfo.DATABASE_ROOT_ACCOUNT_ID,
 						DatabaseInfo.DATABASE_ROOT_ACCOUNT_PW);
 		stat = cont.GetConnection().prepareStatement(sql.toString());
 		stat.setString(1, authToken);
-		// Äõ¸® ½ÇÇà
+		// ì¿¼ë¦¬ ì‹¤í–‰
 		rs = stat.executeQuery();
 		if (rs.next()) {
 			if (!rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_AUTH_TOKEN).equals(authToken)) {
-				// ¿¬°á Á¾·á
+				// ì—°ê²° ì¢…ë£Œ
 				rs.close();
 				stat.close();
 				cont.Close();
 				
-				// ·Î±×ÀÎ ½ÇÆĞ
-				return new String[] { AUTH_RESULT_FAIL , "Auth tokenÀÌ Àß¸øµÇ¾ú½À´Ï´Ù." };
+				// ë¡œê·¸ì¸ ì‹¤íŒ¨
+				return new String[] { AUTH_RESULT_FAIL , "Auth tokenì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 			}else {
-				// °èÁ¤ Á¤º¸ È®ÀÎ
+				// ê³„ì • ì •ë³´ í™•ì¸
 				String user = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_AUTH_USER);
 				String name = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_AUTH_NAME);
 				String date = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_AUTH_TOKEN_DATE);
-				// Äõ¸® »ı¼º StringBuilder ÃÊ±âÈ­
+				// ì¿¼ë¦¬ ìƒì„± StringBuilder ì´ˆê¸°í™”
 				sql.delete(0,sql.length());
-				// Äõ¸® »ı¼º
+				// ì¿¼ë¦¬ ìƒì„±
 				sql.append("SELECT * FROM ");
 				sql.append(DatabaseInfo.DATABASE_TABLE_NAME_USER);
 				sql.append(" WHERE ");
 				sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_UUID);
 				sql.append(" = ?;");
-				// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+				// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 				stat.close();
 				stat = cont.GetConnection().prepareStatement(sql.toString());
 				stat.setString(1, user);
-				// Äõ¸® ½ÇÇà
+				// ì¿¼ë¦¬ ì‹¤í–‰
 				rs = stat.executeQuery();
-				// °á°ú ºñ±³
+				// ê²°ê³¼ ë¹„êµ
 				if (rs.next()) {
 					id = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_ID);
 					password = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_PW);
-					// ¿¬°á Á¾·á
+					// ì—°ê²° ì¢…ë£Œ
 					rs.close();
 					stat.close();
 					cont.Close();
 					
-					// ·Î±×ÀÎ ÁøÇà
+					// ë¡œê·¸ì¸ ì§„í–‰
 					String[] login_result = LoginChecker.IsLoginUser(id, password, null, true);
 					
 					if (login_result[0].equals(LoginChecker.LOGIN_RESULT_SUCCESS)) {
-						// ¿¬°á Á¾·á
+						// ì—°ê²° ì¢…ë£Œ
 						rs.close();
 						stat.close();
 						cont.Close();
 						
-						// ·Î±×ÀÎ ¼º°ø
+						// ë¡œê·¸ì¸ ì„±ê³µ
 						return new String[] { AUTH_RESULT_SUCCESS ,
 								user,
 								name,
 								date};	
 					}else {
-						// ¿¬°á Á¾·á
+						// ì—°ê²° ì¢…ë£Œ
 						rs.close();
 						stat.close();
 						cont.Close();
 						
-						// ·Î±×ÀÎ ½ÇÆĞ
+						// ë¡œê·¸ì¸ ì‹¤íŒ¨
 						return new String[] { AUTH_RESULT_FAIL , login_result[1]};
 					}
 				}else {
-					// ¿¬°á Á¾·á
+					// ì—°ê²° ì¢…ë£Œ
 					rs.close();
 					stat.close();
 					cont.Close();
 					
-					// ·Î±×ÀÎ ½ÇÆĞ
-					return new String[] { AUTH_RESULT_FAIL , "Auth tokenÀÌ Àß¸øµÇ¾ú½À´Ï´Ù." };
+					// ë¡œê·¸ì¸ ì‹¤íŒ¨
+					return new String[] { AUTH_RESULT_FAIL , "Auth tokenì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 				}
 			}
 		}else {
-			// ¿¬°á Á¾·á
+			// ì—°ê²° ì¢…ë£Œ
 			rs.close();
 			stat.close();
 			cont.Close();
-			// ·Î±×ÀÎ ½ÇÆĞ
-			return new String[] { AUTH_RESULT_FAIL , "Auth tokenÀÌ Àß¸øµÇ¾ú½À´Ï´Ù." };
+			// ë¡œê·¸ì¸ ì‹¤íŒ¨
+			return new String[] { AUTH_RESULT_FAIL , "Auth tokenì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 		}
 	}
 	
@@ -225,75 +225,75 @@ public class AuthTokenChecker {
 		StringBuilder sql = new StringBuilder();
 		String id = null;
 		String password = null;
-		// Äõ¸® »ı¼º
+		// ì¿¼ë¦¬ ìƒì„±
 		sql.append("SELECT * FROM ");
 		sql.append(DatabaseInfo.DATABASE_TABLE_NAME_AUTH_TOKEN);
 		sql.append(" WHERE ");
 		sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_AUTH_TOKEN);
 		sql.append(" = ?;");
-		// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+		// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 		cont.Connection(DatabaseInfo.DATABASE_DRIVER_CLASS_NAME,
 						DatabaseInfo.DATABASE_CONNECTION_URL,
 						DatabaseInfo.DATABASE_ROOT_ACCOUNT_ID,
 						DatabaseInfo.DATABASE_ROOT_ACCOUNT_PW);
 		stat = cont.GetConnection().prepareStatement(sql.toString());
 		stat.setString(1, authToken);
-		// Äõ¸® ½ÇÇà
+		// ì¿¼ë¦¬ ì‹¤í–‰
 		rs = stat.executeQuery();
 		if (rs.next()) {
 			if (!rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_AUTH_TOKEN).equals(authToken)) {
-				// ¿¬°á Á¾·á
+				// ì—°ê²° ì¢…ë£Œ
 				rs.close();
 				stat.close();
 				cont.Close();
 				
-				// ·Î±×ÀÎ ½ÇÆĞ
-				return new String[] { AUTH_RESULT_FAIL , "Auth tokenÀÌ Àß¸øµÇ¾ú½À´Ï´Ù." };
+				// ë¡œê·¸ì¸ ì‹¤íŒ¨
+				return new String[] { AUTH_RESULT_FAIL , "Auth tokenì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 			}else {
-				// µ¥ÀÌÅÍ
+				// ë°ì´í„°
 				String user = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_AUTH_USER);
-				// Äõ¸® »ı¼º StringBuilder ÃÊ±âÈ­
+				// ì¿¼ë¦¬ ìƒì„± StringBuilder ì´ˆê¸°í™”
 				sql.delete(0,sql.length());
-				// Äõ¸® »ı¼º
+				// ì¿¼ë¦¬ ìƒì„±
 				sql.append("SELECT * FROM ");
 				sql.append(DatabaseInfo.DATABASE_TABLE_NAME_USER);
 				sql.append(" WHERE ");
 				sql.append(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_UUID);
 				sql.append(" = ?;");
-				// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó
+				// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì†
 				stat.close();
 				stat = cont.GetConnection().prepareStatement(sql.toString());
 				stat.setString(1, user);
-				// Äõ¸® ½ÇÇà
+				// ì¿¼ë¦¬ ì‹¤í–‰
 				rs = stat.executeQuery();
-				// °á°ú ºñ±³
+				// ê²°ê³¼ ë¹„êµ
 				if (rs.next()) {
 					id = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_ID);
 					password = rs.getString(DatabaseInfo.DATABASE_TABLE_COLUMN_USER_USER_PW);
-					// ¿¬°á Á¾·á
+					// ì—°ê²° ì¢…ë£Œ
 					rs.close();
 					stat.close();
 					cont.Close();
 					
-					// ·Î±×ÀÎ ÁøÇà
+					// ë¡œê·¸ì¸ ì§„í–‰
 					return LoginChecker.IsLoginUser(id, password, null, true);
 				}else {
-					// ¿¬°á Á¾·á
+					// ì—°ê²° ì¢…ë£Œ
 					rs.close();
 					stat.close();
 					cont.Close();
 					
-					// ·Î±×ÀÎ ½ÇÆĞ
-					return new String[] { AUTH_RESULT_FAIL , "Auth tokenÀÌ Àß¸øµÇ¾ú½À´Ï´Ù." };
+					// ë¡œê·¸ì¸ ì‹¤íŒ¨
+					return new String[] { AUTH_RESULT_FAIL , "Auth tokenì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 				}
 			}
 		}else {
-			// ¿¬°á Á¾·á
+			// ì—°ê²° ì¢…ë£Œ
 			rs.close();
 			stat.close();
 			cont.Close();
-			// ·Î±×ÀÎ ½ÇÆĞ
-			return new String[] { AUTH_RESULT_FAIL , "Auth tokenÀÌ Àß¸øµÇ¾ú½À´Ï´Ù." };
+			// ë¡œê·¸ì¸ ì‹¤íŒ¨
+			return new String[] { AUTH_RESULT_FAIL , "Auth tokenì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." };
 		}
 	}
 }

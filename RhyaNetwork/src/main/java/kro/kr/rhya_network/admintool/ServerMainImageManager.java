@@ -5,9 +5,9 @@ import kro.kr.rhya_network.utils.db.DatabaseManager.DatabaseConnection;
 
 public class ServerMainImageManager {
 	/**
-	 * ¼­¹ö ¸ŞÀÎ ÀÌ¹ÌÁö ¼³Á¤ »óÅÂ °¡Á®¿À±â
-	 * @return 0 - ±âº» ÀÌ¹ÌÁö·Î ¼³Á¤, 1 - ·£´ı ÀÌ¹ÌÁö·Î ¼³Á¤
-	 * @throws Exception µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó ¿À·ù ¹× ±âÅ¸ ¿À·ù
+	 * ì„œë²„ ë©”ì¸ ì´ë¯¸ì§€ ì„¤ì • ìƒíƒœ ê°€ì ¸ì˜¤ê¸°
+	 * @return 0 - ê¸°ë³¸ ì´ë¯¸ì§€ë¡œ ì„¤ì •, 1 - ëœë¤ ì´ë¯¸ì§€ë¡œ ì„¤ì •
+	 * @throws Exception ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì† ì˜¤ë¥˜ ë° ê¸°íƒ€ ì˜¤ë¥˜
 	 */
 	public int getServerMainSate() throws Exception {
 		try {
@@ -34,9 +34,9 @@ public class ServerMainImageManager {
 
 	
 	/**
-	 * ¼­¹ö ¸ŞÀÎ ÀÌ¹ÌÁö »óÅÂ ¼³Á¤
-	 * @param value 0 - ±âº» ÀÌ¹ÌÁö·Î ¼³Á¤, 1 - ·£´ı ÀÌ¹ÌÁö·Î ¼³Á¤
-	 * @throws Exception µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó ¿À·ù ¹× ±âÅ¸ ¿À·ù
+	 * ì„œë²„ ë©”ì¸ ì´ë¯¸ì§€ ìƒíƒœ ì„¤ì •
+	 * @param value 0 - ê¸°ë³¸ ì´ë¯¸ì§€ë¡œ ì„¤ì •, 1 - ëœë¤ ì´ë¯¸ì§€ë¡œ ì„¤ì •
+	 * @throws Exception ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì† ì˜¤ë¥˜ ë° ê¸°íƒ€ ì˜¤ë¥˜
 	 */
 	public void setServerMainSate(int value) throws Exception {
 		try {

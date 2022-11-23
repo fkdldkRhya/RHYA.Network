@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PageParameter {
-	// ÆäÀÌÁö ÀÌµ¿ ÆÄ¶ó¹ÌÅÍ
+	// í˜ì´ì§€ ì´ë™ íŒŒë¼ë¯¸í„°
 	public static final String REDIRECT_PAGE_ID_PARM = "rpid";
-	// ·Î±×ÀÎ ÅäÅ« »ı¼º
+	// ë¡œê·¸ì¸ í† í° ìƒì„±
 	public static final String IS_CREATE_TOKEN_PARM = "ctoken";
 	
-	// È¸¿ø°¡ÀÔ ÆäÀÌÁö
+	// íšŒì›ê°€ì… í˜ì´ì§€
 	public static class SignUp {
-		// ÆÄ¶ó¹ÌÅÍ ÀÌ¸§
+		// íŒŒë¼ë¯¸í„° ì´ë¦„
 		public final String NAME = "name";
 		public final String ID = "id";
 		public final String EMAIL = "email";
@@ -20,42 +20,42 @@ public class PageParameter {
 		public final String RE_CHAPT_CHA = "rechaptcha";
 		public final String INT_KEY = "key";
 		
-		// Json Å° ÀÌ¸§
+		// Json í‚¤ ì´ë¦„
 		public final String RESULT = "result";
 		public final String MSG = "message";
 		
-		// Ajax °á°ú
+		// Ajax ê²°ê³¼
 		public final String RST_SUCCESS = "S";
 		public final String RST_FAIL = "F";
 	}
 	
 	
-	// ·Î±×ÀÎ ÆäÀÌÁö
+	// ë¡œê·¸ì¸ í˜ì´ì§€
 	public static class SignIn {
-		// ÆÄ¶ó¹ÌÅÍ ÀÌ¸§
+		// íŒŒë¼ë¯¸í„° ì´ë¦„
 		public final String ID = "id";
 		public final String PASSWORD = "password";
 		public final String REMEMBER_ME = "remember_me";
 		public final String RE_CHAPT_CHA = "rechaptcha";
 		public final String INT_KEY = "key";
 		
-		// Cookie ÀÌ¸§
+		// Cookie ì´ë¦„
 		public final String COOKIE_NAME_USER = "AutoLogin_UserUUID";
 		public final String COOKIE_NAME_TOKEN = "AutoLogin_TokenUUID";
 		
-		// Json Å° ÀÌ¸§
+		// Json í‚¤ ì´ë¦„
 		public final String RESULT = "result";
 		public final String MSG = "message";
 		
-		// Ajax °á°ú
+		// Ajax ê²°ê³¼
 		public final String RST_SUCCESS = "S";
 		public final String RST_FAIL = "F";
 	}
 	
 	
-	// ºñ¹Ğ¹øÈ£ º¯°æ
+	// ë¹„ë°€ë²ˆí˜¸ ë³€ê²½
 	public static class ForgotPWD {
-		// ÆÄ¶ó¹ÌÅÍ ÀÌ¸§
+		// íŒŒë¼ë¯¸í„° ì´ë¦„
 		public final String NAME = "name";
 		public final String ID = "id";
 		public final String EMAIL = "email";
@@ -66,11 +66,11 @@ public class PageParameter {
 		public final String RE_CHAPT_CHA = "rechaptcha";
 		public final String INT_KEY = "key";
 		
-		// Json Å° ÀÌ¸§
+		// Json í‚¤ ì´ë¦„
 		public final String RESULT = "result";
 		public final String MSG = "message";
 		
-		// Ajax °á°ú
+		// Ajax ê²°ê³¼
 		public final String RST_SUCCESS = "S";
 		public final String RST_FAIL = "F";
 	}
@@ -78,15 +78,15 @@ public class PageParameter {
 	
 	// Auth token
 	public static class AuthToken {
-		// ÆÄ¶ó¹ÌÅÍ ÀÌ¸§
+		// íŒŒë¼ë¯¸í„° ì´ë¦„
 		public final String USER = "user";
 		public final String TOKEN = "token";
 		public final String NAME = "name";
 		
-		// Cookie ÀÌ¸§
+		// Cookie ì´ë¦„
 		public final String RESULT_COOKIE = "AuthTokenResult";
 		
-		// Áö¿ø ¼­ºñ½º ÀÌ¸§
+		// ì§€ì› ì„œë¹„ìŠ¤ ì´ë¦„
 		public final ArrayList<String> SERVICE = new ArrayList<String>(
 				Arrays.asList(
 						"kro_kr_rhya__network_jp__player",

@@ -51,9 +51,9 @@ import kro.kr.rhya_network.utils.db.DatabaseManager.DatabaseConnection;
 @WebServlet("/utaite_player_manager")
 public class UtaitePlayerManager extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	// MP3 ÆÄÀÏ ÀúÀå °æ·Î
+	// MP3 íŒŒì¼ ì €ì¥ ê²½ë¡œ
 	private final String mp3SaveRootPath = PathManager.UTAITE_PLAYER_MANAGER_MP3_PATH;
-	// JSON ¹İÈ¯ °á°ú
+	// JSON ë°˜í™˜ ê²°ê³¼
 	private final String successMessage = "success";
 	private final String failMessage = "fail";
 	
@@ -76,37 +76,37 @@ public class UtaitePlayerManager extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		// Rhya ·Î°Å º¯¼ö ¼±¾ğ
+		// Rhya ë¡œê±° ë³€ìˆ˜ ì„ ì–¸
 		RhyaLogger rl = new RhyaLogger();
-		// Rhya ·Î°Å ¼³Á¤
+		// Rhya ë¡œê±° ì„¤ì •
 		rl.JspName = request.getServletPath();
 		rl.LogConsole = true;
 		rl.LogFile = true;
 		
 		
-		// Å¬¶óÀÌ¾ğÆ® IP
+		// í´ë¼ì´ì–¸íŠ¸ IP
 		String clientIP = GetClientIPAddress.getClientIp(request);
 		
 		
-		// JSON °á°ú
+		// JSON ê²°ê³¼
 		final String keyName_Result = "result";
 		final String keyName_Message = "message";
-		// JSON º¯¼ö
+		// JSON ë³€ìˆ˜
 		Gson gson = new Gson();
 		JsonObject obj = new JsonObject();
 
 		
-		// DB °ü¸®ÀÚ ¼±¾ğ
+		// DB ê´€ë¦¬ì ì„ ì–¸
 		DatabaseManager.DatabaseConnection databaseConnection = new DatabaseManager.DatabaseConnection();
 		databaseConnection.init();
 		
 		
-		// ÀüÃ¼ ¿¹¿Ü Ã³¸®
+		// ì „ì²´ ì˜ˆì™¸ ì²˜ë¦¬
 		try {
-			// ÆäÀÌÁö ÃÊ±âÈ­
+			// í˜ì´ì§€ ì´ˆê¸°í™”
 			JSPUtilsInitTask jspUtilsInitTask = new JSPUtilsInitTask();
-			if (jspUtilsInitTask.initTask(rl, request, response, JspPageInfo.PageID_Rhya_Utaite_Player)) { // ÆäÀÌÁö ÃÊ±âÈ­ ¼º°ø
-				// DB Á¢¼Ó
+			if (jspUtilsInitTask.initTask(rl, request, response, JspPageInfo.PageID_Rhya_Utaite_Player)) { // í˜ì´ì§€ ì´ˆê¸°í™” ì„±ê³µ
+				// DB ì ‘ì†
 				try {
 					databaseConnection.init();
 					databaseConnection.connection();
@@ -116,22 +116,22 @@ public class UtaitePlayerManager extends HttpServlet {
 					
 					databaseConnection = null;
 					
-					// ·Î±× Ãâ·Â
-					rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á Áß ¿À·ù ¹ß»ı! ", e.toString()));
+					// ë¡œê·¸ ì¶œë ¥
+					rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²° ì¤‘ ì˜¤ë¥˜ ë°œìƒ! ", e.toString()));
 				}
 				
 				
-				// Null È®ÀÎ
+				// Null í™•ì¸
 				if (databaseConnection != null) {
-					// Main ÆÄ¶ó¹ÌÅÍ ÃßÃâ
+					// Main íŒŒë¼ë¯¸í„° ì¶”ì¶œ
 					int inputMode = Integer.parseInt(request.getParameter("mode"));
-					// ·Î±× Ãâ·Â
-					rl.Log(RhyaLogger.Type.Debug, rl.CreateLogTextv8(clientIP, "Å¬¶óÀÌ¾ğÆ®°¡ ÇØ´ç ÆÄ¶ó¹ÌÅÍ·Î Á¢¼ÓÇÔ Mode:", Integer.toString(inputMode)));
+					// ë¡œê·¸ ì¶œë ¥
+					rl.Log(RhyaLogger.Type.Debug, rl.CreateLogTextv8(clientIP, "í´ë¼ì´ì–¸íŠ¸ê°€ í•´ë‹¹ íŒŒë¼ë¯¸í„°ë¡œ ì ‘ì†í•¨ Mode:", Integer.toString(inputMode)));
 					
-					// ÆäÀÌÁö Á¢±Ù È®ÀÎ
+					// í˜ì´ì§€ ì ‘ê·¼ í™•ì¸
 					if (!new ServiceAccessChecker().isAccessService(0)) {
-						// ·Î±× Ãâ·Â
-						rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "¼­ºñ½º Á¢±Ù Â÷´ÜµÊ!"));
+						// ë¡œê·¸ ì¶œë ¥
+						rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "ì„œë¹„ìŠ¤ ì ‘ê·¼ ì°¨ë‹¨ë¨!"));
 						
 						obj.addProperty(keyName_Result, "service_access_block");
 						
@@ -143,17 +143,17 @@ public class UtaitePlayerManager extends HttpServlet {
 						return;
 					}
 					
-					// ÆÄ¶ó¹ÌÅÍ ±¸ºĞ
+					// íŒŒë¼ë¯¸í„° êµ¬ë¶„
 					switch (inputMode) {
 						/**
-						 * ¾Ë ¼ö ¾ø´Â ¸í·É¾î
+						 * ì•Œ ìˆ˜ ì—†ëŠ” ëª…ë ¹ì–´
 						 */
 						default: {
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ÀÔ·ÂÇÑ ¸í·ÉÀ» ºĞ¼®ÇÒ ¼ö ¾ø½À´Ï´Ù. Mode:", Integer.toString(inputMode)));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ì…ë ¥í•œ ëª…ë ¹ì„ ë¶„ì„í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. Mode:", Integer.toString(inputMode)));
 							
 							obj.addProperty(keyName_Result, failMessage);
-							obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¸í·ÉÀÔ´Ï´Ù. mode ÆÄ¶ó¹ÌÅÍ¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.", "UTF-8"));
+							obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ëª…ë ¹ì…ë‹ˆë‹¤. mode íŒŒë¼ë¯¸í„°ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”.", "UTF-8"));
 							
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
@@ -163,28 +163,28 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 0
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 0
 						 * 
-						 * ¼³¸í :
-						 * 		»ç¿ëÀÚ Á¤º¸ °¡Á®¿À±â
+						 * ì„¤ëª… :
+						 * 		ì‚¬ìš©ì ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
+						 * íŒŒë¼ë¯¸í„° :
 						 * 		auth        --> Auth Token
 						 */
 						case 0: {
-							// Auth token È®ÀÎ
+							// Auth token í™•ì¸
 							String authToken = request.getParameter("auth");
 							PageParameter.AuthToken authTokenParm = new PageParameter.AuthToken();
 							AuthTokenChecker authTokenChecker = new AuthTokenChecker();
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
-									result[2].equals(authTokenParm.SERVICE.get(0))) { // ·Î±×ÀÎ ¼º°ø
-								// µ¥ÀÌÅÍ Á¸Àç ¿©ºÎ È®ÀÎ
+									result[2].equals(authTokenParm.SERVICE.get(0))) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// ë°ì´í„° ì¡´ì¬ ì—¬ë¶€ í™•ì¸
 								databaseConnection.setPreparedStatement("SELECT * FROM utaite_user_info WHERE user_uuid = ?;");
 								databaseConnection.getPreparedStatement().setString(1, result[1]);
 								databaseConnection.setResultSet();
 								if (!databaseConnection.getResultSet().next()) {
-									// µ¥ÀÌÅÍ »ğÀÔ
+									// ë°ì´í„° ì‚½ì…
 									databaseConnection.closeResultSet();
 									databaseConnection.closePreparedStatement();
 									databaseConnection.setPreparedStatement("INSERT INTO utaite_user_info VALUES (?, ?, ?, ?, ?);");
@@ -194,7 +194,7 @@ public class UtaitePlayerManager extends HttpServlet {
 									databaseConnection.getPreparedStatement().setInt(4, 0);
 									databaseConnection.getPreparedStatement().setString(5, "[null]");
 									databaseConnection.executeUpdate();
-									// JSON µ¥ÀÌÅÍ ¼³Á¤ [ ±âº» ]
+									// JSON ë°ì´í„° ì„¤ì • [ ê¸°ë³¸ ]
 									obj.addProperty(keyName_Result, successMessage);
 									obj.addProperty("uuid", URLEncoder.encode(result[1], "UTF-8"));
 									obj.addProperty("play_list", URLEncoder.encode("{}", "UTF-8"));
@@ -202,10 +202,10 @@ public class UtaitePlayerManager extends HttpServlet {
 									obj.addProperty("access_var", 0);
 									obj.addProperty("access_date", URLEncoder.encode("[null]", "UTF-8"));
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "»ç¿ëÀÚ Á¤º¸ Ãâ·Â ¼º°ø! (½Å±Ô »ç¿ëÀÚ) Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ì‚¬ìš©ì ì •ë³´ ì¶œë ¥ ì„±ê³µ! (ì‹ ê·œ ì‚¬ìš©ì) Auth Token:", authToken));
 								}else {
-									// JSON µ¥ÀÌÅÍ ¼³Á¤
+									// JSON ë°ì´í„° ì„¤ì •
 									obj.addProperty(keyName_Result, successMessage);
 									obj.addProperty("uuid", URLEncoder.encode(databaseConnection.getResultSet().getString("user_uuid"), "UTF-8"));
 									obj.addProperty("play_list", URLEncoder.encode(databaseConnection.getResultSet().getString("user_play_list"), "UTF-8"));
@@ -213,18 +213,18 @@ public class UtaitePlayerManager extends HttpServlet {
 									obj.addProperty("access_var", databaseConnection.getResultSet().getInt("user_access_var"));
 									obj.addProperty("access_date", URLEncoder.encode(databaseConnection.getResultSet().getString("user_access_date"), "UTF-8"));
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "»ç¿ëÀÚ Á¤º¸ Ãâ·Â ¼º°ø! Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ì‚¬ìš©ì ì •ë³´ ì¶œë ¥ ì„±ê³µ! Auth Token:", authToken));
 								}
-							}else { // ·Î±×ÀÎ ½ÇÆĞ
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+							}else { // ë¡œê·¸ì¸ ì‹¤íŒ¨
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, failMessage);
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "»ç¿ëÀÚ Á¤º¸ Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ì‚¬ìš©ì ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 							}
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -233,18 +233,18 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 1
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 1
 						 * 
-						 * ¼³¸í :
-						 * 		³ë·¡ Á¤º¸ Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		ë…¸ë˜ ì •ë³´ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 	    - ÀÌ Áß ¼±ÅÃÇØ¼­ ÀÔ·Â
+						 * íŒŒë¼ë¯¸í„° :
+						 * 	    - ì´ ì¤‘ ì„ íƒí•´ì„œ ì…ë ¥
 						 *      ------------------------------
-						 * 		new         --> ½Å±Ô ³ë·¡ Ãâ·Â
-						 * 		suuid       --> Æ¯Á¤ ³ë·¡ Ãâ·Â
-						 * 		all         --> ¸ğµç ³ë·¡ Ãâ·Â
-						 * 		version     --> ¸ğµç ³ë·¡ ¹öÀü Ãâ·Â
+						 * 		new         --> ì‹ ê·œ ë…¸ë˜ ì¶œë ¥
+						 * 		suuid       --> íŠ¹ì • ë…¸ë˜ ì¶œë ¥
+						 * 		all         --> ëª¨ë“  ë…¸ë˜ ì¶œë ¥
+						 * 		version     --> ëª¨ë“  ë…¸ë˜ ë²„ì „ ì¶œë ¥
 						 * 		------------------------------
 						 * 		auth        --> Auth Token
 						 */
@@ -255,19 +255,19 @@ public class UtaitePlayerManager extends HttpServlet {
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
 									result[2].equals(authTokenParm.SERVICE.get(0)) &&
-									isAccessCheck(result[1])) { // ·Î±×ÀÎ ¼º°ø
-								// ÆÄ¶ó¹ÌÅÍ ÃßÃâ
+									isAccessCheck(result[1])) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// íŒŒë¼ë¯¸í„° ì¶”ì¶œ
 								String newSong = request.getParameter("new");
 								String suuid = request.getParameter("suuid");
 								String all = request.getParameter("all");
 								String version = request.getParameter("version");
 								
-								// ÆÄ¶ó¹ÌÅÍ ºĞ·ù
-								if (newSong != null) { // ÃÖ½Å ³¯ÀÚ¼ø
+								// íŒŒë¼ë¯¸í„° ë¶„ë¥˜
+								if (newSong != null) { // ìµœì‹  ë‚ ììˆœ
 									databaseConnection.setPreparedStatement("SELECT * FROM utaite_list ORDER BY music_date DESC;");
 									databaseConnection.setResultSet();
 
-									// ³ë·¡ ¸®½ºÆ®
+									// ë…¸ë˜ ë¦¬ìŠ¤íŠ¸
 									// -----------------------------------------------
 									int index = 1;
 									while (databaseConnection.getResultSet().next()) {
@@ -292,14 +292,14 @@ public class UtaitePlayerManager extends HttpServlet {
 									}
 									// -----------------------------------------------
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ÃÖ±Ù¿¡ Ãß°¡µÈ ³ë·¡ ¸®½ºÆ® Ãâ·Â ¼º°ø! Auth Token:", authToken));
-								}else if (suuid != null) { // Æ¯Á¤ ³ë·¡
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ìµœê·¼ì— ì¶”ê°€ëœ ë…¸ë˜ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥ ì„±ê³µ! Auth Token:", authToken));
+								}else if (suuid != null) { // íŠ¹ì • ë…¸ë˜
 									databaseConnection.setPreparedStatement("SELECT * FROM utaite_list WHERE music_uuid = ?;");
 									databaseConnection.getPreparedStatement().setString(1, suuid);
 									databaseConnection.setResultSet();
 									
-									// ³ë·¡ ¸®½ºÆ®
+									// ë…¸ë˜ ë¦¬ìŠ¤íŠ¸
 									// -----------------------------------------------
 									if (databaseConnection.getResultSet().next()) {
 										obj.addProperty(keyName_Result, successMessage);
@@ -344,13 +344,13 @@ public class UtaitePlayerManager extends HttpServlet {
 									}
 									// -----------------------------------------------
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "Æ¯Á¤ ³ë·¡ Á¤º¸ Ãâ·Â ¼º°ø! Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "íŠ¹ì • ë…¸ë˜ ì •ë³´ ì¶œë ¥ ì„±ê³µ! Auth Token:", authToken));
 								}else if (all != null) {
 									databaseConnection.setPreparedStatement("SELECT * FROM utaite_list;");
 									databaseConnection.setResultSet();
 
-									// ³ë·¡ ¸®½ºÆ®
+									// ë…¸ë˜ ë¦¬ìŠ¤íŠ¸
 									// -----------------------------------------------
 									int index = 1;
 									while (databaseConnection.getResultSet().next()) {
@@ -404,13 +404,13 @@ public class UtaitePlayerManager extends HttpServlet {
 									}
 									// -----------------------------------------------
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¸ğµç ³ë·¡ Á¤º¸ Ãâ·Â ¼º°ø! Auth Token:", authToken));
-								}else if (version != null) { // ¹öÀü È®ÀÎ
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ëª¨ë“  ë…¸ë˜ ì •ë³´ ì¶œë ¥ ì„±ê³µ! Auth Token:", authToken));
+								}else if (version != null) { // ë²„ì „ í™•ì¸
 									databaseConnection.setPreparedStatement("SELECT music_uuid, update_version FROM utaite_list;");
 									databaseConnection.setResultSet();
 
-									// ³ë·¡ ¸®½ºÆ®
+									// ë…¸ë˜ ë¦¬ìŠ¤íŠ¸
 									// -----------------------------------------------
 									int index = 1;
 									while (databaseConnection.getResultSet().next()) {
@@ -423,23 +423,23 @@ public class UtaitePlayerManager extends HttpServlet {
 									}
 									// -----------------------------------------------
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¸ğµç ³ë·¡ ¹öÀü Á¤º¸ Ãâ·Â ¼º°ø! Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ëª¨ë“  ë…¸ë˜ ë²„ì „ ì •ë³´ ì¶œë ¥ ì„±ê³µ! Auth Token:", authToken));
 								}else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ÀÔ·ÂÇÑ ¸í·ÉÀ» ºĞ¼®ÇÒ ¼ö ¾ø½À´Ï´Ù. [³ë·¡ Á¤º¸ Ãâ·Â] Auth Token: ", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ì…ë ¥í•œ ëª…ë ¹ì„ ë¶„ì„í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. [ë…¸ë˜ ì •ë³´ ì¶œë ¥] Auth Token: ", authToken));
 									
 									obj.addProperty(keyName_Result, failMessage);
 								}
 							}else {
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, failMessage);
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¸ğµç ³ë·¡ ¹öÀü Á¤º¸ Ãâ·Â ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ]  Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ëª¨ë“  ë…¸ë˜ ë²„ì „ ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨]  Auth Token:", authToken));
 							}
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -448,13 +448,13 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 2
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 2
 						 * 
-						 * ¼³¸í :
-						 * 		³ë·¡ Á¤º¸ ¿ë·® Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		ë…¸ë˜ ì •ë³´ ìš©ëŸ‰ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		<¾øÀ½>
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		<ì—†ìŒ>
 						 */
 						case 2: {
 							databaseConnection.setPreparedStatement("SELECT table_name, round(data_length/(1024*1024),2) as 'DATA_SIZE(MB)' FROM information_schema.TABLES where table_schema = 'rhya_network_server' AND TABLE_NAME = 'utaite_list';");
@@ -468,10 +468,10 @@ public class UtaitePlayerManager extends HttpServlet {
 								obj.addProperty("size", "0");
 							}
 							
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "³ë·¡ Á¤º¸ ¿ë·® Ãâ·Â ¼º°ø!"));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ë…¸ë˜ ì •ë³´ ìš©ëŸ‰ ì¶œë ¥ ì„±ê³µ!"));
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -480,14 +480,14 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 3
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 3
 						 * 
-						 * ¼³¸í :
-						 * 		»ç¿ëÀÚ µ¥ÀÌÅÍ ¼³Á¤
+						 * ì„¤ëª… :
+						 * 		ì‚¬ìš©ì ë°ì´í„° ì„¤ì •
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		index       --> µ¥ÀÌÅÍ Á¾·ù
-						 * 		value       --> µ¥ÀÌÅÍ
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		index       --> ë°ì´í„° ì¢…ë¥˜
+						 * 		value       --> ë°ì´í„°
 						 * 		auth        --> Auth Token
 						 */
 						case 3: {
@@ -496,8 +496,8 @@ public class UtaitePlayerManager extends HttpServlet {
 							AuthTokenChecker authTokenChecker = new AuthTokenChecker();
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
-									result[2].equals(authTokenParm.SERVICE.get(0))) { // ·Î±×ÀÎ ¼º°ø
-								// ÆÄ¶ó¹ÌÅÍ ÃßÃâ
+									result[2].equals(authTokenParm.SERVICE.get(0))) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// íŒŒë¼ë¯¸í„° ì¶”ì¶œ
 								int index = Integer.parseInt(request.getParameter("index"));
 								String value = request.getParameter("value");	
 								// SQL
@@ -505,7 +505,7 @@ public class UtaitePlayerManager extends HttpServlet {
 								if (index == 0) runSQL = runSQL.replace("<KEY>", "user_play_list");
 								else runSQL = runSQL.replace("<KEY>", "user_subscribe_list");
 								
-								// JSON Çü½Ä È®ÀÎ
+								// JSON í˜•ì‹ í™•ì¸
 								try {
 									JsonParser parser = new JsonParser();
 									parser.parse(URLDecoder.decode(value, "UTF-8"));
@@ -516,28 +516,28 @@ public class UtaitePlayerManager extends HttpServlet {
 									databaseConnection.getPreparedStatement().setString(2, result[1]);
 									databaseConnection.executeUpdate();
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv10(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ¼º°ø! - ", "Value:", value, "| Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv10(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì„±ê³µ! - ", "Value:", value, "| Auth Token:", authToken));
 									
 									obj.addProperty(keyName_Result, successMessage);
 								}catch(JsonSyntaxException ex) {
 									ex.printStackTrace();
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! ¾Ë ¼ö ¾ø´Â JSON Çü½Ä Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! ì•Œ ìˆ˜ ì—†ëŠ” JSON í˜•ì‹ Auth Token:", authToken));
 									
 									obj.addProperty(keyName_Result, failMessage);
-									obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¾ø´Â JSON Çü½ÄÀÔ´Ï´Ù.", "UTF-8"));
+									obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ì—†ëŠ” JSON í˜•ì‹ì…ë‹ˆë‹¤.", "UTF-8"));
 								}
-							}else { // ·Î±×ÀÎ ½ÇÆĞ
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+							}else { // ë¡œê·¸ì¸ ì‹¤íŒ¨
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, failMessage);
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 							}
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -546,13 +546,13 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 4
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 4
 						 * 
-						 * ¼³¸í :
-						 * 		³ë·¡ Àç»ı
+						 * ì„¤ëª… :
+						 * 		ë…¸ë˜ ì¬ìƒ
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		uuid        --> ³ë·¡ UUID
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		uuid        --> ë…¸ë˜ UUID
 						 * 		auth        --> Auth Token
 						 */
 						case 4: {
@@ -562,8 +562,8 @@ public class UtaitePlayerManager extends HttpServlet {
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
 									result[2].equals(authTokenParm.SERVICE.get(0)) &&
-									isAccessCheck(result[1])) { // ·Î±×ÀÎ ¼º°ø
-								// ÆÄ¶ó¹ÌÅÍ ÃßÃâ
+									isAccessCheck(result[1])) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// íŒŒë¼ë¯¸í„° ì¶”ì¶œ
 								String uuid = request.getParameter("uuid");
 								// Header
 						        Long startRange = 0l;
@@ -580,7 +580,7 @@ public class UtaitePlayerManager extends HttpServlet {
 						            System.err.println(e);
 						        }
 						        
-						        // ³ë·¡ DB °Ë»ö
+						        // ë…¸ë˜ DB ê²€ìƒ‰
 								databaseConnection.setPreparedStatement("SELECT music_mp3 from utaite_list where music_uuid = ?;");
 								databaseConnection.getPreparedStatement().setString(1, URLDecoder.decode(uuid, "UTF-8"));
 								databaseConnection.setResultSet();
@@ -629,7 +629,7 @@ public class UtaitePlayerManager extends HttpServlet {
 								            startRange = 0l;
 								        }
 									 	
-									 	// ·£´ı ¾×¼¼½º ÆÄÀÏÀ» ÀÌ¿ëÇØ mp3 ÆÄÀÏÀ» ¹üÀ§·Î ÀĞ±â
+									 	// ëœë¤ ì•¡ì„¸ìŠ¤ íŒŒì¼ì„ ì´ìš©í•´ mp3 íŒŒì¼ì„ ë²”ìœ„ë¡œ ì½ê¸°
 								        try (RandomAccessFile randomAccessFile = new RandomAccessFile(mp3, "r");
 								            ServletOutputStream sos = response.getOutputStream();){
 								        	
@@ -638,25 +638,25 @@ public class UtaitePlayerManager extends HttpServlet {
 								            Long count = startRange;
 								            Long requestSize = endRange - startRange + 1;
 
-								            // startRange¿¡¼­ Ãâ¹ß
+								            // startRangeì—ì„œ ì¶œë°œ
 								            randomAccessFile.seek(startRange);
 
 								            while (true) {
-								                // ¹öÆÛ »çÀÌÁî (1024) º¸´Ù ¹üÀ§°¡ ÀÛÀ¸¸é
+								                // ë²„í¼ ì‚¬ì´ì¦ˆ (1024) ë³´ë‹¤ ë²”ìœ„ê°€ ì‘ìœ¼ë©´
 								                if(requestSize <= 2) {
-								                    // Range byte 0-1Àº ¾Æ·¡ ÀÇ¹Ì°¡ ¾Æ´Ô.
+								                    // Range byte 0-1ì€ ì•„ë˜ ì˜ë¯¸ê°€ ì•„ë‹˜.
 								                    // data = randomAccessFile.read(b, 0, requestSize.intValue());
 								                    // sos.write(b, 0, data);
 
-								                    // ** write ¾øÀÌ ¹Ù·Î flush ** //
+								                    // ** write ì—†ì´ ë°”ë¡œ flush ** //
 								                    sos.flush();
 								                    break;
 								                }
 
-								                // ³ª¸ÓÁö´Â ÀÏ¹İÀûÀ¸·Î ÁøÇà
+								                // ë‚˜ë¨¸ì§€ëŠ” ì¼ë°˜ì ìœ¼ë¡œ ì§„í–‰
 								                data = randomAccessFile.read(b, 0, b.length);
 
-								                // count°¡ endRange ÀÌ»óÀÌ¸é ¿äÃ» ¹üÀ§¸¦ ³Ñ¾î¼± °ÍÀÌ¹Ç·Î Á¾·á
+								                // countê°€ endRange ì´ìƒì´ë©´ ìš”ì²­ ë²”ìœ„ë¥¼ ë„˜ì–´ì„  ê²ƒì´ë¯€ë¡œ ì¢…ë£Œ
 								                if(count <= endRange) {
 								                    sos.write(b, 0, data);
 								                    count += bufferSize;
@@ -670,24 +670,24 @@ public class UtaitePlayerManager extends HttpServlet {
 								            sos.flush();
 								        }
 									 	
-										// ·Î±× Ãâ·Â
-										rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv10(clientIP, "³ë·¡ Àç»ı ¼º°ø!", "Music UUID:", uuid, " ,Auth Token:", authToken));
+										// ë¡œê·¸ ì¶œë ¥
+										rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv10(clientIP, "ë…¸ë˜ ì¬ìƒ ì„±ê³µ!", "Music UUID:", uuid, " ,Auth Token:", authToken));
 									}catch (IOException ioe) {
 										ioe.printStackTrace();
 										
-										// ·Î±× Ãâ·Â
-										rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv10(clientIP, "³ë·¡ Àç»ı ½ÇÆĞ! [IOException]", "Auth Token:" , authToken, " -", ioe.toString()));
+										// ë¡œê·¸ ì¶œë ¥
+										rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv10(clientIP, "ë…¸ë˜ ì¬ìƒ ì‹¤íŒ¨! [IOException]", "Auth Token:" , authToken, " -", ioe.toString()));
 									}
 								}else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "³ë·¡ Àç»ı ½ÇÆĞ! [³ë·¡ UUID¸¦ Ã£À» ¼ö ¾øÀ½] Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ë…¸ë˜ ì¬ìƒ ì‹¤íŒ¨! [ë…¸ë˜ UUIDë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŒ] Auth Token:", authToken));
 								}
-							}else { // ·Î±×ÀÎ ½ÇÆĞ
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+							}else { // ë¡œê·¸ì¸ ì‹¤íŒ¨
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, failMessage);
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "³ë·¡ Àç»ı ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ë…¸ë˜ ì¬ìƒ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 							}
 
 							break;
@@ -695,12 +695,12 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 5
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 5
 						 * 
-						 * ¼³¸í :
-						 * 		»ç¿ëÀÚ ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î Á¢±Ù Çã¿ë È®ÀÎ
+						 * ì„¤ëª… :
+						 * 		ì‚¬ìš©ì ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì ‘ê·¼ í—ˆìš© í™•ì¸
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
+						 * íŒŒë¼ë¯¸í„° :
 						 * 		auth        --> Auth Token
 						 */
 						case 5: {
@@ -710,20 +710,20 @@ public class UtaitePlayerManager extends HttpServlet {
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
 									result[2].equals(authTokenParm.SERVICE.get(0)) &&
-									isAccessCheck(result[1])) { // ·Î±×ÀÎ ¼º°ø
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ¼­ºñ½º Á¢±Ù Çã¿ë Auth Token:", authToken));
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+									isAccessCheck(result[1])) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì„œë¹„ìŠ¤ ì ‘ê·¼ í—ˆìš© Auth Token:", authToken));
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, successMessage);
 							}else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ¼­ºñ½º Á¢±Ù °ÅºÎ Auth Token:", authToken));
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì„œë¹„ìŠ¤ ì ‘ê·¼ ê±°ë¶€ Auth Token:", authToken));
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 				
@@ -732,16 +732,16 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 6
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 6
 						 * 
-						 * ¼³¸í :
-						 * 		¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ¾Û Á¤º¸ Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì•± ì •ë³´ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		<¾øÀ½>
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		<ì—†ìŒ>
 						 */
 						case 6: {
-							// ·Î±× Ãâ·Â
+							// ë¡œê·¸ ì¶œë ¥
 							databaseConnection.setPreparedStatement("SELECT * FROM utaite_info;");
 							databaseConnection.setResultSet();
 							if (databaseConnection.getResultSet().next()) {
@@ -752,16 +752,16 @@ public class UtaitePlayerManager extends HttpServlet {
 								obj.addProperty("update_description", URLEncoder.encode(databaseConnection.getResultSet().getString("update_description"), "UTF-8"));
 								obj.addProperty("update_description_for_windows", URLEncoder.encode(databaseConnection.getResultSet().getString("update_description_for_windows"), "UTF-8"));
 								
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ¾Û Á¤º¸ Ãâ·Â ¼º°ø"));	
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì•± ì •ë³´ ì¶œë ¥ ì„±ê³µ"));	
 							}else {
 								obj.addProperty(keyName_Result, failMessage);
 								obj.addProperty("key", "[null]");
 								
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ¾Û Á¤º¸ Ãâ·Â ½ÇÆĞ"));
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì•± ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨"));
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -770,18 +770,18 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 7
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 7
 						 * 
-						 * ¼³¸í :
-						 * 		¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ¾Û ´Ù¿î·Îµå
+						 * ì„¤ëª… :
+						 * 		ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì•± ë‹¤ìš´ë¡œë“œ
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		<¾øÀ½>
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		<ì—†ìŒ>
 						 */
 						case 7: {
-							// ÆÄÀÏ ¾÷·ÎµåµÈ °æ·Î
+							// íŒŒì¼ ì—…ë¡œë“œëœ ê²½ë¡œ
 						    final String root = PathManager.UTAITE_PLAYER_MANAGER_APK_PATH;
-						    // ½ÇÁ¦ ³»º¸³¾ ÆÄÀÏ¸í
+						    // ì‹¤ì œ ë‚´ë³´ë‚¼ íŒŒì¼ëª…
 						    String orgfilename = "up_update_apk.apk";    
 							try {
 								File file = new File(root);
@@ -801,23 +801,23 @@ public class UtaitePlayerManager extends HttpServlet {
 									outs.close();
 									fin.close();
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î APK ÆÄÀÏ ´Ù¿î·Îµå ¼º°ø!"));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ APK íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì„±ê³µ!"));
 								} else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î APK ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! File does not exist!"));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ APK íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! File does not exist!"));
 									
 									obj.addProperty(keyName_Result, failMessage);
 								}
 							} catch (IOException e) {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î APK ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! ¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.", e.toString()));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ APK íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.", e.toString()));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -827,13 +827,13 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 8
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 8
 						 * 
-						 * ¼³¸í :
-						 * 		MP3 ÆÄÀÏ ´Ù¿î·Îµå
+						 * ì„¤ëª… :
+						 * 		MP3 íŒŒì¼ ë‹¤ìš´ë¡œë“œ
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		uuid        --> ³ë·¡ UUID
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		uuid        --> ë…¸ë˜ UUID
 						 * 		auth        --> Auth Token
 						 */
 						case 8: {
@@ -843,8 +843,8 @@ public class UtaitePlayerManager extends HttpServlet {
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
 									result[2].equals(authTokenParm.SERVICE.get(0)) &&
-									isAccessCheck(result[1])) { // ·Î±×ÀÎ ¼º°ø
-								// ÆÄ¶ó¹ÌÅÍ ÃßÃâ
+									isAccessCheck(result[1])) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// íŒŒë¼ë¯¸í„° ì¶”ì¶œ
 								String uuid = request.getParameter("uuid");
 								databaseConnection.setPreparedStatement("SELECT music_mp3 from utaite_list where music_uuid = ?;");
 								databaseConnection.getPreparedStatement().setString(1, URLDecoder.decode(uuid, "UTF-8"));
@@ -875,14 +875,14 @@ public class UtaitePlayerManager extends HttpServlet {
 											outs.close();
 											fin.close();
 											
-											// ·Î±× Ãâ·Â
-											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv10(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î MP3 ÆÄÀÏ ´Ù¿î·Îµå ¼º°ø! [UUID] ", "Auth Token:", authToken, ",Music UUID:", uuid));
+											// ë¡œê·¸ ì¶œë ¥
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv10(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ MP3 íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì„±ê³µ! [UUID] ", "Auth Token:", authToken, ",Music UUID:", uuid));
 										} else {
-											// ·Î±× Ãâ·Â
-											rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv10(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î MP3 ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! File does not exist!", "Auth Token:", authToken, ",Music UUID:", uuid));
+											// ë¡œê·¸ ì¶œë ¥
+											rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv10(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ MP3 íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! File does not exist!", "Auth Token:", authToken, ",Music UUID:", uuid));
 											
 											obj.addProperty(keyName_Result, failMessage);
-											obj.addProperty(keyName_Message, URLEncoder.encode("¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î MP3 ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! File does not exist!", "UTF-8"));
+											obj.addProperty(keyName_Message, URLEncoder.encode("ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ MP3 íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! File does not exist!", "UTF-8"));
 											
 											PrintWriter out = response.getWriter(); 
 											out.println(gson.toJson(obj));
@@ -890,24 +890,24 @@ public class UtaitePlayerManager extends HttpServlet {
 									} catch (IOException ioe) {
 										ioe.printStackTrace();
 										
-										// ·Î±× Ãâ·Â
-										rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv10(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î MP3 ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! [IOException]", "Auth Token:" , authToken, " -", ioe.toString()));
+										// ë¡œê·¸ ì¶œë ¥
+										rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv10(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ MP3 íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! [IOException]", "Auth Token:" , authToken, " -", ioe.toString()));
 									}
 								}else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î MP3 ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! [³ë·¡ UUID¸¦ Ã£À» ¼ö ¾øÀ½] Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ MP3 íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! [ë…¸ë˜ UUIDë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŒ] Auth Token:", authToken));
 									
 									obj.addProperty(keyName_Result, failMessage);
 								}
 							}else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î MP3 ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ MP3 íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -916,23 +916,23 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 9
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 9
 						 * 
-						 * ¼³¸í :
-						 * 		Æ¯Á¤ Æú´õ ¿ë·® Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		íŠ¹ì • í´ë” ìš©ëŸ‰ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		<¾øÀ½>
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		<ì—†ìŒ>
 						 */
 						case 9: {
 							obj.addProperty(keyName_Result, successMessage);
 							obj.addProperty("size", getFolderSize(new File(mp3SaveRootPath)));
 							
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î MP3 ÆÄÀÏ »çÀÌÁî"));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ MP3 íŒŒì¼ ì‚¬ì´ì¦ˆ"));
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -941,13 +941,13 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 10
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 10
 						 * 
-						 * ¼³¸í :
-						 * 		¼­¹ö Á¤º¸ Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		ì„œë²„ ì •ë³´ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		<¾øÀ½>
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		<ì—†ìŒ>
 						 */
 						case 10: {
 							String[] getInfo = isServerAccessCheck();
@@ -957,16 +957,16 @@ public class UtaitePlayerManager extends HttpServlet {
 								obj.addProperty("version", getInfo[0]);
 								obj.addProperty("access", getInfo[1]);
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¼­¹ö Á¤º¸ Ãâ·Â ¼º°ø!"));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ì„œë²„ ì •ë³´ ì¶œë ¥ ì„±ê³µ!"));
 							}else {
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "¼­¹ö Á¤º¸ Ãâ·Â ½ÇÆĞ! ¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù."));
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "ì„œë²„ ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤."));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -975,13 +975,13 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 11
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 11
 						 * 
-						 * ¼³¸í :
-						 * 		³ë·¡ Àç»ı È½¼ö ¹İ¿µ
+						 * ì„¤ëª… :
+						 * 		ë…¸ë˜ ì¬ìƒ íšŸìˆ˜ ë°˜ì˜
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		uuid        --> ³ë·¡ UUID
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		uuid        --> ë…¸ë˜ UUID
 						 * 		auth        --> Auth Token
 						 */
 						case 11: {
@@ -991,10 +991,10 @@ public class UtaitePlayerManager extends HttpServlet {
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
 									result[2].equals(authTokenParm.SERVICE.get(0)) &&
-									isAccessCheck(result[1])) { // ·Î±×ÀÎ ¼º°ø
-								// ÆÄ¶ó¹ÌÅÍ ÃßÃâ
+									isAccessCheck(result[1])) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// íŒŒë¼ë¯¸í„° ì¶”ì¶œ
 								String uuid = request.getParameter("music");
-								// DB Á¢¼Ó
+								// DB ì ‘ì†
 								databaseConnection.setPreparedStatement("UPDATE utaite_list set play_count = play_count + 1 where music_uuid = ?;");
 								databaseConnection.getPreparedStatement().setString(1, uuid);
 								databaseConnection.executeUpdate();
@@ -1005,23 +1005,23 @@ public class UtaitePlayerManager extends HttpServlet {
 								databaseConnection.executeUpdate();
 								
 								if (databaseConnection.executeUpdate() >= 1) {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv10(clientIP, "³ë·¡ Àç»ı È½¼ö ¹İ¿µ ¼º°ø!", "Auth Token:", authToken, ",Music UUID:", uuid));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv10(clientIP, "ë…¸ë˜ ì¬ìƒ íšŸìˆ˜ ë°˜ì˜ ì„±ê³µ!", "Auth Token:", authToken, ",Music UUID:", uuid));
 								}else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "³ë·¡ Àç»ı È½¼ö ¹İ¿µ ½ÇÆĞ! ¼öÁ¤µÈ ³ë·¡ Á¤º¸ °³¼ö°¡  0°³ ÀÔ´Ï´Ù. Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ë…¸ë˜ ì¬ìƒ íšŸìˆ˜ ë°˜ì˜ ì‹¤íŒ¨! ìˆ˜ì •ëœ ë…¸ë˜ ì •ë³´ ê°œìˆ˜ê°€  0ê°œ ì…ë‹ˆë‹¤. Auth Token:", authToken));
 									
 									obj.addProperty(keyName_Result, failMessage);
 								}
 							}else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "³ë·¡ Àç»ı È½¼ö ¹İ¿µ ½ÇÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ë…¸ë˜ ì¬ìƒ íšŸìˆ˜ ë°˜ì˜ ì‹¤íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -1030,12 +1030,12 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 12
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 12
 						 * 
-						 * ¼³¸í :
-						 * 		Àç»ı È½¼ö ±â¹İ Top8 ³ë·¡ ¸®½ºÆ®
+						 * ì„¤ëª… :
+						 * 		ì¬ìƒ íšŸìˆ˜ ê¸°ë°˜ Top8 ë…¸ë˜ ë¦¬ìŠ¤íŠ¸
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
+						 * íŒŒë¼ë¯¸í„° :
 						 * 		auth        --> Auth Token
 						 */
 						case 12: {
@@ -1045,8 +1045,8 @@ public class UtaitePlayerManager extends HttpServlet {
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
 									result[2].equals(authTokenParm.SERVICE.get(0)) &&
-									isAccessCheck(result[1])) { // ·Î±×ÀÎ ¼º°ø
-								// DB Á¢¼Ó
+									isAccessCheck(result[1])) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// DB ì ‘ì†
 								databaseConnection.setPreparedStatement("SELECT music_uuid, play_count, music_date from utaite_list ORDER BY play_count DESC LIMIT 8;");
 								databaseConnection.setResultSet();
 								
@@ -1065,23 +1065,23 @@ public class UtaitePlayerManager extends HttpServlet {
 								}
 								
 								if (isChecker) {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "³ë·¡ ¼øÀ§ Ãâ·Â ¼º°ø! Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ë…¸ë˜ ìˆœìœ„ ì¶œë ¥ ì„±ê³µ! Auth Token:", authToken));
 								}else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "³ë·¡ ¼øÀ§ Ãâ·Â »ìÆĞ! °Ë»öµÈ ³»¿ëÀÌ ¾ø½À´Ï´Ù. Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ë…¸ë˜ ìˆœìœ„ ì¶œë ¥ ì‚´íŒ¨! ê²€ìƒ‰ëœ ë‚´ìš©ì´ ì—†ìŠµë‹ˆë‹¤. Auth Token:", authToken));
 									
 									obj.addProperty(keyName_Result, failMessage);
 								}
 							}else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "³ë·¡ ¼øÀ§ Ãâ·Â »ìÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ë…¸ë˜ ìˆœìœ„ ì¶œë ¥ ì‚´íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -1091,14 +1091,14 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 13
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 13
 						 * 
-						 * ¼³¸í :
-						 * 		»ç¿ëÀÚ Á¤º¸ ¼öÁ¤ [±¸µ¶]
+						 * ì„¤ëª… :
+						 * 		ì‚¬ìš©ì ì •ë³´ ìˆ˜ì • [êµ¬ë…]
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		index       --> ±¸µ¶ Ãë¼Ò, ±¸µ¶
-						 * 		value       --> µ¥ÀÌÅÍ
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		index       --> êµ¬ë… ì·¨ì†Œ, êµ¬ë…
+						 * 		value       --> ë°ì´í„°
 						 * 		auth        --> Auth Token
 						 */
 						case 13: {
@@ -1107,8 +1107,8 @@ public class UtaitePlayerManager extends HttpServlet {
 							AuthTokenChecker authTokenChecker = new AuthTokenChecker();
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
-									result[2].equals(authTokenParm.SERVICE.get(0))) { // ·Î±×ÀÎ ¼º°ø
-								// ÆÄ¶ó¹ÌÅÍ ÃßÃâ
+									result[2].equals(authTokenParm.SERVICE.get(0))) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// íŒŒë¼ë¯¸í„° ì¶”ì¶œ
 								int index = Integer.parseInt(request.getParameter("index"));
 								String value = request.getParameter("value");	
 								// SQL
@@ -1125,7 +1125,7 @@ public class UtaitePlayerManager extends HttpServlet {
 								}
 								
 								if (isExt) {
-									// JSON Çü½Ä È®ÀÎ
+									// JSON í˜•ì‹ í™•ì¸
 									try {
 										databaseConnection.closePreparedStatement();
 										databaseConnection.closeResultSet();
@@ -1177,42 +1177,42 @@ public class UtaitePlayerManager extends HttpServlet {
 											databaseConnection.getPreparedStatement().setString(2, result[1]);
 											databaseConnection.executeUpdate();
 	
-											// ·Î±× Ãâ·Â
-											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv12(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ¼º°ø! [±¸µ¶ Á¤º¸ ¼³Á¤] ,Index:", String.valueOf(index), ",Value:", value, ",Auth Token", authToken));
+											// ë¡œê·¸ ì¶œë ¥
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv12(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì„±ê³µ! [êµ¬ë… ì •ë³´ ì„¤ì •] ,Index:", String.valueOf(index), ",Value:", value, ",Auth Token", authToken));
 											
 											obj.addProperty(keyName_Result, successMessage);
 										}else {
-											// ·Î±× Ãâ·Â
-											rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv12(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [±¸µ¶ Á¤º¸ ¼³Á¤] [»ç¿ëÀÚ Á¶È¸ ½ÇÆĞ] ,Index:", String.valueOf(index), ",Value:", value, "Auth Token", authToken));
+											// ë¡œê·¸ ì¶œë ¥
+											rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv12(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [êµ¬ë… ì •ë³´ ì„¤ì •] [ì‚¬ìš©ì ì¡°íšŒ ì‹¤íŒ¨] ,Index:", String.valueOf(index), ",Value:", value, "Auth Token", authToken));
 											
 											obj.addProperty(keyName_Result, failMessage);
-											obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¾ø´Â JSON Çü½ÄÀÔ´Ï´Ù.", "UTF-8"));
+											obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ì—†ëŠ” JSON í˜•ì‹ì…ë‹ˆë‹¤.", "UTF-8"));
 										}
 									}catch(JsonSyntaxException ex) {
 										ex.printStackTrace();
 										
-										// ·Î±× Ãâ·Â
-										rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv12(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [±¸µ¶ Á¤º¸ ¼³Á¤] [¾Ë ¼ö ¾ø´Â JSON Çü½Ä] ,Index:", String.valueOf(index), ",Value:", value, "Auth Token", authToken));
+										// ë¡œê·¸ ì¶œë ¥
+										rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv12(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [êµ¬ë… ì •ë³´ ì„¤ì •] [ì•Œ ìˆ˜ ì—†ëŠ” JSON í˜•ì‹] ,Index:", String.valueOf(index), ",Value:", value, "Auth Token", authToken));
 										
 										obj.addProperty(keyName_Result, failMessage);
-										obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¾ø´Â JSON Çü½ÄÀÔ´Ï´Ù.", "UTF-8"));
+										obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ì—†ëŠ” JSON í˜•ì‹ì…ë‹ˆë‹¤.", "UTF-8"));
 									}
 								}else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv12(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [±¸µ¶ Á¤º¸ ¼³Á¤] [¾Ë ¼ö ¾ø´Â SINGER UUID] ,Index:", String.valueOf(index), ",Value:", value, "Auth Token", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv12(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [êµ¬ë… ì •ë³´ ì„¤ì •] [ì•Œ ìˆ˜ ì—†ëŠ” SINGER UUID] ,Index:", String.valueOf(index), ",Value:", value, "Auth Token", authToken));
 									
 									obj.addProperty(keyName_Result, failMessage);
-									obj.addProperty(keyName_Message, URLEncoder.encode("¾Ë ¼ö ¾ø´Â UUID ÀÔ´Ï´Ù.", "UTF-8"));
+									obj.addProperty(keyName_Message, URLEncoder.encode("ì•Œ ìˆ˜ ì—†ëŠ” UUID ì…ë‹ˆë‹¤.", "UTF-8"));
 								}
-							}else { // ·Î±×ÀÎ ½ÇÆĞ
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+							}else { // ë¡œê·¸ì¸ ì‹¤íŒ¨
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, failMessage);
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [±¸µ¶ Á¤º¸ ¼³Á¤] [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [êµ¬ë… ì •ë³´ ì„¤ì •] [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 							}
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -1221,20 +1221,20 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 14
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 14
 						 * 
-						 * ¼³¸í :
-						 * 		»ç¿ëÀÚ Á¤º¸ ¼öÁ¤ [ÇÃ·¹ÀÌ¸®½ºÆ®]
+						 * ì„¤ëª… :
+						 * 		ì‚¬ìš©ì ì •ë³´ ìˆ˜ì • [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸]
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		index       --> ¸í·É¾î Å¸ÀÔ
-						 * 			            0 : ÇÃ·¹ÀÌ¸®½ºÆ® »èÁ¦
-						 * 					    1 : ÇÃ·¹ÀÌ¸®½ºÆ® »ı¼º
-						 * 					    2 : ÇÃ·¹ÀÌ¸®½ºÆ® ¼öÁ¤
-						 * 					    3 : ÇÃ·¹ÀÌ¸®½ºÆ® ³ë·¡ ¼öÁ¤
-						 * 		value1      --> µ¥ÀÌÅÍ 1
-						 * 		value2      --> µ¥ÀÌÅÍ 2
-						 * 		value3      --> µ¥ÀÌÅÍ 3
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		index       --> ëª…ë ¹ì–´ íƒ€ì…
+						 * 			            0 : í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì‚­ì œ
+						 * 					    1 : í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ìƒì„±
+						 * 					    2 : í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ìˆ˜ì •
+						 * 					    3 : í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ë…¸ë˜ ìˆ˜ì •
+						 * 		value1      --> ë°ì´í„° 1
+						 * 		value2      --> ë°ì´í„° 2
+						 * 		value3      --> ë°ì´í„° 3
 						 * 		auth        --> Auth Token
 						 */
 						case 14: {
@@ -1243,8 +1243,8 @@ public class UtaitePlayerManager extends HttpServlet {
 							AuthTokenChecker authTokenChecker = new AuthTokenChecker();
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
-									result[2].equals(authTokenParm.SERVICE.get(0))) { // ·Î±×ÀÎ ¼º°ø
-								// ÆÄ¶ó¹ÌÅÍ ÃßÃâ
+									result[2].equals(authTokenParm.SERVICE.get(0))) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// íŒŒë¼ë¯¸í„° ì¶”ì¶œ
 								final String IMAGE_TYPE = "_IMAGE_TYPE_";
 								final String NAME_TYPE = "_NAME_";
 								int index = Integer.parseInt(request.getParameter("index"));
@@ -1256,33 +1256,33 @@ public class UtaitePlayerManager extends HttpServlet {
 								value3 = URLDecoder.decode(value3,"UTF-8");
 							
 								
-								// Index ºĞ¼®
+								// Index ë¶„ì„
 								switch (index) {
 									/**
-									 * ¾Ë ¼ö ¾ø´Â ¸í·É¾î
+									 * ì•Œ ìˆ˜ ì—†ëŠ” ëª…ë ¹ì–´
 									 */
 									default:
-										// JSON µ¥ÀÌÅÍ ¼³Á¤
+										// JSON ë°ì´í„° ì„¤ì •
 										obj.addProperty(keyName_Result, failMessage);
 										
-										// ·Î±× Ãâ·Â
-										rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [¾Ë ¼ö ¾ø´Â INDEX] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
+										// ë¡œê·¸ ì¶œë ¥
+										rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [ì•Œ ìˆ˜ ì—†ëŠ” INDEX] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
 										break;
 								
 									/**
-									 * ÇÃ·¹ÀÌ¸®½ºÆ® »èÁ¦
+									 * í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì‚­ì œ
 									 */
 									case 0: {
-										// ÇÃ·¹ÀÌ¸®½ºÆ® È®ÀÎ
+										// í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ í™•ì¸
 										databaseConnection.setPreparedStatement("SELECT user_play_list FROM utaite_user_info WHERE user_uuid = ?");
 										databaseConnection.getPreparedStatement().setString(1, result[1]);
 										databaseConnection.setResultSet();
 										if (databaseConnection.getResultSet().next()) {
-											// JSON µ¥ÀÌÅÍ ÆÄ½Ì
+											// JSON ë°ì´í„° íŒŒì‹±
 											String jsonValue = databaseConnection.getResultSet().getString("user_play_list");
 											JsonObject jsonRootObject = (JsonObject) new JsonParser().parse(jsonValue);
 											Set<Map.Entry<String, JsonElement>> entries = jsonRootObject.entrySet();
-											// µ¥ÀÌÅÍ Á¦°Å È®ÀÎ
+											// ë°ì´í„° ì œê±° í™•ì¸
 											boolean isExt = false;
 											for (Map.Entry<String, JsonElement> entry: entries) {
 											    if (value1.equals(entry.getKey())) {
@@ -1290,11 +1290,11 @@ public class UtaitePlayerManager extends HttpServlet {
 											    	break;
 											    }
 											}
-											// µ¥ÀÌÅÍ Á¦°Å
+											// ë°ì´í„° ì œê±°
 											if (isExt) {
 												jsonRootObject.remove(value1);
 												
-												// Àû¿ë
+												// ì ìš©
 												databaseConnection.closePreparedStatement();
 												databaseConnection.closeResultSet();
 												databaseConnection.setPreparedStatement("UPDATE utaite_user_info SET user_play_list = ? WHERE user_uuid = ?");
@@ -1303,40 +1303,40 @@ public class UtaitePlayerManager extends HttpServlet {
 												databaseConnection.executeUpdate();
 											}
 											
-											// JSON µ¥ÀÌÅÍ ¼³Á¤
+											// JSON ë°ì´í„° ì„¤ì •
 											obj.addProperty(keyName_Result, successMessage);
 											
-											// ·Î±× Ãâ·Â
-											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ¼º°ø! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® »èÁ¦] ,Index:", String.valueOf(index), ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¸§:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
+											// ë¡œê·¸ ì¶œë ¥
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì„±ê³µ! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì‚­ì œ] ,Index:", String.valueOf(index), ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¦„:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
 										}else {
-											// JSON µ¥ÀÌÅÍ ¼³Á¤
+											// JSON ë°ì´í„° ì„¤ì •
 											obj.addProperty(keyName_Result, failMessage);
 											
-											// ·Î±× Ãâ·Â
-											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® »èÁ¦ ½ÇÆĞ - ÇÃ·¹ÀÌ¸®½ºÆ® Á¶È¸ ºÒ°¡] ,Index:", String.valueOf(index), ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¸§:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
+											// ë¡œê·¸ ì¶œë ¥
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì‚­ì œ ì‹¤íŒ¨ - í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ ë¶ˆê°€] ,Index:", String.valueOf(index), ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¦„:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
 										}
 										
 										break;
 									}
 									
 									/**
-									 * ÇÃ·¹ÀÌ¸®½ºÆ® »ı¼º
+									 * í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ìƒì„±
 									 */
 									case 1: {
-										// ÆÄ¶ó¹ÌÅÍ È®ÀÎ
+										// íŒŒë¼ë¯¸í„° í™•ì¸
 										if (!value2.contains(IMAGE_TYPE)) {
-											// JSON µ¥ÀÌÅÍ ¼³Á¤
+											// JSON ë°ì´í„° ì„¤ì •
 											obj.addProperty(keyName_Result, failMessage);
 											
-											// ·Î±× Ãâ·Â
-											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® »ı¼º ½ÇÆĞ - IMAGE_TYPEÀ» ÁöÁ¤ÇÏÁö ¾ÊÀ½] ,Index:", String.valueOf(index), ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¸§:", value1, ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¹ÌÁö:", value2, ",Value3:", value3, "Auth Token", authToken));
+											// ë¡œê·¸ ì¶œë ¥
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ìƒì„± ì‹¤íŒ¨ - IMAGE_TYPEì„ ì§€ì •í•˜ì§€ ì•ŠìŒ] ,Index:", String.valueOf(index), ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¦„:", value1, ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¯¸ì§€:", value2, ",Value3:", value3, "Auth Token", authToken));
 										}else {
-											// ÇÃ·¹ÀÌ¸®½ºÆ® È®ÀÎ
+											// í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ í™•ì¸
 											databaseConnection.setPreparedStatement("SELECT user_play_list FROM utaite_user_info WHERE user_uuid = ?");
 											databaseConnection.getPreparedStatement().setString(1, result[1]);
 											databaseConnection.setResultSet();
 											if (databaseConnection.getResultSet().next()) {
-												// JSON µ¥ÀÌÅÍ ÆÄ½Ì
+												// JSON ë°ì´í„° íŒŒì‹±
 												UUID uuid = UUID.randomUUID();
 												String uuidStr = uuid.toString();
 												String jsonValue = databaseConnection.getResultSet().getString("user_play_list");
@@ -1346,7 +1346,7 @@ public class UtaitePlayerManager extends HttpServlet {
 												jsonArray.add(value2);
 												jsonRootObject.add(uuidStr, jsonArray);
 												
-												// Àû¿ë
+												// ì ìš©
 												databaseConnection.closePreparedStatement();
 												databaseConnection.closeResultSet();
 												databaseConnection.setPreparedStatement("UPDATE utaite_user_info SET user_play_list = ? WHERE user_uuid = ?");
@@ -1354,17 +1354,17 @@ public class UtaitePlayerManager extends HttpServlet {
 												databaseConnection.getPreparedStatement().setString(2, result[1]);
 												databaseConnection.executeUpdate();
 												
-												// JSON µ¥ÀÌÅÍ ¼³Á¤
+												// JSON ë°ì´í„° ì„¤ì •
 												obj.addProperty(keyName_Result, successMessage);
 												
-												// ·Î±× Ãâ·Â
-												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ¼º°ø! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® »ı¼º] ,Index:", String.valueOf(index), ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¸§:", value1, ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¹ÌÁö:", value2, ",Value3:", value3, "Auth Token", authToken));
+												// ë¡œê·¸ ì¶œë ¥
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì„±ê³µ! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ìƒì„±] ,Index:", String.valueOf(index), ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¦„:", value1, ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¯¸ì§€:", value2, ",Value3:", value3, "Auth Token", authToken));
 											}else {
-												// JSON µ¥ÀÌÅÍ ¼³Á¤
+												// JSON ë°ì´í„° ì„¤ì •
 												obj.addProperty(keyName_Result, failMessage);
 												
-												// ·Î±× Ãâ·Â
-												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® »ı¼º ½ÇÆĞ - ÇÃ·¹ÀÌ¸®½ºÆ® Á¶È¸ ºÒ°¡] ,Index:", String.valueOf(index), ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¸§:", value1, ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¹ÌÁö:", value2, ",Value3:", value3, "Auth Token", authToken));
+												// ë¡œê·¸ ì¶œë ¥
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ìƒì„± ì‹¤íŒ¨ - í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ ë¶ˆê°€] ,Index:", String.valueOf(index), ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¦„:", value1, ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¯¸ì§€:", value2, ",Value3:", value3, "Auth Token", authToken));
 											}
 										}
 										
@@ -1373,21 +1373,21 @@ public class UtaitePlayerManager extends HttpServlet {
 									
 									
 									/**
-									 * ÇÃ·¹ÀÌ¸®½ºÆ® ¼öÁ¤ [±âº» Á¤º¸]
+									 * í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ìˆ˜ì • [ê¸°ë³¸ ì •ë³´]
 									 */
 									case 2: {
-										// ¼öÁ¤ µ¥ÀÌÅÍ ±¸ºĞ
-										if (value1.equalsIgnoreCase("name")) { // ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¸§
-											// ÇÃ·¹ÀÌ¸®½ºÆ® È®ÀÎ
+										// ìˆ˜ì • ë°ì´í„° êµ¬ë¶„
+										if (value1.equalsIgnoreCase("name")) { // í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¦„
+											// í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ í™•ì¸
 											databaseConnection.setPreparedStatement("SELECT user_play_list FROM utaite_user_info WHERE user_uuid = ?");
 											databaseConnection.getPreparedStatement().setString(1, result[1]);
 											databaseConnection.setResultSet();
 											if (databaseConnection.getResultSet().next()) {
-												// JSON µ¥ÀÌÅÍ ÆÄ½Ì
+												// JSON ë°ì´í„° íŒŒì‹±
 												String jsonValue = databaseConnection.getResultSet().getString("user_play_list");
 												JsonObject jsonRootObject = (JsonObject) new JsonParser().parse(jsonValue);
 												Set<Map.Entry<String, JsonElement>> entries = jsonRootObject.entrySet();
-												// µ¥ÀÌÅÍ ¼öÁ¤
+												// ë°ì´í„° ìˆ˜ì •
 												JsonObject jsonSubObject = new JsonObject();
 												for (Map.Entry<String, JsonElement> entry : entries) {
 													if (value2.equals(entry.getKey())) {
@@ -1409,7 +1409,7 @@ public class UtaitePlayerManager extends HttpServlet {
 														jsonSubObject.add(entry.getKey(), entry.getValue());
 													}
 												}
-												// Àû¿ë
+												// ì ìš©
 												databaseConnection.closePreparedStatement();
 												databaseConnection.closeResultSet();
 												databaseConnection.setPreparedStatement("UPDATE utaite_user_info SET user_play_list = ? WHERE user_uuid = ?");
@@ -1417,29 +1417,29 @@ public class UtaitePlayerManager extends HttpServlet {
 												databaseConnection.getPreparedStatement().setString(2, result[1]);
 												databaseConnection.executeUpdate();
 												
-												// JSON µ¥ÀÌÅÍ ¼³Á¤
+												// JSON ë°ì´í„° ì„¤ì •
 												obj.addProperty(keyName_Result, successMessage);
 												
-												// ·Î±× Ãâ·Â
-												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ¼º°ø! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® ¼öÁ¤] ,Index:", String.valueOf(index), ",¼öÁ¤µÉ µ¥ÀÌÅÍ:", value1, ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¸§:", value2, ",¼öÁ¤ µ¥ÀÌÅÍ °ª:", value3, "Auth Token", authToken));
+												// ë¡œê·¸ ì¶œë ¥
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì„±ê³µ! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ìˆ˜ì •] ,Index:", String.valueOf(index), ",ìˆ˜ì •ë  ë°ì´í„°:", value1, ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¦„:", value2, ",ìˆ˜ì • ë°ì´í„° ê°’:", value3, "Auth Token", authToken));
 											}else {
-												// JSON µ¥ÀÌÅÍ ¼³Á¤
+												// JSON ë°ì´í„° ì„¤ì •
 												obj.addProperty(keyName_Result, failMessage);
 												
-												// ·Î±× Ãâ·Â
-												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® ¼öÁ¤ ½ÇÆĞ - ÇÃ·¹ÀÌ¸®½ºÆ® Á¶È¸ ºÒ°¡] ,Index:", String.valueOf(index), ",¼öÁ¤µÉ µ¥ÀÌÅÍ:", value1, ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¸§:", value2, ",¼öÁ¤ µ¥ÀÌÅÍ °ª:", value3, "Auth Token", authToken));
+												// ë¡œê·¸ ì¶œë ¥
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ìˆ˜ì • ì‹¤íŒ¨ - í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ ë¶ˆê°€] ,Index:", String.valueOf(index), ",ìˆ˜ì •ë  ë°ì´í„°:", value1, ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¦„:", value2, ",ìˆ˜ì • ë°ì´í„° ê°’:", value3, "Auth Token", authToken));
 											}
-										}else if (value1.equalsIgnoreCase("image")) { // ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¹ÌÁö
-											// ÇÃ·¹ÀÌ¸®½ºÆ® È®ÀÎ
+										}else if (value1.equalsIgnoreCase("image")) { // í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¯¸ì§€
+											// í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ í™•ì¸
 											databaseConnection.setPreparedStatement("SELECT user_play_list FROM utaite_user_info WHERE user_uuid = ?");
 											databaseConnection.getPreparedStatement().setString(1, result[1]);
 											databaseConnection.setResultSet();
 											if (databaseConnection.getResultSet().next()) {
-												// JSON µ¥ÀÌÅÍ ÆÄ½Ì
+												// JSON ë°ì´í„° íŒŒì‹±
 												String jsonValue = databaseConnection.getResultSet().getString("user_play_list");
 												JsonObject jsonRootObject = (JsonObject) new JsonParser().parse(jsonValue);
 												Set<Map.Entry<String, JsonElement>> entries = jsonRootObject.entrySet();
-												// µ¥ÀÌÅÍ ¼öÁ¤
+												// ë°ì´í„° ìˆ˜ì •
 												JsonObject jsonSubObject = new JsonObject();
 												for (Map.Entry<String, JsonElement> entry : entries) {
 												    if (value2.equals(entry.getKey())) {
@@ -1460,7 +1460,7 @@ public class UtaitePlayerManager extends HttpServlet {
 													    jsonSubObject.add(entry.getKey(), entry.getValue());
 												    }
 												}
-												// Àû¿ë
+												// ì ìš©
 												databaseConnection.closePreparedStatement();
 												databaseConnection.closeResultSet();
 												databaseConnection.setPreparedStatement("UPDATE utaite_user_info SET user_play_list = ? WHERE user_uuid = ?");
@@ -1468,24 +1468,24 @@ public class UtaitePlayerManager extends HttpServlet {
 												databaseConnection.getPreparedStatement().setString(2, result[1]);
 												databaseConnection.executeUpdate();
 												
-												// JSON µ¥ÀÌÅÍ ¼³Á¤
+												// JSON ë°ì´í„° ì„¤ì •
 												obj.addProperty(keyName_Result, successMessage);
 												
-												// ·Î±× Ãâ·Â
-												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ¼º°ø! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® ¼öÁ¤(Image)] ,Index:", String.valueOf(index), ",¼öÁ¤µÉ µ¥ÀÌÅÍ:", value1, ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¸§:", value2, ",¼öÁ¤ µ¥ÀÌÅÍ °ª:", value3, "Auth Token", authToken));
+												// ë¡œê·¸ ì¶œë ¥
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì„±ê³µ! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ìˆ˜ì •(Image)] ,Index:", String.valueOf(index), ",ìˆ˜ì •ë  ë°ì´í„°:", value1, ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¦„:", value2, ",ìˆ˜ì • ë°ì´í„° ê°’:", value3, "Auth Token", authToken));
 											}else {
-												// JSON µ¥ÀÌÅÍ ¼³Á¤
+												// JSON ë°ì´í„° ì„¤ì •
 												obj.addProperty(keyName_Result, failMessage);
 												
-												// ·Î±× Ãâ·Â
-												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® ¼öÁ¤ ½ÇÆĞ - ÇÃ·¹ÀÌ¸®½ºÆ® Á¶È¸ ºÒ°¡] ,Index:", String.valueOf(index), ",¼öÁ¤µÉ µ¥ÀÌÅÍ:", value1, ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¸§:", value2, ",¼öÁ¤ µ¥ÀÌÅÍ °ª:", value3, "Auth Token", authToken));
+												// ë¡œê·¸ ì¶œë ¥
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ìˆ˜ì • ì‹¤íŒ¨ - í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ ë¶ˆê°€] ,Index:", String.valueOf(index), ",ìˆ˜ì •ë  ë°ì´í„°:", value1, ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¦„:", value2, ",ìˆ˜ì • ë°ì´í„° ê°’:", value3, "Auth Token", authToken));
 											}
-										}else { // ¾Ë ¼ö ¾ø´Â µ¥ÀÌÅÍ
-											// JSON µ¥ÀÌÅÍ ¼³Á¤
+										}else { // ì•Œ ìˆ˜ ì—†ëŠ” ë°ì´í„°
+											// JSON ë°ì´í„° ì„¤ì •
 											obj.addProperty(keyName_Result, failMessage);
 											
-											// ·Î±× Ãâ·Â
-											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® ¼öÁ¤ ½ÇÆĞ - µ¥ÀÌÅÍ ¼±ÅÃ ¿À·ù] ,Index:", String.valueOf(index), ",¼öÁ¤µÉ µ¥ÀÌÅÍ:", value1, ",ÇÃ·¹ÀÌ¸®½ºÆ® ÀÌ¸§:", value2, ",¼öÁ¤ µ¥ÀÌÅÍ °ª:", value3, "Auth Token", authToken));
+											// ë¡œê·¸ ì¶œë ¥
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ìˆ˜ì • ì‹¤íŒ¨ - ë°ì´í„° ì„ íƒ ì˜¤ë¥˜] ,Index:", String.valueOf(index), ",ìˆ˜ì •ë  ë°ì´í„°:", value1, ",í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì´ë¦„:", value2, ",ìˆ˜ì • ë°ì´í„° ê°’:", value3, "Auth Token", authToken));
 										}
 										
 										break;
@@ -1493,16 +1493,16 @@ public class UtaitePlayerManager extends HttpServlet {
 									
 									
 									/**
-									 * ÇÃ·¹ÀÌ¸®½ºÆ® ³ë·¡ µ¥ÀÌÅÍ º¯°æ [No Data-Buffer]
+									 * í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ë…¸ë˜ ë°ì´í„° ë³€ê²½ [No Data-Buffer]
 									 */
 									case 3: {
-										// ÇÃ·¹ÀÌ¸®½ºÆ® È®ÀÎ
+										// í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ í™•ì¸
 										databaseConnection.setPreparedStatement("SELECT user_play_list FROM utaite_user_info WHERE user_uuid = ?");
 										databaseConnection.getPreparedStatement().setString(1, result[1]);
 										databaseConnection.setResultSet();
 										if (databaseConnection.getResultSet().next()) {
 											try {
-												// JSON µ¥ÀÌÅÍ ÆÄ½Ì
+												// JSON ë°ì´í„° íŒŒì‹±
 												String jsonValue = databaseConnection.getResultSet().getString("user_play_list");
 												JsonParser jsonParser = new JsonParser();
 												JsonObject jsonRootObject = (JsonObject) jsonParser.parse(jsonValue);
@@ -1526,7 +1526,7 @@ public class UtaitePlayerManager extends HttpServlet {
 
 												
 												Set<Map.Entry<String, JsonElement>> entries = jsonRootObject.entrySet();
-												// µ¥ÀÌÅÍ ¼öÁ¤
+												// ë°ì´í„° ìˆ˜ì •
 												JsonObject jsonSubObject = new JsonObject();
 												for (Map.Entry<String, JsonElement> entry : entries) {
 												    if (value1.equals(entry.getKey())) {
@@ -1536,7 +1536,7 @@ public class UtaitePlayerManager extends HttpServlet {
 												    }
 												}
 												
-												// Àû¿ë
+												// ì ìš©
 												databaseConnection.closePreparedStatement();
 												databaseConnection.closeResultSet();
 												databaseConnection.setPreparedStatement("UPDATE utaite_user_info SET user_play_list = ? WHERE user_uuid = ?");
@@ -1545,27 +1545,27 @@ public class UtaitePlayerManager extends HttpServlet {
 												databaseConnection.executeUpdate();
 												
 												
-												// JSON µ¥ÀÌÅÍ ¼³Á¤
+												// JSON ë°ì´í„° ì„¤ì •
 												obj.addProperty(keyName_Result, successMessage);
 												
-												// ·Î±× Ãâ·Â
-												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ¼º°ø! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® ³ë·¡ Á¤º¸ ¼öÁ¤ (No Data-Buffer) ¼º°ø!] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
+												// ë¡œê·¸ ì¶œë ¥
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì„±ê³µ! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ë…¸ë˜ ì •ë³´ ìˆ˜ì • (No Data-Buffer) ì„±ê³µ!] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
 											}catch (Exception e) {
 												// TODO: handle exception
 												e.printStackTrace();
 												
-												// JSON µ¥ÀÌÅÍ ¼³Á¤
+												// JSON ë°ì´í„° ì„¤ì •
 												obj.addProperty(keyName_Result, failMessage);
 												
-												// ·Î±× Ãâ·Â
-												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® ³ë·¡ Á¤º¸ ¼öÁ¤ (No Data-Buffer) ½ÇÆĞ - JSON µ¥ÀÌÅÍ º¯È¯ ½ÇÆä] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
+												// ë¡œê·¸ ì¶œë ¥
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ë…¸ë˜ ì •ë³´ ìˆ˜ì • (No Data-Buffer) ì‹¤íŒ¨ - JSON ë°ì´í„° ë³€í™˜ ì‹¤í˜] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
 											}
 										}else {
-											// JSON µ¥ÀÌÅÍ ¼³Á¤
+											// JSON ë°ì´í„° ì„¤ì •
 											obj.addProperty(keyName_Result, failMessage);
 											
-											// ·Î±× Ãâ·Â
-											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® ³ë·¡ Á¤º¸ ¼öÁ¤ (No Data-Buffer) ½ÇÆĞ - µ¥ÀÌÅÍ Á¶È¸ ºÒ°¡] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
+											// ë¡œê·¸ ì¶œë ¥
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ë…¸ë˜ ì •ë³´ ìˆ˜ì • (No Data-Buffer) ì‹¤íŒ¨ - ë°ì´í„° ì¡°íšŒ ë¶ˆê°€] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
 										}
 										
 										break;
@@ -1573,16 +1573,16 @@ public class UtaitePlayerManager extends HttpServlet {
 									
 									
 									/**
-									 * ÇÃ·¹ÀÌ¸®½ºÆ® ³ë·¡ µ¥ÀÌÅÍ º¯°æ [Use Data-Buffer]
+									 * í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ë…¸ë˜ ë°ì´í„° ë³€ê²½ [Use Data-Buffer]
 									 */
 									case 4: {
-										// ÇÃ·¹ÀÌ¸®½ºÆ® È®ÀÎ
+										// í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ í™•ì¸
 										databaseConnection.setPreparedStatement("SELECT user_play_list FROM utaite_user_info WHERE user_uuid = ?");
 										databaseConnection.getPreparedStatement().setString(1, result[1]);
 										databaseConnection.setResultSet();
 										if (databaseConnection.getResultSet().next()) {
 											try {
-												// JSON µ¥ÀÌÅÍ ÆÄ½Ì
+												// JSON ë°ì´í„° íŒŒì‹±
 												String jsonValue = databaseConnection.getResultSet().getString("user_play_list");
 												JsonParser jsonParser = new JsonParser();
 												JsonObject jsonRootObject = (JsonObject) jsonParser.parse(jsonValue);
@@ -1593,11 +1593,11 @@ public class UtaitePlayerManager extends HttpServlet {
 
 												
 												if (requestValue == null) {
-													// JSON µ¥ÀÌÅÍ ¼³Á¤
+													// JSON ë°ì´í„° ì„¤ì •
 													obj.addProperty(keyName_Result, failMessage);
 													
-													// ·Î±× Ãâ·Â
-													rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® ³ë·¡ Á¤º¸ ¼öÁ¤ (Use Data-Buffer) ½ÇÆĞ - NotFoundRequestCode] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
+													// ë¡œê·¸ ì¶œë ¥
+													rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ë…¸ë˜ ì •ë³´ ìˆ˜ì • (Use Data-Buffer) ì‹¤íŒ¨ - NotFoundRequestCode] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
 												}else {
 													JsonArray array = (JsonArray) jsonRootObject.getAsJsonArray(value2);
 													JsonArray inputArrayForSongList = (JsonArray) jsonParser.parse(requestValue);
@@ -1618,7 +1618,7 @@ public class UtaitePlayerManager extends HttpServlet {
 
 													
 													Set<Map.Entry<String, JsonElement>> entries = jsonRootObject.entrySet();
-													// µ¥ÀÌÅÍ ¼öÁ¤
+													// ë°ì´í„° ìˆ˜ì •
 													JsonObject jsonSubObject = new JsonObject();
 													for (Map.Entry<String, JsonElement> entry : entries) {
 													    if (value2.equals(entry.getKey())) {
@@ -1628,7 +1628,7 @@ public class UtaitePlayerManager extends HttpServlet {
 													    }
 													}
 
-													// Àû¿ë
+													// ì ìš©
 													databaseConnection.closePreparedStatement();
 													databaseConnection.closeResultSet();
 													databaseConnection.setPreparedStatement("UPDATE utaite_user_info SET user_play_list = ? WHERE user_uuid = ?");
@@ -1636,42 +1636,42 @@ public class UtaitePlayerManager extends HttpServlet {
 													databaseConnection.getPreparedStatement().setString(2, result[1]);
 													databaseConnection.executeUpdate();
 													
-													// JSON µ¥ÀÌÅÍ ¼³Á¤
+													// JSON ë°ì´í„° ì„¤ì •
 													obj.addProperty(keyName_Result, successMessage);
 													
-													// ·Î±× Ãâ·Â
-													rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ¼º°ø! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® ³ë·¡ Á¤º¸ ¼öÁ¤ (Use Data-Buffer) ¼º°ø!] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
+													// ë¡œê·¸ ì¶œë ¥
+													rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì„±ê³µ! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ë…¸ë˜ ì •ë³´ ìˆ˜ì • (Use Data-Buffer) ì„±ê³µ!] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
 												}
 											}catch (Exception e) {
 												// TODO: handle exception
 												e.printStackTrace();
 												
-												// JSON µ¥ÀÌÅÍ ¼³Á¤
+												// JSON ë°ì´í„° ì„¤ì •
 												obj.addProperty(keyName_Result, failMessage);
 												
-												// ·Î±× Ãâ·Â
-												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® ³ë·¡ Á¤º¸ ¼öÁ¤ (Use Data-Buffer) ½ÇÆĞ - JSON µ¥ÀÌÅÍ º¯È¯ ½ÇÆä] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
+												// ë¡œê·¸ ì¶œë ¥
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ë…¸ë˜ ì •ë³´ ìˆ˜ì • (Use Data-Buffer) ì‹¤íŒ¨ - JSON ë°ì´í„° ë³€í™˜ ì‹¤í˜] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
 											}
 										}else {
-											// JSON µ¥ÀÌÅÍ ¼³Á¤
+											// JSON ë°ì´í„° ì„¤ì •
 											obj.addProperty(keyName_Result, failMessage);
 											
-											// ·Î±× Ãâ·Â
-											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [ÇÃ·¹ÀÌ¸®½ºÆ® ³ë·¡ Á¤º¸ ¼öÁ¤ (Use Data-Buffer) ½ÇÆĞ - µ¥ÀÌÅÍ Á¶È¸ ºÒ°¡] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
+											// ë¡œê·¸ ì¶œë ¥
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv11(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ë…¸ë˜ ì •ë³´ ìˆ˜ì • (Use Data-Buffer) ì‹¤íŒ¨ - ë°ì´í„° ì¡°íšŒ ë¶ˆê°€] ,Index:", String.valueOf(index), ",Value1:", value1, ",Value2:", value2, ",Value3:", value3, "Auth Token", authToken));
 										}
 										
 										break;
 									}
 								}
-							}else { // ·Î±×ÀÎ ½ÇÆĞ
-								// JSON µ¥ÀÌÅÍ ¼³Á¤
+							}else { // ë¡œê·¸ì¸ ì‹¤íŒ¨
+								// JSON ë°ì´í„° ì„¤ì •
 								obj.addProperty(keyName_Result, failMessage);
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "»ç¿ëÀÚ µ¥ÀÌÅÍ º¯°æ ½ÇÆĞ! [ÇÃ·¹ÀÌ¸®½ºÆ® Á¤º¸ ¼³Á¤] [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ì‚¬ìš©ì ë°ì´í„° ë³€ê²½ ì‹¤íŒ¨! [í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ ì •ë³´ ì„¤ì •] [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 							}
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -1681,18 +1681,18 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 15
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 15
 						 * 
-						 * ¼³¸í :
-						 * 		¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ÇÁ·Î±×·¥ [PC - Windows] ´Ù¿î·Îµå For ZIP
+						 * ì„¤ëª… :
+						 * 		ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ í”„ë¡œê·¸ë¨ [PC - Windows] ë‹¤ìš´ë¡œë“œ For ZIP
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		<¾øÀ½>
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		<ì—†ìŒ>
 						 */
 						case 15: {
-							// ÆÄÀÏ ¾÷·ÎµåµÈ °æ·Î
+							// íŒŒì¼ ì—…ë¡œë“œëœ ê²½ë¡œ
 						    final String root = PathManager.UTAITE_PLAYER_MANAGER_ZIP_PATH;
-						    // ½ÇÁ¦ ³»º¸³¾ ÆÄÀÏ¸í
+						    // ì‹¤ì œ ë‚´ë³´ë‚¼ íŒŒì¼ëª…
 						    String orgfilename = "up_update_zip.zip";    
 							try {
 								File file = new File(root);
@@ -1712,24 +1712,24 @@ public class UtaitePlayerManager extends HttpServlet {
 									outs.close();
 									fin.close();
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ZIP[WINDOWS] ÆÄÀÏ ´Ù¿î·Îµå ¼º°ø!"));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ZIP[WINDOWS] íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì„±ê³µ!"));
 								} else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ZIP[WINDOWS] ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! File does not exist!"));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ZIP[WINDOWS] íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! File does not exist!"));
 									
 									obj.addProperty(keyName_Result, failMessage);
 								}
 							} catch (IOException e) {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ZIP[WINDOWS] ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! ¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.", e.toString()));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ZIP[WINDOWS] íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.", e.toString()));
 								e.printStackTrace();
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -1739,16 +1739,16 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 16
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 16
 						 * 
-						 * ¼³¸í :
-						 * 		´ÏÄÚ´ÏÄÚµ¿ ¼øÀ§ Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		ë‹ˆì½”ë‹ˆì½”ë™ ìˆœìœ„ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		uuid        --> ³ë·¡ UUID
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		uuid        --> ë…¸ë˜ UUID
 						 */
 						case 16: {  
-							// µ¥ÀÌÅÍ Á¸Àç À¯¹« È®ÀÎ
+							// ë°ì´í„° ì¡´ì¬ ìœ ë¬´ í™•ì¸
 							databaseConnection.setPreparedStatement("SELECT * FROM utaite_niconico_rank ORDER BY rank ASC");
 							databaseConnection.setResultSet();
 
@@ -1768,12 +1768,12 @@ public class UtaitePlayerManager extends HttpServlet {
 							obj.addProperty(keyName_Result, successMessage);
 							obj.addProperty("message", java.net.URLEncoder.encode(rankResult.toString(), "UTF-8"));
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
-							// ·Î±× Ãâ·Â
-							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "´ÏÄÚ´ÏÄÚµ¿ ¼øÀ§ Ãâ·Â ¼º°ø!"));
+							// ë¡œê·¸ ì¶œë ¥
+							rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ë‹ˆì½”ë‹ˆì½”ë™ ìˆœìœ„ ì¶œë ¥ ì„±ê³µ!"));
 							
 							break;
 						}
@@ -1781,18 +1781,18 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 17
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 17
 						 * 
-						 * ¼³¸í :
-						 * 		¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î EXE ´Ù¿î·Îµå
+						 * ì„¤ëª… :
+						 * 		ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ EXE ë‹¤ìš´ë¡œë“œ
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 * 		<¾øÀ½>
+						 * íŒŒë¼ë¯¸í„° :
+						 * 		<ì—†ìŒ>
 						 */
 						case 17: {
-							// ÆÄÀÏ ¾÷·ÎµåµÈ °æ·Î
+							// íŒŒì¼ ì—…ë¡œë“œëœ ê²½ë¡œ
 						    final String root = PathManager.UTAITE_PLAYER_MANAGER_EXE_PATH;
-						    // ½ÇÁ¦ ³»º¸³¾ ÆÄÀÏ¸í
+						    // ì‹¤ì œ ë‚´ë³´ë‚¼ íŒŒì¼ëª…
 						    String orgfilename = "up_windows_setup.exe";    
 							try {
 								File file = new File(root);
@@ -1812,24 +1812,24 @@ public class UtaitePlayerManager extends HttpServlet {
 									outs.close();
 									fin.close();
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î EXE ÆÄÀÏ ´Ù¿î·Îµå ¼º°ø!"));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ EXE íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì„±ê³µ!"));
 								} else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î EXE ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! File does not exist!"));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ EXE íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! File does not exist!"));
 									
 									obj.addProperty(keyName_Result, failMessage);
 								}
 							} catch (IOException e) {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î EXE ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! ¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.", e.toString()));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ EXE íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.", e.toString()));
 								e.printStackTrace();
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -1839,12 +1839,12 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 18
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 18
 						 * 
-						 * ¼³¸í :
-						 * 		»ç¿ëÀÚ ³ë·¡ Àç»ı È½¼ö Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		ì‚¬ìš©ì ë…¸ë˜ ì¬ìƒ íšŸìˆ˜ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
+						 * íŒŒë¼ë¯¸í„° :
 						 * 		auth        --> Auth Token
 						 */
 						case 18: {
@@ -1854,8 +1854,8 @@ public class UtaitePlayerManager extends HttpServlet {
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
 									result[2].equals(authTokenParm.SERVICE.get(0)) &&
-									isAccessCheck(result[1])) { // ·Î±×ÀÎ ¼º°ø
-								// DB Á¢¼Ó
+									isAccessCheck(result[1])) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// DB ì ‘ì†
 								databaseConnection.setPreparedStatement("SELECT * FROM utaite_user_play_count WHERE user_uuid = ? ORDER BY COUNT DESC;");
 								databaseConnection.getPreparedStatement().setString(1, result[1]);
 								databaseConnection.setResultSet();
@@ -1869,20 +1869,20 @@ public class UtaitePlayerManager extends HttpServlet {
 									countResult.add(info);
 								}
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "»ç¿ëÀÚ ³ë·¡ Àç»ı È½¼ö Ãâ·Â ¼º°ø! Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ì‚¬ìš©ì ë…¸ë˜ ì¬ìƒ íšŸìˆ˜ ì¶œë ¥ ì„±ê³µ! Auth Token:", authToken));
 								
 								obj.addProperty(keyName_Result, successMessage);
 								obj.addProperty("message", java.net.URLEncoder.encode(countResult.toString(), "UTF-8"));
 							}else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "»ç¿ëÀÚ ³ë·¡ Àç»ı È½¼ö Ãâ·Â »ìÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ì‚¬ìš©ì ë…¸ë˜ ì¬ìƒ íšŸìˆ˜ ì¶œë ¥ ì‚´íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -1892,13 +1892,13 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 19
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 19
 						 * 
-						 * ¼³¸í :
-						 * 		ÇÈ½Ãºê Top 50 ÀÌ¹ÌÁö Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		í”½ì‹œë¸Œ Top 50 ì´ë¯¸ì§€ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 *      smode       --> ÀÌ¹ÌÁö Ãâ·Â : 0 / ÀÌ¹ÌÁö Á¤º¸ Ãâ·Â : 1
+						 * íŒŒë¼ë¯¸í„° :
+						 *      smode       --> ì´ë¯¸ì§€ ì¶œë ¥ : 0 / ì´ë¯¸ì§€ ì •ë³´ ì¶œë ¥ : 1
 						 * 		name        --> Image Name
 						 * 		auth        --> Auth Token
 						 */
@@ -1909,7 +1909,7 @@ public class UtaitePlayerManager extends HttpServlet {
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
 									result[2].equals(authTokenParm.SERVICE.get(0)) &&
-									isAccessCheck(result[1])) { // ·Î±×ÀÎ ¼º°ø
+									isAccessCheck(result[1])) { // ë¡œê·¸ì¸ ì„±ê³µ
 								String smode = request.getParameter("smode");
 								if (smode != null && (Integer.parseInt(smode) == 1)) {
 									File dir = new File(PathManager.UTAITE_PLAYER_PIXIV_TOP_50_IMAGE_PATH);
@@ -1920,8 +1920,8 @@ public class UtaitePlayerManager extends HttpServlet {
 									for (int i = 0; i < files.length; i++)
 										imageResult.add(files[i].getName());	
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ÇÈ½Ãºê Top 50 ÀÌ¹ÌÁö Á¤º¸ Ãâ·Â ¼º°ø! Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "í”½ì‹œë¸Œ Top 50 ì´ë¯¸ì§€ ì •ë³´ ì¶œë ¥ ì„±ê³µ! Auth Token:", authToken));
 									
 									obj.addProperty(keyName_Result, successMessage);
 									obj.addProperty("message", java.net.URLEncoder.encode(imageResult.toString(), "UTF-8"));
@@ -1934,26 +1934,26 @@ public class UtaitePlayerManager extends HttpServlet {
 										byte[] image = IOUtils.toByteArray(new FileInputStream(file));
 										response.getOutputStream().write(image);
 										
-										// ·Î±× Ãâ·Â
-										rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("ÇÈ½Ãºê Top 50 ÀÌ¹ÌÁö Ãâ·Â ¼º°ø! [%s] Auth Token:", fileName), authToken));
+										// ë¡œê·¸ ì¶œë ¥
+										rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("í”½ì‹œë¸Œ Top 50 ì´ë¯¸ì§€ ì¶œë ¥ ì„±ê³µ! [%s] Auth Token:", fileName), authToken));
 									
 										return;
 									}else {
-										// ·Î±× Ãâ·Â
-										rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, String.format("ÇÈ½Ãºê Top 50 ÀÌ¹ÌÁö Ãâ·Â »ìÆĞ! [ÆÄÀÏÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù - '%s'] Auth Token:", fileName), authToken));
+										// ë¡œê·¸ ì¶œë ¥
+										rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, String.format("í”½ì‹œë¸Œ Top 50 ì´ë¯¸ì§€ ì¶œë ¥ ì‚´íŒ¨! [íŒŒì¼ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤ - '%s'] Auth Token:", fileName), authToken));
 										
 										obj.addProperty(keyName_Result, failMessage);
 									}
 								}
 							}else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ÇÈ½Ãºê Top 50 ÀÌ¹ÌÁö/ÀÌ¹ÌÁö Á¤º¸ Ãâ·Â »ìÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "í”½ì‹œë¸Œ Top 50 ì´ë¯¸ì§€/ì´ë¯¸ì§€ ì •ë³´ ì¶œë ¥ ì‚´íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -1963,12 +1963,12 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 20
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 20
 						 * 
-						 * ¼³¸í :
-						 * 		»ç¿ëÀÚº° °¡Àå ¸¹ÀÌ µè´Â ³ë·¡ °¡»çº° À¯»çµµ Top30 Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		ì‚¬ìš©ìë³„ ê°€ì¥ ë§ì´ ë“£ëŠ” ë…¸ë˜ ê°€ì‚¬ë³„ ìœ ì‚¬ë„ Top30 ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
+						 * íŒŒë¼ë¯¸í„° :
 						 * 		auth        --> Auth Token
 						 */
 						case 20: {
@@ -1978,33 +1978,33 @@ public class UtaitePlayerManager extends HttpServlet {
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
 									result[2].equals(authTokenParm.SERVICE.get(0)) &&
-									isAccessCheck(result[1])) { // ·Î±×ÀÎ ¼º°ø
-								// DB Á¢¼Ó
+									isAccessCheck(result[1])) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// DB ì ‘ì†
 								databaseConnection.setPreparedStatement("SELECT exec_result FROM utaite_ngram_lyrics WHERE user_uuid = ?;");
 								databaseConnection.getPreparedStatement().setString(1, result[1]);
 								databaseConnection.setResultSet();
 								
 								if (databaseConnection.getResultSet().next()) {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "»ç¿ëÀÚº° °¡Àå ¸¹ÀÌ µè´Â ³ë·¡ °¡»çº° À¯»çµµ Top30 Ãâ·Â ¼º°ø! Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ì‚¬ìš©ìë³„ ê°€ì¥ ë§ì´ ë“£ëŠ” ë…¸ë˜ ê°€ì‚¬ë³„ ìœ ì‚¬ë„ Top30 ì¶œë ¥ ì„±ê³µ! Auth Token:", authToken));
 									
 									obj.addProperty(keyName_Result, successMessage);
 									obj.addProperty("message", java.net.URLEncoder.encode(databaseConnection.getResultSet().getString("exec_result"), "UTF-8"));
 								}else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "»ç¿ëÀÚº° °¡Àå ¸¹ÀÌ µè´Â ³ë·¡ °¡»çº° À¯»çµµ Top30 Ãâ·Â »ìÆĞ! [µ¥ÀÌÅÍ ¾øÀ½] Auth Token:", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ì‚¬ìš©ìë³„ ê°€ì¥ ë§ì´ ë“£ëŠ” ë…¸ë˜ ê°€ì‚¬ë³„ ìœ ì‚¬ë„ Top30 ì¶œë ¥ ì‚´íŒ¨! [ë°ì´í„° ì—†ìŒ] Auth Token:", authToken));
 									
 									obj.addProperty(keyName_Result, failMessage);
 								}
 							}else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "»ç¿ëÀÚº° °¡Àå ¸¹ÀÌ µè´Â ³ë·¡ °¡»çº° À¯»çµµ Top30 Ãâ·Â »ìÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ì‚¬ìš©ìë³„ ê°€ì¥ ë§ì´ ë“£ëŠ” ë…¸ë˜ ê°€ì‚¬ë³„ ìœ ì‚¬ë„ Top30 ì¶œë ¥ ì‚´íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -2014,12 +2014,12 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 21
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 21
 						 * 
-						 * ¼³¸í :
-						 * 		OHLI ¾Ö´Ï¸ŞÀÌ¼Ç ¹æ¿µ Á¤º¸ Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		OHLI ì• ë‹ˆë©”ì´ì…˜ ë°©ì˜ ì •ë³´ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
+						 * íŒŒë¼ë¯¸í„° :
 						 * 		auth        --> Auth Token
 						 */
 						case 21: {
@@ -2029,8 +2029,8 @@ public class UtaitePlayerManager extends HttpServlet {
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
 									result[2].equals(authTokenParm.SERVICE.get(0)) &&
-									isAccessCheck(result[1])) { // ·Î±×ÀÎ ¼º°ø
-								// DB Á¢¼Ó
+									isAccessCheck(result[1])) { // ë¡œê·¸ì¸ ì„±ê³µ
+								// DB ì ‘ì†
 								databaseConnection.setPreparedStatement("SELECT * FROM utaite_ohli_anim_air_info");
 								databaseConnection.setResultSet();
 								
@@ -2049,20 +2049,20 @@ public class UtaitePlayerManager extends HttpServlet {
 									animResult.add(info);
 								}
 								
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "OHLI ¾Ö´Ï¸ŞÀÌ¼Ç ¹æ¿µ Á¤º¸ Ãâ·Â ¼º°ø! Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "OHLI ì• ë‹ˆë©”ì´ì…˜ ë°©ì˜ ì •ë³´ ì¶œë ¥ ì„±ê³µ! Auth Token:", authToken));
 								
 								obj.addProperty(keyName_Result, successMessage);
 								obj.addProperty("message", java.net.URLEncoder.encode(animResult.toString(), "UTF-8"));
 							}else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "OHLI ¾Ö´Ï¸ŞÀÌ¼Ç ¹æ¿µ Á¤º¸ Ãâ·Â »ìÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "OHLI ì• ë‹ˆë©”ì´ì…˜ ë°©ì˜ ì •ë³´ ì¶œë ¥ ì‚´íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -2072,14 +2072,14 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 22
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 22
 						 * 
-						 * ¼³¸í :
-						 * 		¾Ö´Ï¸ŞÀÌ¼Ç ¾÷·Îµå Á¤º¸ Ãâ·Â
+						 * ì„¤ëª… :
+						 * 		ì• ë‹ˆë©”ì´ì…˜ ì—…ë¡œë“œ ì •ë³´ ì¶œë ¥
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 *      smode       --> ¾÷·Îµå Á¤º¸ Ãâ·Â : 0 / º¯°æµÈ Á¤º¸ Ãâ·Â : 1 [date ÆÄ¶ó¹ÌÅÍ ÇÊ¿ä]
-						 *      date        --> º¯°æ ³¯Â¥
+						 * íŒŒë¼ë¯¸í„° :
+						 *      smode       --> ì—…ë¡œë“œ ì •ë³´ ì¶œë ¥ : 0 / ë³€ê²½ëœ ì •ë³´ ì¶œë ¥ : 1 [date íŒŒë¼ë¯¸í„° í•„ìš”]
+						 *      date        --> ë³€ê²½ ë‚ ì§œ
 						 * 		auth        --> Auth Token
 						 */
 						case 22: {
@@ -2089,9 +2089,9 @@ public class UtaitePlayerManager extends HttpServlet {
 							String[] result = authTokenChecker.getAuthInfo(authToken);
 							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
 									result[2].equals(authTokenParm.SERVICE.get(0)) &&
-									isAccessCheck(result[1])) { // ·Î±×ÀÎ ¼º°ø
+									isAccessCheck(result[1])) { // ë¡œê·¸ì¸ ì„±ê³µ
 								
-								// µ¥ÀÌÅÍ °»½Å È®ÀÎ
+								// ë°ì´í„° ê°±ì‹  í™•ì¸
 								boolean isReload = false;
 								databaseConnection.setPreparedStatement("SELECT is_reload FROM utaite_anim_upload_info_var");
 								databaseConnection.setResultSet();
@@ -2103,8 +2103,8 @@ public class UtaitePlayerManager extends HttpServlet {
 								String date = request.getParameter("date");
 								
 								if (isReload) {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv12(clientIP, "¾Ö´Ï¸ŞÀÌ¼Ç ¾÷·Îµå Á¤º¸ Ãâ·Â ½ÇÆĞ! [µ¥ÀÌÅÍ °»½Å Áß] ,sMode:", smode, ",Date:", date, "Auth Token", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv12(clientIP, "ì• ë‹ˆë©”ì´ì…˜ ì—…ë¡œë“œ ì •ë³´ ì¶œë ¥ ì‹¤íŒ¨! [ë°ì´í„° ê°±ì‹  ì¤‘] ,sMode:", smode, ",Date:", date, "Auth Token", authToken));
 
 									obj.addProperty(keyName_Result, failMessage);
 								}else {
@@ -2112,12 +2112,12 @@ public class UtaitePlayerManager extends HttpServlet {
 									databaseConnection.closePreparedStatement();
 
 									if (smode != null && (Integer.parseInt(smode) == 1)) {
-										// DB Á¢¼Ó
+										// DB ì ‘ì†
 										databaseConnection.setPreparedStatement("SELECT * FROM utaite_anim_upload_info WHERE NOT date = ?;");
 										databaseConnection.getPreparedStatement().setString(1, date);
 										databaseConnection.setResultSet();
 									}else {
-										// DB Á¢¼Ó
+										// DB ì ‘ì†
 										databaseConnection.setPreparedStatement("SELECT * FROM utaite_anim_upload_info");
 										databaseConnection.setResultSet();
 									}	
@@ -2136,20 +2136,20 @@ public class UtaitePlayerManager extends HttpServlet {
 										animResult.add(info);
 									}
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv12(clientIP, "¾Ö´Ï¸ŞÀÌ¼Ç ¾÷·Îµå Á¤º¸ Ãâ·Â ¼º°ø! sMode:", smode, ",Date:", date, "Auth Token", authToken));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv12(clientIP, "ì• ë‹ˆë©”ì´ì…˜ ì—…ë¡œë“œ ì •ë³´ ì¶œë ¥ ì„±ê³µ! sMode:", smode, ",Date:", date, "Auth Token", authToken));
 									
 									obj.addProperty(keyName_Result, successMessage);
 									obj.addProperty("message", java.net.URLEncoder.encode(animResult.toString(), "UTF-8"));
 								}
 							}else {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "¾Ö´Ï¸ŞÀÌ¼Ç ¾÷·Îµå Á¤º¸ Ãâ·Â »ìÆĞ! [·Î±×ÀÎ ½ÇÆĞ] Auth Token:", authToken));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ì• ë‹ˆë©”ì´ì…˜ ì—…ë¡œë“œ ì •ë³´ ì¶œë ¥ ì‚´íŒ¨! [ë¡œê·¸ì¸ ì‹¤íŒ¨] Auth Token:", authToken));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -2159,19 +2159,19 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 23
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 23
 						 * 
-						 * ¼³¸í :
-						 * 		¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î µå¶óÀÌ¹ö ´Ù¿î·Îµå
+						 * ì„¤ëª… :
+						 * 		ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ë“œë¼ì´ë²„ ë‹¤ìš´ë¡œë“œ
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 *      bit         --> 64ºñÆ® ¿î¿µÃ¼Á¦ : x64 , 32ºñÆ® ¿î¿µÃ¼Á¦ : x86
+						 * íŒŒë¼ë¯¸í„° :
+						 *      bit         --> 64ë¹„íŠ¸ ìš´ì˜ì²´ì œ : x64 , 32ë¹„íŠ¸ ìš´ì˜ì²´ì œ : x86
 						 */
 						case 23: {
-							// ÆÄÀÏ ¾÷·ÎµåµÈ °æ·Î
+							// íŒŒì¼ ì—…ë¡œë“œëœ ê²½ë¡œ
 						    final String root_x64 = PathManager.UTAITE_PLAYER_MANAGER_DRIVER_VCREDIST_x64_PATH;
 						    final String root_x32 = PathManager.UTAITE_PLAYER_MANAGER_DRIVER_VCREDIST_x86_PATH;
-						    // ½ÇÁ¦ ³»º¸³¾ ÆÄÀÏ¸í
+						    // ì‹¤ì œ ë‚´ë³´ë‚¼ íŒŒì¼ëª…
 						    final String orgfilename_x64 = "up_windows_driver_vcredist_x64.exe";
 						    final String orgfilename_x32 = "up_windows_driver_vcredist_x32.exe";
 							try {
@@ -2196,23 +2196,23 @@ public class UtaitePlayerManager extends HttpServlet {
 									outs.close();
 									fin.close();
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î µå¶óÀÌ¹ö ÆÄÀÏ ´Ù¿î·Îµå ¼º°ø!"));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ë“œë¼ì´ë²„ íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì„±ê³µ!"));
 								} else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î µå¶óÀÌ¹ö ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! File does not exist!"));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ë“œë¼ì´ë²„ íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! File does not exist!"));
 									
 									obj.addProperty(keyName_Result, failMessage);
 								}
 							} catch (IOException e) {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î µå¶óÀÌ¹ö ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! ¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.", e.toString()));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ë“œë¼ì´ë²„ íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.", e.toString()));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -2222,18 +2222,18 @@ public class UtaitePlayerManager extends HttpServlet {
 						
 						
 						/**
-						 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î °ü¸® ¸ğµå : 24
+						 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ê´€ë¦¬ ëª¨ë“œ : 24
 						 * 
-						 * ¼³¸í :
-						 * 		¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î Windows ¹öÀü ZIP ÆÄÀÏ ´Ù¿î·Îµå
+						 * ì„¤ëª… :
+						 * 		ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ Windows ë²„ì „ ZIP íŒŒì¼ ë‹¤ìš´ë¡œë“œ
 						 * 
-						 * ÆÄ¶ó¹ÌÅÍ :
-						 *      <¾øÀ½>
+						 * íŒŒë¼ë¯¸í„° :
+						 *      <ì—†ìŒ>
 						 */
 						case 24: {
-							// ÆÄÀÏ ¾÷·ÎµåµÈ °æ·Î
+							// íŒŒì¼ ì—…ë¡œë“œëœ ê²½ë¡œ
 						    final String root = PathManager.UTAITE_PLAYER_MANAGER_INSATLL_ZIP_PATH;
-						    // ½ÇÁ¦ ³»º¸³¾ ÆÄÀÏ¸í
+						    // ì‹¤ì œ ë‚´ë³´ë‚¼ íŒŒì¼ëª…
 						    String orgfilename = "up_windows_install_zip.zip";
 							try {
 								File file = new File(root);
@@ -2253,23 +2253,23 @@ public class UtaitePlayerManager extends HttpServlet {
 									outs.close();
 									fin.close();
 									
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ZIP ¼³Ä¡ ÆÄÀÏ ´Ù¿î·Îµå ¼º°ø!"));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ZIP ì„¤ì¹˜ íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì„±ê³µ!"));
 								} else {
-									// ·Î±× Ãâ·Â
-									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ZIP ¼³Ä¡ ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! File does not exist!"));
+									// ë¡œê·¸ ì¶œë ¥
+									rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv5(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ZIP ì„¤ì¹˜ íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! File does not exist!"));
 									
 									obj.addProperty(keyName_Result, failMessage);
 								}
 							} catch (IOException e) {
-								// ·Î±× Ãâ·Â
-								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î ZIP ¼³Ä¡ ÆÄÀÏ ´Ù¿î·Îµå ½ÇÆĞ! ¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.", e.toString()));
+								// ë¡œê·¸ ì¶œë ¥
+								rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ZIP ì„¤ì¹˜ íŒŒì¼ ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨! ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.", e.toString()));
 								
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
 							
-							// JSON µ¥ÀÌÅÍ Ãâ·Â
+							// JSON ë°ì´í„° ì¶œë ¥
 							PrintWriter out = response.getWriter(); 
 							out.println(gson.toJson(obj));
 							
@@ -2277,10 +2277,10 @@ public class UtaitePlayerManager extends HttpServlet {
 						}
 					}
 				}
-			}else { // ÆäÀÌÁö ÃÊ±âÈ­ ½ÇÆĞ
+			}else { // í˜ì´ì§€ ì´ˆê¸°í™” ì‹¤íŒ¨
 				obj.addProperty(keyName_Result, failMessage);
 				
-				rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "JSP ÆäÀÌÁö ÃÊ±âÈ­ Áß ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù."));
+				rl.Log(RhyaLogger.Type.Error, rl.CreateLogTextv5(clientIP, "JSP í˜ì´ì§€ ì´ˆê¸°í™” ì¤‘ ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤."));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -2289,20 +2289,20 @@ public class UtaitePlayerManager extends HttpServlet {
 			PrintWriter out = response.getWriter(); 
 			out.println(gson.toJson(obj));
 			
-			// ·Î±× Ãâ·Â
-			rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "¾Ë ¼ö ¾ø´Â ¿À·ù ¹ß»ı!", e.toString()));
+			// ë¡œê·¸ ì¶œë ¥
+			rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜ ë°œìƒ!", e.toString()));
 		}
 		
 		
-		// DB ¿¬°á ÇØÁ¦
+		// DB ì—°ê²° í•´ì œ
 		try {
 			if (databaseConnection != null) 
 				databaseConnection.allClose();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			
-			// ·Î±× Ãâ·Â
-			rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á ÇØÁ¦ ¿À·ù ¹ß»ı! ", e.toString()));
+			// ë¡œê·¸ ì¶œë ¥
+			rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²° í•´ì œ ì˜¤ë¥˜ ë°œìƒ! ", e.toString()));
 		}
 	}
     
@@ -2338,12 +2338,12 @@ public class UtaitePlayerManager extends HttpServlet {
 	// ----------------------------------------------------------------------- //
 	// ----------------------------------------------------------------------- //
 	/**
-	 * ³ë·¡ ¾ÆÆ¼½ºÆ® ÀÌ¸§, ÀÌ¹ÌÁö ±¸ÇÏ±â
+	 * ë…¸ë˜ ì•„í‹°ìŠ¤íŠ¸ ì´ë¦„, ì´ë¯¸ì§€ êµ¬í•˜ê¸°
 	 * 
-	 * @param uuid ¾ÆÆ¼½ºÆ® UUID
+	 * @param uuid ì•„í‹°ìŠ¤íŠ¸ UUID
 	 * @return String Array
-	 * @throws SQLException DB Á¢¼Ó ¿À·ù
-	 * @throws ClassNotFoundException DB Á¢¼Ó ¿À·ù
+	 * @throws SQLException DB ì ‘ì† ì˜¤ë¥˜
+	 * @throws ClassNotFoundException DB ì ‘ì† ì˜¤ë¥˜
 	 */
 	private String[] getSingerNameAndImage(String uuid) throws SQLException, ClassNotFoundException {
 		DatabaseManager.DatabaseConnection databaseConnection = new DatabaseManager.DatabaseConnection();
@@ -2369,9 +2369,9 @@ public class UtaitePlayerManager extends HttpServlet {
 	
 	
 	/**
-	 * Æ¯Á¤ Æú´õ ¿ë·® ±¸ÇÏ´Â ÇÔ¼ö
+	 * íŠ¹ì • í´ë” ìš©ëŸ‰ êµ¬í•˜ëŠ” í•¨ìˆ˜
 	 * 
-	 * @param directory Æú´õ °æ·Î
+	 * @param directory í´ë” ê²½ë¡œ
 	 * @return long
 	 */
 	private long getFolderSize(File directory) {
@@ -2392,12 +2392,12 @@ public class UtaitePlayerManager extends HttpServlet {
 	
 	
 	/**
-	 * ¼­¹ö Á¢±Ù Á¦ÇÑ È®ÀÎ
+	 * ì„œë²„ ì ‘ê·¼ ì œí•œ í™•ì¸
 	 * 
 	 * @return 0 --> Version
 	 * 		   1 --> Access check value
-	 * @throws SQLException DB Á¢¼Ó ¿À·ù
-	 * @throws ClassNotFoundException DB Á¢¼Ó ¿À·ù
+	 * @throws SQLException DB ì ‘ì† ì˜¤ë¥˜
+	 * @throws ClassNotFoundException DB ì ‘ì† ì˜¤ë¥˜
 	 */
 	public String[] isServerAccessCheck() throws SQLException, ClassNotFoundException {
 		DatabaseManager.DatabaseConnection databaseConnection = new DatabaseManager.DatabaseConnection();
@@ -2422,13 +2422,13 @@ public class UtaitePlayerManager extends HttpServlet {
 	
 	
 	/**
-	 * ¿ìÅ¸ÀÌÅ× ÇÃ·¹ÀÌ¾î Á¢±Ù Çã¿ë È®ÀÎ
+	 * ìš°íƒ€ì´í…Œ í”Œë ˆì´ì–´ ì ‘ê·¼ í—ˆìš© í™•ì¸
 	 * 
-	 * @param user_uuid »ç¿ëÀÚ UUID
+	 * @param user_uuid ì‚¬ìš©ì UUID
 	 * @return boolean
-	 * @throws SQLException DB Á¢¼Ó ¿À·ù
-	 * @throws ParseException ³¯Â¥ º¯È¯ ¿À·ù
-	 * @throws ClassNotFoundException DB Á¢¼Ó ¿À·ù
+	 * @throws SQLException DB ì ‘ì† ì˜¤ë¥˜
+	 * @throws ParseException ë‚ ì§œ ë³€í™˜ ì˜¤ë¥˜
+	 * @throws ClassNotFoundException DB ì ‘ì† ì˜¤ë¥˜
 	 */
 	private boolean isAccessCheck(String user_uuid) throws SQLException, ParseException, ClassNotFoundException {
 		DatabaseManager.DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -2443,32 +2443,32 @@ public class UtaitePlayerManager extends HttpServlet {
 			int checker = databaseConnection.getResultSet().getInt("user_access_var");
 			String date = databaseConnection.getResultSet().getString("user_access_date");
 			
-			// ³¯ÀÚ ¹× º¯¼ö È®ÀÎ
+			// ë‚ ì ë° ë³€ìˆ˜ í™•ì¸
 			if (checker == 1) {
 				if (!date.equals("[null]")) {
 					if (date.equals("[unlimited]")) {
-						// »ç¿ë Çã°¡
+						// ì‚¬ìš© í—ˆê°€
 						isUse = true;
 					}else {
-						// ÇöÀç ³¯ÀÚ
+						// í˜„ì¬ ë‚ ì
 						Date nowDate = new Date();		
 						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 						Date getdate = simpleDateFormat.parse(date);
-						// ³¯ÀÚ È®ÀÎ
+						// ë‚ ì í™•ì¸
 						if (getdate.compareTo(nowDate) >= 0) {
-							// »ç¿ë Çã°¡
+							// ì‚¬ìš© í—ˆê°€
 							isUse = true;
 						}else {
-							// ÀÌ¿ë Â÷´Ü
+							// ì´ìš© ì°¨ë‹¨
 							isUse = false;
 						}
 					}
 				}else {
-					// ÀÌ¿ë Â÷´Ü
+					// ì´ìš© ì°¨ë‹¨
 					isUse = false;
 				}
 			}else {
-				// ÀÌ¿ë Â÷´Ü
+				// ì´ìš© ì°¨ë‹¨
 				isUse = false;
 			}
 		}else {

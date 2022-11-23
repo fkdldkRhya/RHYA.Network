@@ -22,7 +22,7 @@ import kro.kr.rhya_network.utils.db.DatabaseManager;
 
 public class OnlineAttendanceAccessChecker {
 	/**
-	 * ¿Â¶óÀÎ Ãâ¼®ºÎ Á¢±Ù ±ÇÇÑ È®ÀÎ
+	 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ì ‘ê·¼ ê¶Œí•œ í™•ì¸
 	 * 
 	 * @param authToken Auth Token
 	 * @return True, False
@@ -37,7 +37,7 @@ public class OnlineAttendanceAccessChecker {
 		PageParameter.AuthToken authTokenParm = new PageParameter.AuthToken();
 		AuthTokenChecker authTokenChecker = new AuthTokenChecker();
 		String[] result = authTokenChecker.getAuthInfo(authToken);
-		// ·Î±×ÀÎ È®ÀÎ
+		// ë¡œê·¸ì¸ í™•ì¸
 		if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS)) {
 			if (result[2].equals(authTokenParm.SERVICE.get(1))) {
 				DatabaseManager.DatabaseConnection db = new DatabaseManager.DatabaseConnection();
@@ -64,22 +64,22 @@ public class OnlineAttendanceAccessChecker {
 	
 	
 	/**
-	 * ¿Â¶óÀÎ Ãâ¼®ºÎ °èÁ¤ ¿¬µ¿ ÀÎÁõ ÇÔ¼ö
+	 * ì˜¨ë¼ì¸ ì¶œì„ë¶€ ê³„ì • ì—°ë™ ì¸ì¦ í•¨ìˆ˜
 	 * 
 	 * @param request HttpServletRequest
 	 * @param authToken Auth token
 	 * @param authCode Sync authorization key
 	 * @return
 	 * 
-	 * 0 : Auth token °ªÀÌ NullÀÓ
-	 * 1 : °èÁ¤ ¿¬µ¿ ÄÚµå°¡ µ¥ÀÌÅÍº£ÀÌ½º¿¡¼­ ¼³Á¤µÇÁö ¾ÊÀ½
-	 * 2 : °èÁ¤ ¿¬µ¿ ÄÚµå°¡ ÀÏÄ¡ÇÔ
-	 * 3 : °èÁ¤ ¿¬µ¿ ÄÚµå ÀÏÄ¡ÇÏÁö ¾ÊÀ½
-	 * 4 : ÀÌ¸ŞÀÏÀÌ ÀÌ¹Ì Àü¼ÛµÊ
-     * 5 : account_sync_emailÀ» º¯°æÇÏ°í ¸ŞÀÏÀÇ ¹ß¼Û¿¡ ¼º°øÇÔ
-	 * 6 : °èÁ¤ ¿¬µ¿ µ¥ÀÌÅÍ¸¦ µ¥ÀÌÅÍº£ÀÌ½º¿¡ »ğÀÔÇÏ°í ¸ŞÀÏÀÇ ¹ß¼Û¿¡ ¼º°øÇÔ
-	 * 7 : °èÁ¤ ¿¬µ¿ µ¥ÀÌÅÍ¸¦ µ¥ÀÌÅÍº£ÀÌ½º¿¡ »ğÀÔÇÏ°í ¸ŞÀÏÀÇ ¹ß¼Û¿¡ ½ÇÆĞÇÔ
-	 * 8 : ¾Ë ¼ö ¾ø´Â ¿À·ù
+	 * 0 : Auth token ê°’ì´ Nullì„
+	 * 1 : ê³„ì • ì—°ë™ ì½”ë“œê°€ ë°ì´í„°ë² ì´ìŠ¤ì—ì„œ ì„¤ì •ë˜ì§€ ì•ŠìŒ
+	 * 2 : ê³„ì • ì—°ë™ ì½”ë“œê°€ ì¼ì¹˜í•¨
+	 * 3 : ê³„ì • ì—°ë™ ì½”ë“œ ì¼ì¹˜í•˜ì§€ ì•ŠìŒ
+	 * 4 : ì´ë©”ì¼ì´ ì´ë¯¸ ì „ì†¡ë¨
+     * 5 : account_sync_emailì„ ë³€ê²½í•˜ê³  ë©”ì¼ì˜ ë°œì†¡ì— ì„±ê³µí•¨
+	 * 6 : ê³„ì • ì—°ë™ ë°ì´í„°ë¥¼ ë°ì´í„°ë² ì´ìŠ¤ì— ì‚½ì…í•˜ê³  ë©”ì¼ì˜ ë°œì†¡ì— ì„±ê³µí•¨
+	 * 7 : ê³„ì • ì—°ë™ ë°ì´í„°ë¥¼ ë°ì´í„°ë² ì´ìŠ¤ì— ì‚½ì…í•˜ê³  ë©”ì¼ì˜ ë°œì†¡ì— ì‹¤íŒ¨í•¨
+	 * 8 : ì•Œ ìˆ˜ ì—†ëŠ” ì˜¤ë¥˜
 	 * 
 	 * 
 	 * @throws ClassNotFoundException
@@ -101,7 +101,7 @@ public class OnlineAttendanceAccessChecker {
 		PageParameter.AuthToken authTokenParm = new PageParameter.AuthToken();
 		AuthTokenChecker authTokenChecker = new AuthTokenChecker();
 		String[] result = authTokenChecker.getAuthInfo(authToken);
-		// ·Î±×ÀÎ È®ÀÎ
+		// ë¡œê·¸ì¸ í™•ì¸
 		if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS)) {
 			if (result[2].equals(authTokenParm.SERVICE.get(1))) {
 				result = null;
@@ -156,7 +156,7 @@ public class OnlineAttendanceAccessChecker {
 							db.executeUpdate();
 							db.allClose();
 							
-							// ÀÌ¸ŞÀÏ ¹ß¼Û
+							// ì´ë©”ì¼ ë°œì†¡
 							StringBuilder stringBuilder = new StringBuilder();
 							stringBuilder.append("[ UUID: ");
 							stringBuilder.append(result[1]);
@@ -220,7 +220,7 @@ public class OnlineAttendanceAccessChecker {
 						connection.allClose();
 						connection = null;
 						
-						// ÀÌ¸ŞÀÏ ¹ß¼Û
+						// ì´ë©”ì¼ ë°œì†¡
 						StringBuilder stringBuilder = new StringBuilder();
 						stringBuilder.append("[ UUID: ");
 						stringBuilder.append(result[1]);
@@ -285,7 +285,7 @@ public class OnlineAttendanceAccessChecker {
 		PageParameter.AuthToken authTokenParm = new PageParameter.AuthToken();
 		AuthTokenChecker authTokenChecker = new AuthTokenChecker();
 		String[] result = authTokenChecker.getAuthInfo(authToken);
-		// ·Î±×ÀÎ È®ÀÎ
+		// ë¡œê·¸ì¸ í™•ì¸
 		if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS)) {
 			if (result[2].equals(authTokenParm.SERVICE.get(1))) {
 				DatabaseManager.DatabaseConnection db = new DatabaseManager.DatabaseConnection();
