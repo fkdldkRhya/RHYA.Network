@@ -175,9 +175,10 @@ public class PathManager {
 	
 	/**
 	 * WanaCry 루트 폴더
-	 * 123
+	 * 
 	 * WINDOWS --> "<NULL>"
 	 * LINUX   --> "/usr/local/resources/wanacry_resources"
 	 */
 	public static final String WANACRY_ROOT_PATH = "/usr/local/resources/wanacry_resources";
+	/*dfgdfgsdfgdfgfgdfgdgdfgfgffdgsgf*/
 }
