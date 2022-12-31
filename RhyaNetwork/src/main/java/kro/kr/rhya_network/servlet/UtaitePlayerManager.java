@@ -12,6 +12,7 @@ import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +39,8 @@ import kro.kr.rhya_network.logger.GetClientIPAddress;
 import kro.kr.rhya_network.logger.RhyaLogger;
 import kro.kr.rhya_network.page.JspPageInfo;
 import kro.kr.rhya_network.page.PageParameter;
+import kro.kr.rhya_network.utaite_player.UtaitePlayerEQSettingManager;
+import kro.kr.rhya_network.utaite_player.UtaitePlayerEQSettingVO;
 import kro.kr.rhya_network.util.AuthTokenChecker;
 import kro.kr.rhya_network.util.JSPUtilsInitTask;
 import kro.kr.rhya_network.util.PathManager;
@@ -2268,6 +2271,252 @@ public class UtaitePlayerManager extends HttpServlet {
 								obj.addProperty(keyName_Result, failMessage);
 							}
 							
+							
+							// JSON 데이터 출력
+							PrintWriter out = response.getWriter(); 
+							out.println(gson.toJson(obj));
+							
+							break;
+						}
+						
+						
+						
+						/**
+						 * 우타이테 플레이어 관리 모드 : 25
+						 * 
+						 * 설명 :
+						 * 		EQ 설정 생성, 수정, 제거 관리
+						 * 
+						 * 파라미터 :
+						 *      auth           --> Auth Token
+						 *      smode          --> 데이터 생성 : 0 / 데이터 제거 : 1 / 데이터 수정 : 2 / 데이터 리스트 [전체] : 3 / 데이터 리스트 [일부] : 4
+						 *      			       smode : 2,3,4 인 경우에는 'auth,eq_id' 파라미터만 필요함 (단, 3번일 경우는 'eq_id'는 필요 없음)
+						 *      eq_name        --> EQ 설정 이름
+						 * 		eq_date        --> EQ 설정 생성 및 수정 날짜
+						 * 		eq_value_60    --> EQ 값 (Frequency: 60)
+						 * 		eq_value_170   --> EQ 값 (Frequency: 170)
+						 * 		eq_value_310   --> EQ 값 (Frequency: 310)
+						 * 		eq_value_600   --> EQ 값 (Frequency: 600)
+						 * 		eq_value_1000  --> EQ 값 (Frequency: 1000)
+						 * 		eq_value_3000  --> EQ 값 (Frequency: 3000)
+						 * 		eq_value_6000  --> EQ 값 (Frequency: 6000)
+						 * 		eq_value_12000 --> EQ 값 (Frequency: 12000)
+						 * 		eq_value_14000 --> EQ 값 (Frequency: 14000)
+						 * 		eq_value_16000 --> EQ 값 (Frequency: 16000)
+						 * 		eq_id          --> EQ 설정 아이디
+						 */
+						case 25: {
+							String authToken = request.getParameter("auth");
+							PageParameter.AuthToken authTokenParm = new PageParameter.AuthToken();
+							AuthTokenChecker authTokenChecker = new AuthTokenChecker();
+							String[] result = authTokenChecker.getAuthInfo(authToken);
+							if (result[0].equals(AuthTokenChecker.AUTH_RESULT_SUCCESS) &&
+									result[2].equals(authTokenParm.SERVICE.get(0)) &&
+									isAccessCheck(result[1])) { // 로그인 성공
+								// 파라미터 읽기
+								String smode_str = request.getParameter("smode");
+								int smode = Integer.parseInt(smode_str);
+								String eq_name = request.getParameter("eq_name");
+								String eq_value_60_str = request.getParameter("eq_value_60");
+								String eq_value_170_str = request.getParameter("eq_value_170");
+								String eq_value_310_str = request.getParameter("eq_value_310");
+								String eq_value_600_str = request.getParameter("eq_value_600");
+								String eq_value_1000_str = request.getParameter("eq_value_1000");
+								String eq_value_3000_str = request.getParameter("eq_value_3000");
+								String eq_value_6000_str = request.getParameter("eq_value_6000");
+								String eq_value_12000_str = request.getParameter("eq_value_12000");
+								String eq_value_14000_str = request.getParameter("eq_value_14000");
+								String eq_value_16000_str = request.getParameter("eq_value_16000");
+								String eq_id = request.getParameter("eq_id");
+								
+								// 관리자 선언
+								UtaitePlayerEQSettingManager utaitePlayerEQSettingManager = new UtaitePlayerEQSettingManager(result[1]);
+								
+								// 날짜
+								String eq_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+								
+								// 파라미터 구분
+								switch (smode) {
+									case 0: { // 데이터 생성
+										try {
+											int id = utaitePlayerEQSettingManager.createEQValue(
+													eq_name,
+													eq_date,
+													Double.parseDouble(eq_value_60_str),
+													Double.parseDouble(eq_value_170_str),
+													Double.parseDouble(eq_value_310_str),
+													Double.parseDouble(eq_value_600_str),
+													Double.parseDouble(eq_value_1000_str),
+													Double.parseDouble(eq_value_3000_str),
+													Double.parseDouble(eq_value_6000_str),
+													Double.parseDouble(eq_value_12000_str),
+													Double.parseDouble(eq_value_14000_str),
+													Double.parseDouble(eq_value_16000_str));
+											
+											if (id == -1) { // 오류 발생!
+												// 로그 출력
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "EQ 설정 생성 중 오류 발생! Auth Token:", authToken));
+												obj.addProperty(keyName_Result, failMessage);
+											}else { // 작업 성공
+												// 로그 출력
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("EQ 설정 생성 성공! [ID: %d] Auth Token:", id), authToken));
+												obj.addProperty(keyName_Result, successMessage);
+												obj.addProperty("id", id);	
+											}
+										}catch (Exception ex) {
+											// 로그 출력
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("EQ 설정 생성 작업 처리 실패! [알 수 없는 오류 발생 : %s] Auth Token:", ex.toString()), authToken));
+											obj.addProperty(keyName_Result, failMessage);
+										}
+										
+										break;
+									}
+									
+									case 1: { // 데이터 수정
+										try {
+											boolean editEQResult = utaitePlayerEQSettingManager.editEQValue(
+													Integer.parseInt(eq_id),
+													eq_name,
+													eq_date,
+													Double.parseDouble(eq_value_60_str),
+													Double.parseDouble(eq_value_170_str),
+													Double.parseDouble(eq_value_310_str),
+													Double.parseDouble(eq_value_600_str),
+													Double.parseDouble(eq_value_1000_str),
+													Double.parseDouble(eq_value_3000_str),
+													Double.parseDouble(eq_value_6000_str),
+													Double.parseDouble(eq_value_12000_str),
+													Double.parseDouble(eq_value_14000_str),
+													Double.parseDouble(eq_value_16000_str));
+											
+											if (!editEQResult) { // 오류 발생!
+												// 로그 출력
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("EQ 설정 수정 실패! [ID: %d] Auth Token:", Integer.parseInt(eq_id)), authToken));
+												obj.addProperty(keyName_Result, failMessage);
+											}else { // 작업 성공
+												// 로그 출력
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("EQ 설정 수정 성공! [ID: %d] Auth Token:", Integer.parseInt(eq_id)), authToken));
+												obj.addProperty(keyName_Result, successMessage);
+											}
+										}catch (Exception ex) {
+											// 로그 출력
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("EQ 설정 수정 실패! [알 수 없는 오류 발생 : %s] Auth Token:", ex.toString()), authToken));
+											obj.addProperty(keyName_Result, failMessage);
+										}
+										
+										break;
+									}
+									
+									case 2: { // 데이터 제거
+										try {
+											boolean editEQResult = utaitePlayerEQSettingManager.deleteEQValue(Integer.parseInt(eq_id));
+											
+											if (!editEQResult) { // 오류 발생!
+												// 로그 출력
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("EQ 설정 제거 실패! [ID: %d] Auth Token:", Integer.parseInt(eq_id)), authToken));
+												obj.addProperty(keyName_Result, failMessage);
+											}else { // 작업 성공
+												// 로그 출력
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("EQ 설정 제거 성공! [ID: %d] Auth Token:", Integer.parseInt(eq_id)), authToken));
+												obj.addProperty(keyName_Result, successMessage);
+											}
+										}catch (Exception ex) {
+											// 로그 출력
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("EQ 설정 제거 작업 처리 실패! [알 수 없는 오류 발생 : %s] Auth Token:", ex.toString()), authToken));
+											obj.addProperty(keyName_Result, failMessage);
+										}
+										
+										break;
+									}
+									
+									case 3: { // 데이터 불러오기 [전체]
+										try {
+											ArrayList<UtaitePlayerEQSettingVO> list = utaitePlayerEQSettingManager.getEQValueAllData();
+											JsonArray dataResult = new JsonArray();
+											if (list != null) {
+												for (UtaitePlayerEQSettingVO utaitePlayerEQSettingVO : list) {
+													JsonObject jsonObject = new JsonObject();
+													jsonObject.addProperty("eq_id", utaitePlayerEQSettingVO.eq_id);
+													jsonObject.addProperty("eq_setting_name", URLEncoder.encode(utaitePlayerEQSettingVO.eq_setting_name, "UTF-8"));
+													jsonObject.addProperty("eq_setting_date", utaitePlayerEQSettingVO.eq_setting_date);
+													jsonObject.addProperty("eq_value_60", utaitePlayerEQSettingVO.eq_value_60);
+													jsonObject.addProperty("eq_value_170", utaitePlayerEQSettingVO.eq_value_170);
+													jsonObject.addProperty("eq_value_310", utaitePlayerEQSettingVO.eq_value_310);
+													jsonObject.addProperty("eq_value_600", utaitePlayerEQSettingVO.eq_value_600);
+													jsonObject.addProperty("eq_value_1000", utaitePlayerEQSettingVO.eq_value_1000);
+													jsonObject.addProperty("eq_value_3000", utaitePlayerEQSettingVO.eq_value_3000);
+													jsonObject.addProperty("eq_value_6000", utaitePlayerEQSettingVO.eq_value_6000);
+													jsonObject.addProperty("eq_value_12000", utaitePlayerEQSettingVO.eq_value_12000);
+													jsonObject.addProperty("eq_value_14000", utaitePlayerEQSettingVO.eq_value_14000);
+													jsonObject.addProperty("eq_value_16000", utaitePlayerEQSettingVO.eq_value_16000);
+													
+													dataResult.add(jsonObject);
+												}
+												
+												// 로그 출력
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "EQ 전체 설정 출력 성공! Auth Token:", authToken));
+												obj.addProperty(keyName_Result, successMessage);
+												obj.add(keyName_Message, dataResult);
+											}else {
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, "EQ 전체 설정 출력 실패! [NullReferenceException : List is null] Auth Token:", authToken));
+												obj.addProperty(keyName_Result, failMessage);
+											}
+										}catch (Exception ex) {
+											// 로그 출력
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("EQ 전체 설정 출력 실패! [알 수 없는 오류 발생 : %s] Auth Token:", ex.toString()), authToken));
+											obj.addProperty(keyName_Result, failMessage);
+										}
+										
+										break;
+									}
+									
+									case 4: { // 데이터 불러오기 [일부]
+										try {
+											UtaitePlayerEQSettingVO utaitePlayerEQSettingVO = utaitePlayerEQSettingManager.getEQValueData(Integer.parseInt(eq_id));
+											if (utaitePlayerEQSettingVO != null) {
+												JsonObject jsonObject = new JsonObject();
+												jsonObject.addProperty("eq_id", utaitePlayerEQSettingVO.eq_id);
+												jsonObject.addProperty("eq_setting_name", URLEncoder.encode(utaitePlayerEQSettingVO.eq_setting_name, "UTF-8"));
+												jsonObject.addProperty("eq_setting_date", utaitePlayerEQSettingVO.eq_setting_date);
+												jsonObject.addProperty("eq_value_60", utaitePlayerEQSettingVO.eq_value_60);
+												jsonObject.addProperty("eq_value_170", utaitePlayerEQSettingVO.eq_value_170);
+												jsonObject.addProperty("eq_value_310", utaitePlayerEQSettingVO.eq_value_310);
+												jsonObject.addProperty("eq_value_600", utaitePlayerEQSettingVO.eq_value_600);
+												jsonObject.addProperty("eq_value_1000", utaitePlayerEQSettingVO.eq_value_1000);
+												jsonObject.addProperty("eq_value_3000", utaitePlayerEQSettingVO.eq_value_3000);
+												jsonObject.addProperty("eq_value_6000", utaitePlayerEQSettingVO.eq_value_6000);
+												jsonObject.addProperty("eq_value_12000", utaitePlayerEQSettingVO.eq_value_12000);
+												jsonObject.addProperty("eq_value_14000", utaitePlayerEQSettingVO.eq_value_14000);
+												jsonObject.addProperty("eq_value_16000", utaitePlayerEQSettingVO.eq_value_16000);
+												
+												// 로그 출력
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("EQ EQ 설정 제거 성공! [ID: %d] Auth Token:", Integer.parseInt(eq_id)), authToken));
+												obj.addProperty(keyName_Result, successMessage);
+												obj.add(keyName_Message, jsonObject);
+											}else {
+												rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("EQ 일부 설정 출력 실패! [ID: %d] Auth Token:", Integer.parseInt(eq_id)), authToken));
+												obj.addProperty(keyName_Result, failMessage);
+											}
+										}catch (Exception ex) {
+											// 로그 출력
+											rl.Log(RhyaLogger.Type.Info, rl.CreateLogTextv8(clientIP, String.format("EQ 일부 설정 출력 실패! [알 수 없는 오류 발생 : %s] Auth Token:", ex.toString()), authToken));
+											obj.addProperty(keyName_Result, failMessage);
+										}
+										
+										break;
+									}
+									
+									/**
+									 * UtaitePlayerManager 는 Mode 25까지 지원 하게 됩니다.
+									 * API Mode 26부터는 UtaitePlayerManagerV2 에 정의되어있습니다.
+									 * UtaitePlayerManagerV2 를 참조해 주십시오.
+									 */
+								}
+							}else {
+								// 로그 출력
+								rl.Log(RhyaLogger.Type.Warning, rl.CreateLogTextv8(clientIP, "EQ 설정 생성, 수정, 제거 관리 작업 처리 실패! [로그인 실패] Auth Token:", authToken));
+								obj.addProperty(keyName_Result, failMessage);
+							}
 							
 							// JSON 데이터 출력
 							PrintWriter out = response.getWriter(); 
