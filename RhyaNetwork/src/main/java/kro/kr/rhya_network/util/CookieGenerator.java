@@ -16,6 +16,8 @@ public class CookieGenerator {
 	    cookie.setComment(cookieComment);
 	    // 쿠키 유효기간을 설정
 	    cookie.setMaxAge(60);
+	    // 쿠키 도메인 추가
+	    cookie.setDomain("rhya-network.kro.kr");
 	    // 응답헤더에 쿠키를 추가
 	    rsp.addCookie(cookie);
 	    

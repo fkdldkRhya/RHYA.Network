@@ -201,6 +201,8 @@ public class LoginChecker {
 			    c1.setPath("/");
 			    // 쿠키에 설명을 추가
 			    c1.setComment("UserUUID");
+			    // 쿠키 도메인 추가
+			    c1.setDomain("rhya-network.kro.kr");
 			    // 쿠키 유효기간을 설정
 			    c1.setMaxAge(60);
 				// 쿠키 생성
@@ -209,6 +211,8 @@ public class LoginChecker {
 			    c2.setPath("/");
 			    // 쿠키에 설명을 추가
 			    c2.setComment("UserUUID");
+			    // 쿠키 도메인 추가
+			    c2.setDomain("rhya-network.kro.kr");
 			    // 쿠키 유효기간을 설정
 			    c2.setMaxAge(60);
 			    // 응답헤더에 쿠키를 추가
